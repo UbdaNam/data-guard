@@ -8,10 +8,12 @@
 Build a production-grade Python contract generator that consumes Feature 1 canonical artifacts and JSONL governed datasets, profiles structure/statistics, synthesizes contract clauses and requirement-driven invariants, injects lineage-aware downstream context, and writes deterministic Bitol-compatible + dbt-compatible YAML outputs to stable paths.
 
 Primary first-class datasets:
+
 - `outputs/week3/extractions.jsonl`
 - `outputs/week5/events.jsonl`
 
 Primary outputs:
+
 - `generated_contracts/week3_extractions.yaml`
 - `generated_contracts/week5_events.yaml`
 - `generated_contracts/week3_extractions_dbt.yml`
@@ -112,118 +114,78 @@ violation_log/
 ## Architecture Plan
 
 ### 1) Input dataset loading from canonical JSONL paths
+
 - Resolve dataset targets from `contracts/canonical_paths.yaml`.
 - Validate readiness with `contracts/dataset_readiness.json` before generation.
-- Load JSONL line-by-line with resilient parsing:
-      - valid records collected,
-      - malformed records captured as evidence in metadata.
+- Load JSONL line-by-line with resilient parsing: - valid records collected, - malformed records captured as evidence in metadata.
 
 ### 2) Dataset profiling
-- Structural profiling:
-      - field discovery (including nested objects/arrays where feasible),
-      - nullability/presence rates,
-      - type consistency map.
-- Statistical profiling:
-      - numeric min/max/mean/quantile candidates,
-      - value distribution summaries for enum candidacy,
-      - uniqueness indicators and sparsity.
+
+- Structural profiling: - field discovery (including nested objects/arrays where feasible), - nullability/presence rates, - type consistency map.
+- Statistical profiling: - numeric min/max/mean/quantile candidates, - value distribution summaries for enum candidacy, - uniqueness indicators and sparsity.
 
 ### 3) Schema inference and nested field handling
-- Maintain both:
-      - canonical nested path representation (`a.b.c`), and
-      - dbt-compatible flattened test-target references.
+
+- Maintain both: - canonical nested path representation (`a.b.c`), and - dbt-compatible flattened test-target references.
 - Preserve parent-child links for nested fields to avoid semantic loss.
 
 ### 4) Contract clause generation
-- Synthesize clauses for:
-      - required/not-null,
-      - ranges,
-      - enums/accepted values,
-      - patterns,
-      - positivity,
-      - monotonicity candidates,
-      - referential relationships,
-      - dataset-level checks.
+
+- Synthesize clauses for: - required/not-null, - ranges, - enums/accepted values, - patterns, - positivity, - monotonicity candidates, - referential relationships, - dataset-level checks.
 
 ### 5) Requirement-driven clause injection
+
 - Read requirement constraints from Feature 1 traceability/domain notes.
 - Inject known invariants even if sample data does not violate them.
 - Mark source attribution per clause (`inferred` vs `requirement_defined`).
 
 ### 6) Lineage-aware downstream consumer context injection
-- Consume:
-      - `contracts/interface_registry.yaml`
-      - `contracts/schema_ownership_map.yaml`
-      - `outputs/week4/lineage_snapshots.jsonl` (when available)
-- Embed downstream context in each contract:
-      - downstream systems,
-      - consumed fields,
-      - likely breaking fields,
-      - consumer-facing change sensitivity.
+
+- Consume: - `contracts/interface_registry.yaml` - `contracts/schema_ownership_map.yaml` - `outputs/week4/lineage_snapshots.jsonl` (when available)
+- Embed downstream context in each contract: - downstream systems, - consumed fields, - likely breaking fields, - consumer-facing change sensitivity.
 
 ### 7) Output rendering to Bitol-compatible YAML
+
 - Render deterministic key ordering and deterministic list ordering.
 - Include explicit mismatch and uncertainty sections.
 
 ### 8) Output rendering to dbt-compatible schema YAML
-- Emit counterpart tests for supported clauses:
-      - not_null,
-      - accepted_values,
-      - relationships,
-      - unique.
+
+- Emit counterpart tests for supported clauses: - not_null, - accepted_values, - relationships, - unique.
 - Record unsupported clause mappings explicitly in metadata.
 
 ### 9) Generation metadata, logging, and deterministic file writing
+
 - Log run id, input artifact versions/hashes, record counts, parse errors, mismatch counts.
-- Determinism rules:
-      - stable sorting by dataset + field path + clause type,
-      - normalized YAML emitter settings,
-      - only timestamp/version fields allowed to vary.
+- Determinism rules: - stable sorting by dataset + field path + clause type, - normalized YAML emitter settings, - only timestamp/version fields allowed to vary.
 - Write temp file + atomic replace to reduce partial-write risk.
 
 ### 10) Extensibility to additional governed datasets
+
 - Dataset-agnostic orchestration pipeline keyed by dataset config.
 - Add dataset via registry/config mapping, not generator code fork.
 
 ## Failure Handling
 
-- Missing input dataset path:
-      - fail dataset-specific generation with clear error,
-      - continue other dataset generation,
-      - emit metadata status `blocked_by_missing_upstream_data`.
-- Malformed JSONL lines:
-      - continue parsing valid lines,
-      - record malformed-line diagnostics and count.
-- Partial conformance to canonical schema:
-      - still generate baseline contract,
-      - emit mismatch evidence (filename/shape/field/semantic),
-      - keep canonical target semantics unchanged.
-- Missing optional lineage assets:
-      - generate contracts with explicit `partial_context` annotations.
+- Missing input dataset path: - fail dataset-specific generation with clear error, - continue other dataset generation, - emit metadata status `blocked_by_missing_upstream_data`.
+- Malformed JSONL lines: - continue parsing valid lines, - record malformed-line diagnostics and count.
+- Partial conformance to canonical schema: - still generate baseline contract, - emit mismatch evidence (filename/shape/field/semantic), - keep canonical target semantics unchanged.
+- Missing optional lineage assets: - generate contracts with explicit `partial_context` annotations.
 
 ## Output Naming & Versioning Conventions
 
-- File naming (fixed):
-      - `generated_contracts/week3_extractions.yaml`
-      - `generated_contracts/week5_events.yaml`
-      - `generated_contracts/week3_extractions_dbt.yml`
-      - `generated_contracts/week5_events_dbt.yml`
-- Contract metadata fields:
-      - `generator_version`
-      - `contract_schema_version`
-      - `generated_at` (allowed non-deterministic)
-      - `input_artifact_hashes`
-      - `dataset_record_count`
+- File naming (fixed): - `generated_contracts/week3_extractions.yaml` - `generated_contracts/week5_events.yaml` - `generated_contracts/week3_extractions_dbt.yml` - `generated_contracts/week5_events_dbt.yml`
+- Contract metadata fields: - `generator_version` - `contract_schema_version` - `generated_at` (allowed non-deterministic) - `input_artifact_hashes` - `dataset_record_count`
 
 ## Risks & Mitigations
 
-| Risk | Impact | Mitigation |
-|---|---|---|
-| Inconsistent nested structures across records | Unstable inferred schema | Use unioned field graph with confidence annotations and explicit unknown typing |
-| Overfitting enum/range clauses to small samples | False strictness | Mark inferred confidence, prefer requirement-defined invariants where available |
-| Non-deterministic YAML serialization | Poor review/diff experience | Stable sorting + canonical dumper settings + golden-file tests |
-| Missing Week 4 lineage data | Incomplete downstream context | Emit partial-context markers and preserve extension points |
-| Drift between canonical target and observed data | Downstream breakage | Always preserve canonical schema target and emit mismatch evidence |
+| Risk                                             | Impact                        | Mitigation                                                                      |
+| ------------------------------------------------ | ----------------------------- | ------------------------------------------------------------------------------- |
+| Inconsistent nested structures across records    | Unstable inferred schema      | Use unioned field graph with confidence annotations and explicit unknown typing |
+| Overfitting enum/range clauses to small samples  | False strictness              | Mark inferred confidence, prefer requirement-defined invariants where available |
+| Non-deterministic YAML serialization             | Poor review/diff experience   | Stable sorting + canonical dumper settings + golden-file tests                  |
+| Missing Week 4 lineage data                      | Incomplete downstream context | Emit partial-context markers and preserve extension points                      |
+| Drift between canonical target and observed data | Downstream breakage           | Always preserve canonical schema target and emit mismatch evidence              |
 
 ## Mermaid Diagrams
 

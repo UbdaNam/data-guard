@@ -1,6 +1,7 @@
 # Data Model — Contract Generation Engine
 
 ## Entity: DatasetTarget
+
 - **Purpose**: Canonical description of one governed input dataset.
 - **Fields**:
   - `dataset_id` (str)
@@ -11,6 +12,7 @@
   - `schema_name` (str)
 
 ## Entity: ProfiledField
+
 - **Purpose**: Structural and statistical characterization of one field path.
 - **Fields**:
   - `field_path` (str, nested path format)
@@ -26,6 +28,7 @@
   - `uncertainty_note` (str | null)
 
 ## Entity: InvariantClause
+
 - **Purpose**: One generated contract clause.
 - **Fields**:
   - `clause_id` (str)
@@ -37,6 +40,7 @@
   - `supported_in_dbt` (bool)
 
 ## Entity: DownstreamContextAnnotation
+
 - **Purpose**: Preserved downstream context for later impact analysis.
 - **Fields**:
   - `downstream_systems` (list[str])
@@ -47,6 +51,7 @@
   - `context_sources` (list[str])
 
 ## Entity: CanonicalMismatchRecord
+
 - **Purpose**: Observed-vs-canonical difference evidence.
 - **Fields**:
   - `dataset_id` (str)
@@ -57,6 +62,7 @@
   - `migration_or_normalization_required` (bool)
 
 ## Entity: GeneratedContract
+
 - **Purpose**: Primary Bitol-compatible output model.
 - **Fields**:
   - `contract_id` (str)
@@ -68,6 +74,7 @@
   - `metadata` (GenerationMetadata)
 
 ## Entity: DbtSchemaArtifact
+
 - **Purpose**: dbt-compatible counterpart for supported clause types.
 - **Fields**:
   - `model_name` (str)
@@ -76,6 +83,7 @@
   - `unsupported_clause_mappings` (list[str])
 
 ## Entity: GenerationMetadata
+
 - **Purpose**: Run traceability and deterministic diff controls.
 - **Fields**:
   - `run_id` (str)
@@ -88,10 +96,11 @@
   - `deterministic_signature` (str)
 
 ## Relationships
+
 - `DatasetTarget` 1..1 -> 1..1 `GeneratedContract`
-- `GeneratedContract` 1..* -> 0..* `InvariantClause`
-- `GeneratedContract` 1..* -> 0..* `ProfiledField`
+- `GeneratedContract` 1.._ -> 0.._ `InvariantClause`
+- `GeneratedContract` 1.._ -> 0.._ `ProfiledField`
 - `GeneratedContract` 1..1 -> 1..1 `DownstreamContextAnnotation`
-- `GeneratedContract` 1..* -> 0..* `CanonicalMismatchRecord`
+- `GeneratedContract` 1.._ -> 0.._ `CanonicalMismatchRecord`
 - `GeneratedContract` 1..1 -> 1..1 `DbtSchemaArtifact`
 - `GeneratedContract` 1..1 -> 1..1 `GenerationMetadata`

@@ -63,6 +63,19 @@
 - [ ] CHK029 Does the spec unambiguously separate generation-time enrichment metadata from execution-time blast-radius/schema-evolution analysis responsibilities? [Ambiguity, Spec §FR-015, Spec §FR-015a]
 - [ ] CHK030 Is a stable requirement-to-acceptance trace mapping explicit enough to audit coverage for all must-have validation themes in this checklist? [Traceability, Gap]
 
+## Author Self-Review Pass (PR-Ready Requirement Quality)
+
+- [ ] CHK031 Are all “MUST” statements in FR-001..FR-020 written so two independent reviewers would interpret scope identically? [Clarity, Spec §FR-001..FR-020]
+- [ ] CHK032 Do Week 3 and Week 5 requirements define both input identity and output identity without relying on implied naming conventions? [Completeness, Spec §FR-002, Spec §FR-010, Spec §FR-017]
+- [ ] CHK033 Are profiling requirements explicit about minimum output fields/metrics needed for later clause synthesis (not just “profiling happens”)? [Measurability, Spec §FR-005, Spec §FR-006, Gap]
+- [ ] CHK034 Is the requirement-defined invariant injection behavior clearly distinguishable from inferred invariant behavior in artifact metadata? [Consistency, Spec §User Story 1 Scenario 3, Spec §FR-006]
+- [ ] CHK035 Are uncertainty-handling requirements strong enough to prevent semantic invention while still requiring structural baseline completion? [Consistency, Spec §FR-008, Spec §FR-008b, Spec §FR-008c]
+- [ ] CHK036 Are lineage-context requirements specific enough to define expected placeholders when Week 4 lineage data is missing or partial? [Coverage, Spec §FR-003a, Spec §User Story 2 Scenario 4]
+- [ ] CHK037 Are Bitol and dbt output requirements explicitly connected so counterpart artifacts remain synchronized when clause coverage changes? [Consistency, Spec §FR-004, Spec §FR-009, Spec §FR-009a]
+- [ ] CHK038 Is deterministic-output language testable with explicit exception boundaries (timestamps/version fields only) and no hidden nondeterministic fields? [Clarity, Spec §FR-020, Spec §SC-009]
+- [ ] CHK039 Do out-of-scope boundaries clearly exclude implementation of validation execution, attribution, schema-evolution execution, AI checks, and reporting while permitting generation metadata needed by those features? [Boundary, Spec §FR-015, Spec §FR-015a]
+- [ ] CHK040 Is downstream-readiness language specific enough that later validation/attribution/evolution/reporting features can consume artifacts without schema rediscovery? [Completeness, Spec §FR-014, Spec §Downstream Impact, Gap]
+
 ## Notes
 
 - Check items off as completed: `[x]`

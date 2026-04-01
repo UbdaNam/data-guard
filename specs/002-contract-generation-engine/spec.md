@@ -21,6 +21,8 @@
 - Q: What lineage-aware downstream context must be embedded in generated contracts when Feature 1 and Week 4 lineage/interface assets are available? → A: Generated contracts MUST embed downstream systems, fields consumed downstream, likely breaking fields, and consumer-facing change sensitivity, using available lineage data and interface metadata from Feature 1 and Week 4 assets; this context is required to support later blast radius and schema evolution capabilities, even though those capabilities are not implemented in this feature.
 - Q: What output formats and portability guarantees must generation provide? → A: The primary output MUST be Bitol-compatible YAML contract files under `generated_contracts/`; each generated contract MUST also emit a dbt-compatible schema YAML counterpart for supported clauses (required/not null, accepted values/enums, relationships/referential integrity, uniqueness where applicable), and outputs MUST be deterministic enough for review and diffing across runs except for timestamps or explicitly versioned metadata.
 - Q: How must generation handle fields whose business meaning is weakly inferable? → A: If business meaning cannot be inferred confidently from field name, neighboring fields, and sample values, the generator MUST avoid inventing unsupported meaning, MUST record uncertainty explicitly, MAY emit annotation placeholders or machine-readable uncertainty notes, and MUST preserve enough context for later human review or LLM-assisted enrichment; weak semantic confidence MUST NOT block structural contract baseline generation.
+- Q: What concrete profiling, determinism, and constraint-precedence rules remove remaining ambiguity? → A: Structural profiling supports scalar fields, nested objects, and arrays-of-objects up to depth 5 using dot-path field naming; statistical profiling for numeric fields MUST include min, max, mean, standard deviation, p50, p95, and p99 plus null and uniqueness rates; requirement-defined constraints always override observed-data inferences, and observed data may inform profiling/anomaly notes but MUST NOT weaken governed constraints; deterministic output requires stable dataset/field/clause ordering, canonical YAML formatting, and no cross-run diffs except approved metadata fields (`generated_at`, explicit version metadata, run_id).
+- Q: How must dependency and failure handling behave for missing/partial Feature 1 artifacts and dataset conditions? → A: When all required Feature 1 artifacts are available, generation proceeds normally; when optional lineage artifacts are partial/missing, generation proceeds with explicit `partial_context` annotations; when required artifacts or required datasets are missing/unreadable, the affected dataset generation MUST fail with explicit status/diagnostics while other datasets may proceed; partial schema conformance MUST still produce a contract with explicit mismatch records.
 
 ## User Scenarios & Testing _(mandatory)_
 
@@ -36,9 +38,10 @@ As a platform engineer, I need repeatable contract generation for the core gover
 
 1. **Given** the canonical dataset registry and readiness inventory from Feature 1, **When** the generator runs, **Then** it produces baseline contract artifacts for `outputs/week3/extractions.jsonl` and `outputs/week5/events.jsonl`.
 2. **Given** a governed dataset with inferable structure and statistics, **When** generation completes, **Then** the resulting contract captures structural and statistical profiling results, including field and nested-field structure where feasible, numeric value distributions, required fields, range constraints, enum constraints, pattern constraints, positivity checks, monotonicity candidates, and referential relationships where inferable.
-3. **Given** requirement-document constraints that are not yet violated by sample data, **When** generation completes, **Then** the resulting contract still preserves those constraints as governed expectations rather than omitting them because the current sample happens to comply.
+3. **Given** requirement-document constraints and observed-data inferences conflict, **When** generation completes, **Then** requirement-defined constraints are preserved as canonical contract clauses and observed-data-only alternatives are recorded as profiling/anomaly notes instead of replacing governed constraints.
 4. **Given** a governed dataset with ambiguous fields, **When** the generator cannot determine semantics confidently from field name, neighboring fields, and sample values, **Then** it records explicit uncertainty and avoids inventing unsupported business meaning.
 5. **Given** low confidence in business meaning for one or more fields, **When** generation runs, **Then** structural baseline contract generation still completes and preserves context for later human review or LLM-assisted enrichment.
+6. **Given** a required dataset path is missing or unreadable, **When** generation runs, **Then** the affected dataset is marked failed with explicit diagnostics and no fabricated contract output is emitted for that dataset.
 
 ---
 
@@ -56,6 +59,7 @@ As a platform architect, I need generated contracts to preserve consumer, lineag
 2. **Given** a generated contract for a core governed dataset, **When** later features read it, **Then** they can identify the producing dataset, known consumers, and dependency context without reconstructing the source surface.
 3. **Given** lineage data or interface metadata from Feature 1 and Week 4 assets, **When** generation completes, **Then** the contract embeds downstream systems, fields consumed downstream, likely breaking fields, and consumer-facing change sensitivity.
 4. **Given** partial lineage coverage, **When** required context fields cannot be inferred confidently, **Then** the contract records explicit unknown/partial context annotations instead of omitting downstream-context structure.
+5. **Given** required Feature 1 ownership/interface artifacts are missing, **When** generation runs, **Then** affected datasets fail with explicit dependency diagnostics rather than emitting unverifiable downstream context.
 
 ---
 
@@ -72,23 +76,25 @@ As a delivery lead, I need the generator to emit both contract YAML and dbt-comp
 1. **Given** a supported governed dataset, **When** generation completes, **Then** the feature emits a primary Bitol-compatible YAML contract artifact under `generated_contracts/` and a dbt-compatible schema YAML counterpart.
 2. **Given** future additional governed datasets, **When** they are added to the canonical surface, **Then** the generator architecture supports them without changing core path conventions or output semantics.
 3. **Given** supported clauses in a generated contract, **When** dbt-compatible output is produced, **Then** required/not null, accepted values/enums, relationships/referential integrity, and uniqueness constraints are represented where applicable.
-4. **Given** repeated generation runs with unchanged inputs, **When** outputs are compared, **Then** artifacts are deterministic enough for review and diffing except for timestamps or explicitly versioned metadata.
+4. **Given** repeated generation runs with unchanged inputs and identical artifact versions, **When** outputs are compared, **Then** artifacts are byte-for-byte identical except approved non-deterministic metadata fields (`generated_at`, `run_id`, explicit version metadata fields).
 
 ---
 
 ### Edge Cases
 
 - A governed dataset is present but the readiness inventory marks it blocked or pending normalization.
+- Structural profiling encounters nested structures deeper than supported depth 5; unsupported depth is recorded as a profiling limitation note while supported levels are still profiled.
 - Structural profiling identifies a field with a stable name but ambiguous semantics across upstream records.
-- Statistical profiling finds sparse or inconsistent values that cannot support a strong contract clause.
+- Statistical profiling finds sparse or inconsistent values that cannot support a strong contract clause; clauses requiring higher confidence are omitted with explicit rationale.
 - Downstream lineage context exists for some fields but not for all fields in the same dataset.
 - Week 4 lineage snapshots or interface metadata exist but only partially map field-level consumers, requiring explicit partial-context annotations.
 - A supported dataset expands in the future; the architecture must allow a new contract output without renaming the existing stable paths.
 - A dataset extension target (week1, week2, week4, or LangSmith traces) is introduced after the initial release and must fit the same generator surface.
 - dbt-compatible schema output cannot be produced for a clause because the clause has no schema-level equivalent.
-- Outputs generated from unchanged inputs differ for non-semantic reasons, reducing review and diffability.
+- Outputs generated from unchanged inputs differ for non-semantic reasons outside approved metadata fields; this is treated as a determinism failure.
 - Multiple fields have weakly inferable semantics; uncertainty notes are required while structural contract generation must still proceed.
 - Observed data differs from the canonical governed schema in filename, shape, field names, or field semantics.
+- Required Feature 1 artifacts are partially available; optional lineage context may degrade with `partial_context`, but required dependency gaps fail affected datasets.
 
 ## Requirements _(mandatory)_
 
@@ -97,11 +103,14 @@ As a delivery lead, I need the generator to emit both contract YAML and dbt-comp
 - **FR-001**: The feature MUST generate baseline machine-checkable contracts from governed JSONL datasets.
 - **FR-002**: The feature MUST support contract generation for at least `outputs/week3/extractions.jsonl` and `outputs/week5/events.jsonl`.
 - **FR-002a**: The feature MUST support future extension to `outputs/week1/intent_records.jsonl`, `outputs/week2/verdicts.jsonl`, `outputs/week4/lineage_snapshots.jsonl`, and LangSmith trace records without changing the generator architecture.
-- **FR-003**: The feature MUST read Feature 1 foundation artifacts directly, including canonical dataset registry, dataset readiness inventory, interface registry, schema ownership map, data flow architecture references, and foundational domain/schema notes.
+- **FR-003**: The feature MUST read Feature 1 foundation artifacts directly from canonical paths: `contracts/canonical_paths.yaml` (dataset registry), `contracts/dataset_readiness.json` (readiness inventory), `contracts/interface_registry.yaml` (interface registry), `contracts/schema_ownership_map.yaml` (schema ownership metadata), `contracts/data_flow_architecture.mmd` (data flow references), and `DOMAIN_NOTES.md` (foundational domain/schema notes).
 - **FR-003a**: The feature MUST consume Week 4 lineage assets where available (including `outputs/week4/lineage_snapshots.jsonl`) to enrich downstream context annotations.
 - **FR-004**: The feature MUST generate primary contracts as Bitol-compatible YAML files in stable paths under `generated_contracts/`, aligned to the requirement document.
-- **FR-005**: The feature MUST include structural profiling of fields and nested fields where feasible, plus statistical profiling for numeric values and contract-relevant distributions, in the contract generation process.
+- **FR-005**: The feature MUST perform structural profiling for scalar fields, nested objects, and arrays-of-objects up to maximum nested depth 5 using deterministic dot-path field naming, plus field presence/null/type-frequency summaries.
+- **FR-005a**: The feature MUST perform statistical profiling for numeric fields with required metrics: `min`, `max`, `mean`, `stddev`, `p50`, `p95`, `p99`, `null_rate`, and `uniqueness_rate`.
 - **FR-006**: The feature MUST generate contract clauses for required fields, ranges, enums, patterns, positivity, monotonicity candidates, referential relationships, and dataset-level checks where these are inferable or defined by the requirement document.
+- **FR-006a**: Invariant source boundaries MUST be explicit: requirement-defined constraints come from requirement/foundation artifacts, while inferred constraints come from profiling results; each clause MUST declare its source.
+- **FR-006b**: Requirement-defined constraints MUST override observed-data inferences when conflicts exist; observed data may only add profiling/anomaly notes and MUST NOT weaken governed constraints.
 - **FR-007**: The feature MUST inject lineage-aware downstream context into generated contracts when available, including downstream systems, consumed fields, likely breaking fields, and consumer-facing change sensitivity.
 - **FR-008**: When a field’s business meaning cannot be inferred confidently from field name, neighboring fields, and sample values, the feature MUST avoid inventing unsupported business meaning and MUST record uncertainty explicitly.
 - **FR-008b**: For weakly inferable field meaning, the feature MAY emit annotation placeholders or machine-readable uncertainty notes and MUST preserve enough context for future human review or LLM-assisted enrichment.
@@ -110,18 +119,24 @@ As a delivery lead, I need the generator to emit both contract YAML and dbt-comp
 - **FR-009**: The feature MUST generate dbt-compatible schema YAML outputs as counterparts to each generated contract for supported clauses.
 - **FR-009a**: Supported counterpart clause mappings MUST include required/not null, accepted values/enums, relationships/referential integrity, and uniqueness where applicable.
 - **FR-010**: The feature MUST emit generated contract artifacts into stable paths under `generated_contracts/` for later features to consume directly.
-- **FR-011**: The feature MUST produce execution metadata or logs sufficient to trace when and how a contract artifact was generated.
+- **FR-010a**: Required output artifacts per supported dataset are: one Bitol-compatible contract YAML, one dbt-compatible schema YAML counterpart, and one generation metadata/log record with deterministic signature.
+- **FR-011**: The feature MUST produce execution metadata/logs including: run_id, generated_at, generator_version, contract_schema_version, input artifact hashes, input record counts, malformed-line counts, mismatch counts, and deterministic signature.
 - **FR-012**: The feature MUST preserve downstream consumer context so later validation, attribution, blast radius, and migration features can operate without rediscovering dependencies.
 - **FR-013**: The feature MUST be extensible to additional governed datasets without changing the architecture or stable output conventions.
 - **FR-014**: The feature MUST produce generated contracts that are usable as direct inputs for validation, drift detection, violation attribution, schema evolution intelligence, AI contract enforcement extensions where relevant, and operational report generation.
-- **FR-015**: The feature MUST not implement validation execution against datasets, violation attribution, blast radius calculation/execution, schema evolution diffing/execution, AI drift analysis, or operational report generation behavior.
+- **FR-015**: The feature MUST only generate contracts/metadata and MUST NOT implement: (a) validation execution against datasets, (b) violation attribution, (c) blast radius calculation/execution, (d) schema evolution diffing/execution, (e) AI-specific drift/contract checks, or (f) operational report generation behavior.
 - **FR-015a**: Lineage-aware downstream context is included as generation metadata to support later blast radius and schema evolution capabilities, but those capabilities remain out of scope for this feature.
 - **FR-016**: The feature MUST align generated contracts with the canonical governed data surface established in Feature 1.
 - **FR-016a**: Generated contracts MUST target the canonical governed schemas defined by the platform even when observed data differs from expected schema or semantics.
 - **FR-017**: The feature MUST identify canonical output file names and maintain them as durable generator targets.
 - **FR-018**: The feature MUST record generated schema snapshots or generation-ready schema representations if required by later schema evolution work.
 - **FR-019**: The feature MUST preserve a single canonical contract-generation architecture that serves the minimum supported datasets and future extension targets without per-dataset forks.
-- **FR-020**: Generated outputs MUST be deterministic enough for human review and diffing across runs with unchanged inputs, except for timestamps or explicitly versioned metadata fields.
+- **FR-020**: Generated outputs MUST be deterministic for unchanged inputs and identical dependency versions: stable dataset/field/clause ordering, stable YAML key ordering, stable scalar formatting, and stable field naming.
+- **FR-020a**: The only allowed non-deterministic output fields are `generated_at`, `run_id`, and explicitly versioned metadata fields.
+- **FR-021**: Dependency handling MUST be explicit: if required Feature 1 artifacts are missing/unreadable, affected dataset generation fails; if optional lineage artifacts are missing/partial, generation continues with explicit `partial_context` annotations.
+- **FR-022**: Failure behavior MUST be explicit: missing required dataset path or unreadable dataset fails that dataset; malformed lines are counted and logged while valid lines continue; partial schema conformance still yields contract generation with mismatch records.
+- **FR-023**: Portability requirement: generated contract and dbt artifacts MUST be consumable by downstream validation/attribution/schema-evolution/reporting features without additional translation layers.
+- **FR-024**: Requirement traceability MUST be explicit: each functional requirement in this feature MUST map to at least one acceptance scenario and at least one measurable success criterion.
 
 ### Key Entities _(include if feature involves data)_
 
@@ -153,6 +168,8 @@ As a delivery lead, I need the generator to emit both contract YAML and dbt-comp
 ### Measurable Outcomes
 
 - **SC-001**: The generator can produce contracts for both in-scope governed datasets from the canonical surface without manual schema reconstruction.
+- **SC-001a**: Structural profiling coverage is >= 99% of discovered fields at nested depth <= 5 for each supported dataset.
+- **SC-001b**: Statistical profiling coverage is 100% of numeric fields for required metrics (`min`, `max`, `mean`, `stddev`, `p50`, `p95`, `p99`, `null_rate`, `uniqueness_rate`).
 - **SC-002**: 100% of generated contracts include downstream consumer context when that context is available from foundation artifacts, including downstream systems, consumed fields, likely breaking fields, and consumer-facing change sensitivity.
 - **SC-003**: 100% of ambiguous fields are either annotated or left explicitly unresolved rather than silently remapped.
 - **SC-010**: 0% of runs fail structural contract baseline generation solely due to weak confidence in field business meaning.
@@ -161,7 +178,11 @@ As a delivery lead, I need the generator to emit both contract YAML and dbt-comp
 - **SC-006**: For supported clauses, a parallel dbt-compatible schema artifact is generated alongside the primary contract artifact.
 - **SC-007**: 100% of supported datasets that differ from the canonical governed schema have explicit mismatch documentation rather than silent reinterpretation.
 - **SC-008**: The architecture can extend to week1, week2, week4, and LangSmith trace records without changing the core generation design.
-- **SC-009**: For runs with unchanged inputs, generated artifacts are diff-stable except for timestamps or explicitly versioned metadata.
+- **SC-009**: For runs with unchanged inputs and identical dependency versions, generated artifacts are byte-for-byte diff-stable except for `generated_at`, `run_id`, and explicitly versioned metadata fields.
+- **SC-011**: Each generated contract contains at least 8 clauses total, including at least 1 required/not-null clause and 1 dataset-level clause, unless dataset size is < 10 valid records (then clause minimum is documented as reduced with rationale).
+- **SC-012**: When required Feature 1 artifacts are missing, 100% of affected datasets fail with explicit dependency diagnostics and no fabricated output artifacts.
+- **SC-013**: When datasets are partially conformant, 100% of generated outputs include explicit mismatch records for filename, schema-shape, field-name, and semantic mismatch classes that are observed.
+- **SC-014**: 100% of functional requirements (FR-001..FR-024) are trace-mapped to at least one acceptance scenario and one success criterion before implementation starts.
 
 ## Assumptions
 
@@ -177,6 +198,7 @@ As a delivery lead, I need the generator to emit both contract YAML and dbt-comp
 - This feature preserves the Feature 1 canonical repository layout and uses the existing foundation artifacts as the authoritative source of truth.
 - No new top-level directories are introduced beyond the contract output surface already established in the platform foundation.
 - Generated contract paths must remain stable so downstream features can consume them without rediscovering structure.
+- End-to-end contract generation responsibility chain is explicit and mandatory: input artifact loading -> dataset loading -> structural/statistical profiling -> invariant synthesis (inferred + requirement-defined) -> downstream context injection -> Bitol/dbt rendering -> deterministic write -> metadata/log emission.
 
 ## Implementation Prompt Integrity Checklist _(mandatory)_
 

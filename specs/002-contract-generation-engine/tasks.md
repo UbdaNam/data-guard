@@ -17,7 +17,7 @@
 
 **Purpose**: Initialize durable generator scaffolding and canonical feature wiring.
 
-- [ ] T001 Create Feature 2 generation package scaffolding in src/generation/__init__.py, src/models/contract_models.py, and src/validators/contract_quality_validator.py (Files: src/generation/__init__.py, src/models/contract_models.py, src/validators/contract_quality_validator.py; AC: modules import cleanly and expose typed stubs used by later tasks).
+- [ ] T001 Create Feature 2 generation package scaffolding in src/generation/**init**.py, src/models/contract_models.py, and src/validators/contract_quality_validator.py (Files: src/generation/**init**.py, src/models/contract_models.py, src/validators/contract_quality_validator.py; AC: modules import cleanly and expose typed stubs used by later tasks).
 - [ ] T002 [P] Add YAML rendering dependency and generation extras in pyproject.toml (Files: pyproject.toml; AC: dependency set includes PyYAML and install resolves without altering canonical project layout).
 - [ ] T003 [P] Add generator command entry wiring in contracts/generator.py and src/cli/foundation.py (Files: contracts/generator.py, src/cli/foundation.py; AC: generator entrypoint callable exists and routes to orchestration without implementing validation/attribution/reporting behavior).
 - [ ] T004 Capture Feature 2 operational guidance skeleton in specs/002-contract-generation-engine/quickstart.md (Files: specs/002-contract-generation-engine/quickstart.md; AC: quickstart references canonical Week 3/Week 5 inputs and canonical generated_contracts output paths).

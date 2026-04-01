@@ -1,0 +1,274 @@
+canonical_input_path: outputs/week3/extractions.jsonl
+clauses:
+- confidence: high
+  expression:
+    rule: must_align_to_canonical_schema
+  field: null
+  id: week3_extractions.dataset.required_schema
+  source: requirement_defined
+  type: dataset_check
+- confidence: medium
+  expression:
+    accepted_values:
+    - gold
+    - silver
+    - bronze
+  field: category
+  id: week3_extractions.category.enum
+  source: inferred
+  type: enum
+- confidence: high
+  expression:
+    presence_rate: 1.0
+  field: category
+  id: week3_extractions.category.required
+  source: inferred
+  type: required
+- confidence: medium
+  expression:
+    uniqueness_rate: 1.0
+  field: category
+  id: week3_extractions.category.uniqueness
+  source: inferred
+  type: uniqueness
+- confidence: medium
+  expression:
+    accepted_values:
+    - '{''name'': ''Acme'', ''score'': 92.5}'
+    - '{''name'': ''Beta'', ''score'': 81.0}'
+    - '{''name'': ''Gamma'', ''score'': 77.3}'
+  field: entity
+  id: week3_extractions.entity.enum
+  source: inferred
+  type: enum
+- confidence: high
+  expression:
+    presence_rate: 1.0
+  field: entity
+  id: week3_extractions.entity.required
+  source: inferred
+  type: required
+- confidence: medium
+  expression:
+    uniqueness_rate: 1.0
+  field: entity
+  id: week3_extractions.entity.uniqueness
+  source: inferred
+  type: uniqueness
+- confidence: medium
+  expression:
+    accepted_values:
+    - Acme
+    - Beta
+    - Gamma
+  field: entity.name
+  id: week3_extractions.entity.name.enum
+  source: inferred
+  type: enum
+- confidence: high
+  expression:
+    presence_rate: 1.0
+  field: entity.name
+  id: week3_extractions.entity.name.required
+  source: inferred
+  type: required
+- confidence: medium
+  expression:
+    uniqueness_rate: 1.0
+  field: entity.name
+  id: week3_extractions.entity.name.uniqueness
+  source: inferred
+  type: uniqueness
+- confidence: medium
+  expression:
+    accepted_values:
+    - '92.5'
+    - '81.0'
+    - '77.3'
+  field: entity.score
+  id: week3_extractions.entity.score.enum
+  source: inferred
+  type: enum
+- confidence: medium
+  expression:
+    non_negative: true
+  field: entity.score
+  id: week3_extractions.entity.score.positivity
+  source: inferred
+  type: positivity
+- confidence: medium
+  expression:
+    max: 92.5
+    min: 77.3
+  field: entity.score
+  id: week3_extractions.entity.score.range
+  source: inferred
+  type: range
+- confidence: high
+  expression:
+    presence_rate: 1.0
+  field: entity.score
+  id: week3_extractions.entity.score.required
+  source: inferred
+  type: required
+- confidence: medium
+  expression:
+    uniqueness_rate: 1.0
+  field: entity.score
+  id: week3_extractions.entity.score.uniqueness
+  source: inferred
+  type: uniqueness
+- confidence: medium
+  expression:
+    accepted_values:
+    - '2026-04-01T10:00:00Z'
+    - '2026-04-01T10:01:00Z'
+    - '2026-04-01T10:02:00Z'
+  field: event_ts
+  id: week3_extractions.event_ts.enum
+  source: inferred
+  type: enum
+- confidence: high
+  expression:
+    presence_rate: 1.0
+  field: event_ts
+  id: week3_extractions.event_ts.required
+  source: inferred
+  type: required
+- confidence: medium
+  expression:
+    uniqueness_rate: 1.0
+  field: event_ts
+  id: week3_extractions.event_ts.uniqueness
+  source: inferred
+  type: uniqueness
+- confidence: medium
+  expression:
+    accepted_values:
+    - r1
+    - r2
+    - r3
+  field: record_id
+  id: week3_extractions.record_id.enum
+  source: inferred
+  type: enum
+- confidence: high
+  expression:
+    presence_rate: 1.0
+  field: record_id
+  id: week3_extractions.record_id.required
+  source: inferred
+  type: required
+- confidence: medium
+  expression:
+    uniqueness_rate: 1.0
+  field: record_id
+  id: week3_extractions.record_id.uniqueness
+  source: inferred
+  type: uniqueness
+contract_id: week3_extractions.v1
+dataset_id: week3.extractions
+downstream_context:
+  consumed_fields:
+  - category
+  - entity.name
+  - entity.score
+  - record_id
+  consumer_change_sensitivity:
+  - consumer_owner: platform-foundation
+    sensitivity: high
+  - consumer_owner: violation-attribution-team
+    sensitivity: high
+  context_sources:
+  - contracts/interface_registry.yaml
+  - contracts/schema_ownership_map.yaml
+  - outputs/week4/lineage_snapshots.jsonl
+  coverage_status: full
+  downstream_systems:
+  - violation-attribution
+  likely_breaking_fields:
+  - category
+  - entity.name
+  - entity.score
+  - record_id
+metadata:
+  contract_schema_version: '1.0'
+  deterministic_signature: 27a4be8673310622c51640bb12374b332dc0165dc06024d8161340bb1b0a713e
+  generated_at: '2026-04-01T21:54:04.804419+00:00'
+  generator_version: 0.2.0
+  input_artifact_hashes: {}
+  input_record_counts:
+    week3.extractions: 3
+  malformed_line_count: 0
+  mismatch_count: 1
+  run_id: 2115e0b9-034d-42d1-8946-b4142886c7ed
+mismatch_records:
+- canonical_value: canonical_governed_schema
+  dataset_id: week3.extractions
+  impact_note: Observed data may diverge from canonical target
+  migration_or_normalization_required: true
+  mismatch_type: semantic
+  observed_value: upstream_variant
+schema_fields:
+- field_path: category
+  null_rate: 0.0
+  numeric_stats: null
+  parent_path: null
+  presence_rate: 1.0
+  semantic_confidence: high
+  types:
+  - str
+  uncertainty_note: null
+- field_path: entity
+  null_rate: 0.0
+  numeric_stats: null
+  parent_path: null
+  presence_rate: 1.0
+  semantic_confidence: high
+  types:
+  - dict
+  uncertainty_note: null
+- field_path: entity.name
+  null_rate: 0.0
+  numeric_stats: null
+  parent_path: entity
+  presence_rate: 1.0
+  semantic_confidence: high
+  types:
+  - str
+  uncertainty_note: null
+- field_path: entity.score
+  null_rate: 0.0
+  numeric_stats:
+    max: 92.5
+    mean: 83.6
+    min: 77.3
+    p50: 81.0
+    p95: 92.5
+    p99: 92.5
+    stddev: 6.471990935304737
+  parent_path: entity
+  presence_rate: 1.0
+  semantic_confidence: high
+  types:
+  - float
+  uncertainty_note: null
+- field_path: event_ts
+  null_rate: 0.0
+  numeric_stats: null
+  parent_path: null
+  presence_rate: 1.0
+  semantic_confidence: high
+  types:
+  - str
+  uncertainty_note: null
+- field_path: record_id
+  null_rate: 0.0
+  numeric_stats: null
+  parent_path: null
+  presence_rate: 1.0
+  semantic_confidence: high
+  types:
+  - str
+  uncertainty_note: null
+schema_name: extraction_v1

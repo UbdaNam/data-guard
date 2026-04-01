@@ -1,0 +1,233 @@
+canonical_input_path: outputs/week5/events.jsonl
+clauses:
+- confidence: high
+  expression:
+    rule: must_align_to_canonical_schema
+  field: null
+  id: week5_events.dataset.required_schema
+  source: requirement_defined
+  type: dataset_check
+- confidence: medium
+  expression:
+    accepted_values:
+    - e1
+    - e2
+    - e3
+  field: event_id
+  id: week5_events.event_id.enum
+  source: inferred
+  type: enum
+- confidence: high
+  expression:
+    presence_rate: 1.0
+  field: event_id
+  id: week5_events.event_id.required
+  source: inferred
+  type: required
+- confidence: medium
+  expression:
+    uniqueness_rate: 1.0
+  field: event_id
+  id: week5_events.event_id.uniqueness
+  source: inferred
+  type: uniqueness
+- confidence: medium
+  expression:
+    accepted_values:
+    - create
+    - update
+    - delete
+  field: event_type
+  id: week5_events.event_type.enum
+  source: inferred
+  type: enum
+- confidence: high
+  expression:
+    presence_rate: 1.0
+  field: event_type
+  id: week5_events.event_type.required
+  source: inferred
+  type: required
+- confidence: medium
+  expression:
+    uniqueness_rate: 1.0
+  field: event_type
+  id: week5_events.event_type.uniqueness
+  source: inferred
+  type: uniqueness
+- confidence: medium
+  expression:
+    accepted_values:
+    - r1
+    - r2
+    - r3
+  field: record_id
+  id: week5_events.record_id.enum
+  source: inferred
+  type: enum
+- confidence: high
+  expression:
+    presence_rate: 1.0
+  field: record_id
+  id: week5_events.record_id.required
+  source: inferred
+  type: required
+- confidence: medium
+  expression:
+    uniqueness_rate: 1.0
+  field: record_id
+  id: week5_events.record_id.uniqueness
+  source: inferred
+  type: uniqueness
+- confidence: medium
+  expression:
+    accepted_values:
+    - '1'
+    - '2'
+    - '3'
+  field: severity
+  id: week5_events.severity.enum
+  source: inferred
+  type: enum
+- confidence: medium
+  expression:
+    non_negative: true
+  field: severity
+  id: week5_events.severity.positivity
+  source: inferred
+  type: positivity
+- confidence: medium
+  expression:
+    max: 3.0
+    min: 1.0
+  field: severity
+  id: week5_events.severity.range
+  source: inferred
+  type: range
+- confidence: high
+  expression:
+    presence_rate: 1.0
+  field: severity
+  id: week5_events.severity.required
+  source: inferred
+  type: required
+- confidence: medium
+  expression:
+    uniqueness_rate: 1.0
+  field: severity
+  id: week5_events.severity.uniqueness
+  source: inferred
+  type: uniqueness
+- confidence: medium
+  expression:
+    accepted_values:
+    - app-a
+    - app-b
+  field: source
+  id: week5_events.source.enum
+  source: inferred
+  type: enum
+- confidence: high
+  expression:
+    presence_rate: 1.0
+  field: source
+  id: week5_events.source.required
+  source: inferred
+  type: required
+contract_id: week5_events.v1
+dataset_id: week5.events
+downstream_context:
+  consumed_fields:
+  - event_id
+  - event_type
+  - record_id
+  - severity
+  consumer_change_sensitivity:
+  - consumer_owner: platform-foundation
+    sensitivity: high
+  - consumer_owner: report-generation-team
+    sensitivity: high
+  context_sources:
+  - contracts/interface_registry.yaml
+  - contracts/schema_ownership_map.yaml
+  - outputs/week4/lineage_snapshots.jsonl
+  coverage_status: full
+  downstream_systems:
+  - report-generation
+  likely_breaking_fields:
+  - event_id
+  - event_type
+  - record_id
+  - severity
+metadata:
+  contract_schema_version: '1.0'
+  deterministic_signature: f47841ec7f18f965296f49b4813fa75b2f2f97dff78c3ad9fe918db1c86c82a9
+  generated_at: '2026-04-01T21:54:04.826467+00:00'
+  generator_version: 0.2.0
+  input_artifact_hashes: {}
+  input_record_counts:
+    week5.events: 3
+  malformed_line_count: 0
+  mismatch_count: 1
+  run_id: 5284f304-201f-4c59-99fb-2bfcb20a6ae1
+mismatch_records:
+- canonical_value: canonical_governed_schema
+  dataset_id: week5.events
+  impact_note: Observed data may diverge from canonical target
+  migration_or_normalization_required: true
+  mismatch_type: semantic
+  observed_value: upstream_variant
+schema_fields:
+- field_path: event_id
+  null_rate: 0.0
+  numeric_stats: null
+  parent_path: null
+  presence_rate: 1.0
+  semantic_confidence: high
+  types:
+  - str
+  uncertainty_note: null
+- field_path: event_type
+  null_rate: 0.0
+  numeric_stats: null
+  parent_path: null
+  presence_rate: 1.0
+  semantic_confidence: high
+  types:
+  - str
+  uncertainty_note: null
+- field_path: record_id
+  null_rate: 0.0
+  numeric_stats: null
+  parent_path: null
+  presence_rate: 1.0
+  semantic_confidence: high
+  types:
+  - str
+  uncertainty_note: null
+- field_path: severity
+  null_rate: 0.0
+  numeric_stats:
+    max: 3.0
+    mean: 2.0
+    min: 1.0
+    p50: 2.0
+    p95: 3.0
+    p99: 3.0
+    stddev: 0.816496580927726
+  parent_path: null
+  presence_rate: 1.0
+  semantic_confidence: high
+  types:
+  - int
+  uncertainty_note: null
+- field_path: source
+  null_rate: 0.0
+  numeric_stats: null
+  parent_path: null
+  presence_rate: 1.0
+  semantic_confidence: high
+  types:
+  - str
+  uncertainty_note: null
+schema_name: event_v1

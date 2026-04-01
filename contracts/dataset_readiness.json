@@ -1,0 +1,68 @@
+[
+  {
+    "dataset_id": "week1.intent_records",
+    "canonical_path": "outputs/week1/intent_records.jsonl",
+    "schema_name": "intent_record_v1",
+    "producer_system": "upstream-week1",
+    "consumer_systems": [
+      "platform-foundation",
+      "feature-2-contract-generation"
+    ],
+    "readiness_status": "inferred_from_requirement_document",
+    "mismatch_refs": [],
+    "evidence_notes": "Canonical dataset surface defined by requirements; upstream emission shape not yet confirmed."
+  },
+  {
+    "dataset_id": "week2.verdicts",
+    "canonical_path": "outputs/week2/verdicts.jsonl",
+    "schema_name": "verdict_v1",
+    "producer_system": "upstream-week2",
+    "consumer_systems": ["platform-foundation", "feature-3-validation-runtime"],
+    "readiness_status": "inferred_from_requirement_document",
+    "mismatch_refs": [],
+    "evidence_notes": "Canonical dataset surface defined by requirements; upstream emission shape not yet confirmed."
+  },
+  {
+    "dataset_id": "week3.extractions",
+    "canonical_path": "outputs/week3/extractions.jsonl",
+    "schema_name": "extraction_v1",
+    "producer_system": "upstream-week3",
+    "consumer_systems": [
+      "platform-foundation",
+      "feature-4-violation-attribution"
+    ],
+    "readiness_status": "blocked_by_missing_upstream_data",
+    "mismatch_refs": ["mismatch-week3-shape-001"],
+    "evidence_notes": "Upstream shape not yet reconciled with canonical field semantics."
+  },
+  {
+    "dataset_id": "week4.lineage_snapshots",
+    "canonical_path": "outputs/week4/lineage_snapshots.jsonl",
+    "schema_name": "lineage_snapshot_v1",
+    "producer_system": "upstream-week4",
+    "consumer_systems": ["platform-foundation", "feature-5-schema-evolution"],
+    "readiness_status": "inferred_from_requirement_document",
+    "mismatch_refs": [],
+    "evidence_notes": "Canonical lineage surface established; upstream record semantics still pending validation."
+  },
+  {
+    "dataset_id": "week5.events",
+    "canonical_path": "outputs/week5/events.jsonl",
+    "schema_name": "event_v1",
+    "producer_system": "upstream-week5",
+    "consumer_systems": ["platform-foundation", "feature-7-reporting"],
+    "readiness_status": "pending_migration_or_normalization",
+    "mismatch_refs": ["mismatch-week5-semantics-001"],
+    "evidence_notes": "Event semantics require normalization before later capability features can rely on them."
+  },
+  {
+    "dataset_id": "traces.runs",
+    "canonical_path": "outputs/traces/runs.jsonl",
+    "schema_name": "run_trace_v1",
+    "producer_system": "runtime-trace-collector",
+    "consumer_systems": ["platform-foundation", "feature-7-reporting"],
+    "readiness_status": "confirmed_from_repository_evidence",
+    "mismatch_refs": [],
+    "evidence_notes": "Trace surface is present in the repository structure and matches canonical naming."
+  }
+]

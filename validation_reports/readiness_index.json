@@ -1,0 +1,23 @@
+{
+  "datasets": [
+    {
+      "contract_output": "generated_contracts/week3_extractions.yaml",
+      "dataset_id": "week3.extractions",
+      "dbt_output": "generated_contracts/week3_extractions_dbt.yml",
+      "metadata_output": "generated_contracts/week3_extractions.metadata.json",
+      "quality_issues": [],
+      "status": "generated"
+    },
+    {
+      "contract_output": "generated_contracts/week5_events.yaml",
+      "dataset_id": "week5.events",
+      "dbt_output": "generated_contracts/week5_events_dbt.yml",
+      "metadata_output": "generated_contracts/week5_events.metadata.json",
+      "quality_issues": [],
+      "status": "generated"
+    }
+  ],
+  "failed_count": 0,
+  "feature": "contract-generation-engine",
+  "generated_count": 2
+}

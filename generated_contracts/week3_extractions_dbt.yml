@@ -1,0 +1,67 @@
+models:
+- columns:
+  - description: Generated contract field
+    name: category
+    tests:
+    - accepted_values:
+        values:
+        - gold
+        - silver
+        - bronze
+    - not_null
+    - unique
+  - description: Generated contract field
+    name: entity
+    tests:
+    - accepted_values:
+        values:
+        - '{''name'': ''Acme'', ''score'': 92.5}'
+        - '{''name'': ''Beta'', ''score'': 81.0}'
+        - '{''name'': ''Gamma'', ''score'': 77.3}'
+    - not_null
+    - unique
+  - description: Generated contract field
+    name: entity.name
+    tests:
+    - accepted_values:
+        values:
+        - Acme
+        - Beta
+        - Gamma
+    - not_null
+    - unique
+  - description: Generated contract field
+    name: entity.score
+    tests:
+    - accepted_values:
+        values:
+        - '92.5'
+        - '81.0'
+        - '77.3'
+    - not_null
+    - unique
+  - description: Generated contract field
+    name: event_ts
+    tests:
+    - accepted_values:
+        values:
+        - '2026-04-01T10:00:00Z'
+        - '2026-04-01T10:01:00Z'
+        - '2026-04-01T10:02:00Z'
+    - not_null
+    - unique
+  - description: Generated contract field
+    name: record_id
+    tests:
+    - accepted_values:
+        values:
+        - r1
+        - r2
+        - r3
+    - not_null
+    - unique
+  name: week3_extractions
+unsupported_clause_mappings:
+- entity.score:positivity
+- entity.score:range
+version: 2

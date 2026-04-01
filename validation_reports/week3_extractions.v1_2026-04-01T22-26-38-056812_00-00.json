@@ -1,0 +1,727 @@
+{
+  "contract_id": "week3_extractions.v1",
+  "errored": 0,
+  "failed": 1,
+  "passed": 34,
+  "report_id": "451fe0ab-777d-4c73-923f-275cf351134c",
+  "results": [
+    {
+      "actual_value": {
+        "rule": "must_align_to_canonical_schema"
+      },
+      "check_id": "week3_extractions.dataset.required_schema",
+      "check_type": "dataset_check",
+      "column_name": null,
+      "expected": {
+        "rule": "must_align_to_canonical_schema",
+        "source": "requirement_defined"
+      },
+      "message": "dataset_check check passed for dataset: dataset-level contract rule satisfied",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "high",
+      "status": "PASS"
+    },
+    {
+      "actual_value": 3,
+      "check_id": "week3_extractions.v1.dataset.row_count",
+      "check_type": "row_count",
+      "column_name": null,
+      "expected": 3,
+      "message": "row_count check passed for dataset: expected 3, observed 3",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "accepted_values": [
+          "bronze",
+          "gold",
+          "silver"
+        ]
+      },
+      "check_id": "week3_extractions.category.enum",
+      "check_type": "enum",
+      "column_name": "category",
+      "expected": {
+        "accepted_values": [
+          "gold",
+          "silver",
+          "bronze"
+        ],
+        "source": "inferred"
+      },
+      "message": "enum check passed for category: 0 enum violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "allow_null": false,
+        "null_count": 0
+      },
+      "check_id": "week3_extractions.v1.category.nullability",
+      "check_type": "nullability",
+      "column_name": "category",
+      "expected": {
+        "nullable": false
+      },
+      "message": "nullability check passed for category: 0 nullability violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "missing": 0
+      },
+      "check_id": "week3_extractions.category.required",
+      "check_type": "required",
+      "column_name": "category",
+      "expected": {
+        "presence_rate": 1.0,
+        "source": "inferred"
+      },
+      "message": "required check passed for category: 0 records missing required values",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "high",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "types": [
+          "str"
+        ]
+      },
+      "check_id": "week3_extractions.v1.category.type",
+      "check_type": "type",
+      "column_name": "category",
+      "expected": {
+        "types": [
+          "str"
+        ]
+      },
+      "message": "type check passed for category: 0 type mismatches",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "duplicates": 0,
+        "observed": 3
+      },
+      "check_id": "week3_extractions.category.uniqueness",
+      "check_type": "uniqueness",
+      "column_name": "category",
+      "expected": {
+        "source": "inferred",
+        "uniqueness_rate": 1.0
+      },
+      "message": "uniqueness check passed for category: 0 duplicate values",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "accepted_values": [
+          "{'name': 'Acme', 'score': 92.5}",
+          "{'name': 'Beta', 'score': 81.0}",
+          "{'name': 'Gamma', 'score': 77.3}"
+        ]
+      },
+      "check_id": "week3_extractions.entity.enum",
+      "check_type": "enum",
+      "column_name": "entity",
+      "expected": {
+        "accepted_values": [
+          "{'name': 'Acme', 'score': 92.5}",
+          "{'name': 'Beta', 'score': 81.0}",
+          "{'name': 'Gamma', 'score': 77.3}"
+        ],
+        "source": "inferred"
+      },
+      "message": "enum check failed for entity: 3 enum violations",
+      "records_failing": 3,
+      "sample_failing": [
+        {
+          "actual_value": {
+            "name": "Acme",
+            "score": 92.5
+          },
+          "expected": [
+            "{'name': 'Acme', 'score': 92.5}",
+            "{'name': 'Gamma', 'score': 77.3}",
+            "{'name': 'Beta', 'score': 81.0}"
+          ],
+          "field": "entity",
+          "reason": "unexpected_structure",
+          "record_index": 0
+        },
+        {
+          "actual_value": {
+            "name": "Beta",
+            "score": 81.0
+          },
+          "expected": [
+            "{'name': 'Acme', 'score': 92.5}",
+            "{'name': 'Gamma', 'score': 77.3}",
+            "{'name': 'Beta', 'score': 81.0}"
+          ],
+          "field": "entity",
+          "reason": "unexpected_structure",
+          "record_index": 1
+        },
+        {
+          "actual_value": {
+            "name": "Gamma",
+            "score": 77.3
+          },
+          "expected": [
+            "{'name': 'Acme', 'score': 92.5}",
+            "{'name': 'Gamma', 'score': 77.3}",
+            "{'name': 'Beta', 'score': 81.0}"
+          ],
+          "field": "entity",
+          "reason": "unexpected_structure",
+          "record_index": 2
+        }
+      ],
+      "severity": "medium",
+      "status": "FAIL"
+    },
+    {
+      "actual_value": {
+        "allow_null": false,
+        "null_count": 0
+      },
+      "check_id": "week3_extractions.v1.entity.nullability",
+      "check_type": "nullability",
+      "column_name": "entity",
+      "expected": {
+        "nullable": false
+      },
+      "message": "nullability check passed for entity: 0 nullability violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "missing": 0
+      },
+      "check_id": "week3_extractions.entity.required",
+      "check_type": "required",
+      "column_name": "entity",
+      "expected": {
+        "presence_rate": 1.0,
+        "source": "inferred"
+      },
+      "message": "required check passed for entity: 0 records missing required values",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "high",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "types": [
+          "dict"
+        ]
+      },
+      "check_id": "week3_extractions.v1.entity.type",
+      "check_type": "type",
+      "column_name": "entity",
+      "expected": {
+        "types": [
+          "dict"
+        ]
+      },
+      "message": "type check passed for entity: 0 type mismatches",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "duplicates": 0,
+        "observed": 3
+      },
+      "check_id": "week3_extractions.entity.uniqueness",
+      "check_type": "uniqueness",
+      "column_name": "entity",
+      "expected": {
+        "source": "inferred",
+        "uniqueness_rate": 1.0
+      },
+      "message": "uniqueness check passed for entity: 0 duplicate values",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "accepted_values": [
+          "Acme",
+          "Beta",
+          "Gamma"
+        ]
+      },
+      "check_id": "week3_extractions.entity.name.enum",
+      "check_type": "enum",
+      "column_name": "entity.name",
+      "expected": {
+        "accepted_values": [
+          "Acme",
+          "Beta",
+          "Gamma"
+        ],
+        "source": "inferred"
+      },
+      "message": "enum check passed for entity.name: 0 enum violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "allow_null": false,
+        "null_count": 0
+      },
+      "check_id": "week3_extractions.v1.entity.name.nullability",
+      "check_type": "nullability",
+      "column_name": "entity.name",
+      "expected": {
+        "nullable": false
+      },
+      "message": "nullability check passed for entity.name: 0 nullability violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "missing": 0
+      },
+      "check_id": "week3_extractions.entity.name.required",
+      "check_type": "required",
+      "column_name": "entity.name",
+      "expected": {
+        "presence_rate": 1.0,
+        "source": "inferred"
+      },
+      "message": "required check passed for entity.name: 0 records missing required values",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "high",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "types": [
+          "str"
+        ]
+      },
+      "check_id": "week3_extractions.v1.entity.name.type",
+      "check_type": "type",
+      "column_name": "entity.name",
+      "expected": {
+        "types": [
+          "str"
+        ]
+      },
+      "message": "type check passed for entity.name: 0 type mismatches",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "duplicates": 0,
+        "observed": 3
+      },
+      "check_id": "week3_extractions.entity.name.uniqueness",
+      "check_type": "uniqueness",
+      "column_name": "entity.name",
+      "expected": {
+        "source": "inferred",
+        "uniqueness_rate": 1.0
+      },
+      "message": "uniqueness check passed for entity.name: 0 duplicate values",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "max": 92.5,
+        "mean": 83.6,
+        "min": 77.3,
+        "sample_size": 3,
+        "stddev": 6.471990935304736,
+        "z_score": 0.0
+      },
+      "check_id": "week3_extractions.v1.entity.score.drift",
+      "check_type": "drift",
+      "column_name": "entity.score",
+      "expected": {
+        "baseline_max": 92.5,
+        "baseline_mean": 83.6,
+        "baseline_min": 77.3,
+        "baseline_stddev": 6.471990935304736
+      },
+      "message": "No drift detected: z_score=0.0000",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "low",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "accepted_values": [
+          "77.3",
+          "81.0",
+          "92.5"
+        ]
+      },
+      "check_id": "week3_extractions.entity.score.enum",
+      "check_type": "enum",
+      "column_name": "entity.score",
+      "expected": {
+        "accepted_values": [
+          "92.5",
+          "81.0",
+          "77.3"
+        ],
+        "source": "inferred"
+      },
+      "message": "enum check passed for entity.score: 0 enum violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "allow_null": false,
+        "null_count": 0
+      },
+      "check_id": "week3_extractions.v1.entity.score.nullability",
+      "check_type": "nullability",
+      "column_name": "entity.score",
+      "expected": {
+        "nullable": false
+      },
+      "message": "nullability check passed for entity.score: 0 nullability violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "non_negative": true
+      },
+      "check_id": "week3_extractions.entity.score.positivity",
+      "check_type": "positivity",
+      "column_name": "entity.score",
+      "expected": {
+        "non_negative": true,
+        "source": "inferred"
+      },
+      "message": "positivity check passed for entity.score: 0 positivity violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "max": 92.5,
+        "min": 77.3
+      },
+      "check_id": "week3_extractions.entity.score.range",
+      "check_type": "range",
+      "column_name": "entity.score",
+      "expected": {
+        "max": 92.5,
+        "min": 77.3,
+        "source": "inferred"
+      },
+      "message": "range check passed for entity.score: 0 range violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "missing": 0
+      },
+      "check_id": "week3_extractions.entity.score.required",
+      "check_type": "required",
+      "column_name": "entity.score",
+      "expected": {
+        "presence_rate": 1.0,
+        "source": "inferred"
+      },
+      "message": "required check passed for entity.score: 0 records missing required values",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "high",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "types": [
+          "float"
+        ]
+      },
+      "check_id": "week3_extractions.v1.entity.score.type",
+      "check_type": "type",
+      "column_name": "entity.score",
+      "expected": {
+        "types": [
+          "float"
+        ]
+      },
+      "message": "type check passed for entity.score: 0 type mismatches",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "duplicates": 0,
+        "observed": 3
+      },
+      "check_id": "week3_extractions.entity.score.uniqueness",
+      "check_type": "uniqueness",
+      "column_name": "entity.score",
+      "expected": {
+        "source": "inferred",
+        "uniqueness_rate": 1.0
+      },
+      "message": "uniqueness check passed for entity.score: 0 duplicate values",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "accepted_values": [
+          "2026-04-01T10:00:00Z",
+          "2026-04-01T10:01:00Z",
+          "2026-04-01T10:02:00Z"
+        ]
+      },
+      "check_id": "week3_extractions.event_ts.enum",
+      "check_type": "enum",
+      "column_name": "event_ts",
+      "expected": {
+        "accepted_values": [
+          "2026-04-01T10:00:00Z",
+          "2026-04-01T10:01:00Z",
+          "2026-04-01T10:02:00Z"
+        ],
+        "source": "inferred"
+      },
+      "message": "enum check passed for event_ts: 0 enum violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "allow_null": false,
+        "null_count": 0
+      },
+      "check_id": "week3_extractions.v1.event_ts.nullability",
+      "check_type": "nullability",
+      "column_name": "event_ts",
+      "expected": {
+        "nullable": false
+      },
+      "message": "nullability check passed for event_ts: 0 nullability violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "missing": 0
+      },
+      "check_id": "week3_extractions.event_ts.required",
+      "check_type": "required",
+      "column_name": "event_ts",
+      "expected": {
+        "presence_rate": 1.0,
+        "source": "inferred"
+      },
+      "message": "required check passed for event_ts: 0 records missing required values",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "high",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "types": [
+          "str"
+        ]
+      },
+      "check_id": "week3_extractions.v1.event_ts.type",
+      "check_type": "type",
+      "column_name": "event_ts",
+      "expected": {
+        "types": [
+          "str"
+        ]
+      },
+      "message": "type check passed for event_ts: 0 type mismatches",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "duplicates": 0,
+        "observed": 3
+      },
+      "check_id": "week3_extractions.event_ts.uniqueness",
+      "check_type": "uniqueness",
+      "column_name": "event_ts",
+      "expected": {
+        "source": "inferred",
+        "uniqueness_rate": 1.0
+      },
+      "message": "uniqueness check passed for event_ts: 0 duplicate values",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "accepted_values": [
+          "r1",
+          "r2",
+          "r3"
+        ]
+      },
+      "check_id": "week3_extractions.record_id.enum",
+      "check_type": "enum",
+      "column_name": "record_id",
+      "expected": {
+        "accepted_values": [
+          "r1",
+          "r2",
+          "r3"
+        ],
+        "source": "inferred"
+      },
+      "message": "enum check passed for record_id: 0 enum violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "allow_null": false,
+        "null_count": 0
+      },
+      "check_id": "week3_extractions.v1.record_id.nullability",
+      "check_type": "nullability",
+      "column_name": "record_id",
+      "expected": {
+        "nullable": false
+      },
+      "message": "nullability check passed for record_id: 0 nullability violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "missing": 0
+      },
+      "check_id": "week3_extractions.record_id.required",
+      "check_type": "required",
+      "column_name": "record_id",
+      "expected": {
+        "presence_rate": 1.0,
+        "source": "inferred"
+      },
+      "message": "required check passed for record_id: 0 records missing required values",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "high",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "types": [
+          "str"
+        ]
+      },
+      "check_id": "week3_extractions.v1.record_id.type",
+      "check_type": "type",
+      "column_name": "record_id",
+      "expected": {
+        "types": [
+          "str"
+        ]
+      },
+      "message": "type check passed for record_id: 0 type mismatches",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "duplicates": 0,
+        "observed": 3
+      },
+      "check_id": "week3_extractions.record_id.uniqueness",
+      "check_type": "uniqueness",
+      "column_name": "record_id",
+      "expected": {
+        "source": "inferred",
+        "uniqueness_rate": 1.0
+      },
+      "message": "uniqueness check passed for record_id: 0 duplicate values",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    }
+  ],
+  "run_timestamp": "2026-04-01T22:26:38.056812+00:00",
+  "snapshot_id": "5e48a9b9a6d72ed9",
+  "total_checks": 35,
+  "warned": 0
+}

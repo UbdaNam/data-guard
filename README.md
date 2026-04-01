@@ -13,6 +13,38 @@ systems.
 
 Project governance is defined in .specify/memory/constitution.md.
 
+## Validation Execution (Feature 3)
+
+Primary entry point:
+
+- contracts/runner.py
+
+Primary governed inputs:
+
+- generated_contracts/week3_extractions.yaml
+- generated_contracts/week5_events.yaml
+- outputs/week3/extractions.jsonl
+- outputs/week5/events.jsonl
+- schema_snapshots/baselines.json
+
+Primary generated outputs:
+
+- validation*reports/{contract_id}*{timestamp}.json
+- schema_snapshots/baselines.json
+
+Validation can also be triggered via:
+
+- src/cli/foundation.py validate-contracts
+
+Operational guarantees:
+
+- Structural checks cover `type`, `required`, `nullability`, and `pattern`
+- Semantic checks cover `range`, `enum`, and `relationship`
+- Dataset-level checks cover `row_count`, `uniqueness`, and `referential_integrity`
+- Missing columns and unexpected structures return `ERROR`
+- Invalid type violations return `FAIL`
+- Unchanged inputs produce identical report content except `report_id` and `run_timestamp`
+
 ## Contract Generation (Feature 2)
 
 Primary entry point:

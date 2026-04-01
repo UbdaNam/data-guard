@@ -1,0 +1,567 @@
+{
+  "contract_id": "week5_events.v1",
+  "errored": 0,
+  "failed": 0,
+  "passed": 29,
+  "report_id": "b59269b5-d9b9-4e51-af05-4c9b280c131c",
+  "results": [
+    {
+      "actual_value": {
+        "rule": "must_align_to_canonical_schema"
+      },
+      "check_id": "week5_events.dataset.required_schema",
+      "check_type": "dataset_check",
+      "column_name": null,
+      "expected": {
+        "rule": "must_align_to_canonical_schema",
+        "source": "requirement_defined"
+      },
+      "message": "dataset_check check passed for dataset: dataset-level contract rule satisfied",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "high",
+      "status": "PASS"
+    },
+    {
+      "actual_value": 3,
+      "check_id": "week5_events.v1.dataset.row_count",
+      "check_type": "row_count",
+      "column_name": null,
+      "expected": 3,
+      "message": "row_count check passed for dataset: expected 3, observed 3",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "accepted_values": [
+          "e1",
+          "e2",
+          "e3"
+        ]
+      },
+      "check_id": "week5_events.event_id.enum",
+      "check_type": "enum",
+      "column_name": "event_id",
+      "expected": {
+        "accepted_values": [
+          "e1",
+          "e2",
+          "e3"
+        ],
+        "source": "inferred"
+      },
+      "message": "enum check passed for event_id: 0 enum violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "allow_null": false,
+        "null_count": 0
+      },
+      "check_id": "week5_events.v1.event_id.nullability",
+      "check_type": "nullability",
+      "column_name": "event_id",
+      "expected": {
+        "nullable": false
+      },
+      "message": "nullability check passed for event_id: 0 nullability violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "missing": 0
+      },
+      "check_id": "week5_events.event_id.required",
+      "check_type": "required",
+      "column_name": "event_id",
+      "expected": {
+        "presence_rate": 1.0,
+        "source": "inferred"
+      },
+      "message": "required check passed for event_id: 0 records missing required values",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "high",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "types": [
+          "str"
+        ]
+      },
+      "check_id": "week5_events.v1.event_id.type",
+      "check_type": "type",
+      "column_name": "event_id",
+      "expected": {
+        "types": [
+          "str"
+        ]
+      },
+      "message": "type check passed for event_id: 0 type mismatches",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "duplicates": 0,
+        "observed": 3
+      },
+      "check_id": "week5_events.event_id.uniqueness",
+      "check_type": "uniqueness",
+      "column_name": "event_id",
+      "expected": {
+        "source": "inferred",
+        "uniqueness_rate": 1.0
+      },
+      "message": "uniqueness check passed for event_id: 0 duplicate values",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "accepted_values": [
+          "create",
+          "delete",
+          "update"
+        ]
+      },
+      "check_id": "week5_events.event_type.enum",
+      "check_type": "enum",
+      "column_name": "event_type",
+      "expected": {
+        "accepted_values": [
+          "create",
+          "update",
+          "delete"
+        ],
+        "source": "inferred"
+      },
+      "message": "enum check passed for event_type: 0 enum violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "allow_null": false,
+        "null_count": 0
+      },
+      "check_id": "week5_events.v1.event_type.nullability",
+      "check_type": "nullability",
+      "column_name": "event_type",
+      "expected": {
+        "nullable": false
+      },
+      "message": "nullability check passed for event_type: 0 nullability violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "missing": 0
+      },
+      "check_id": "week5_events.event_type.required",
+      "check_type": "required",
+      "column_name": "event_type",
+      "expected": {
+        "presence_rate": 1.0,
+        "source": "inferred"
+      },
+      "message": "required check passed for event_type: 0 records missing required values",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "high",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "types": [
+          "str"
+        ]
+      },
+      "check_id": "week5_events.v1.event_type.type",
+      "check_type": "type",
+      "column_name": "event_type",
+      "expected": {
+        "types": [
+          "str"
+        ]
+      },
+      "message": "type check passed for event_type: 0 type mismatches",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "duplicates": 0,
+        "observed": 3
+      },
+      "check_id": "week5_events.event_type.uniqueness",
+      "check_type": "uniqueness",
+      "column_name": "event_type",
+      "expected": {
+        "source": "inferred",
+        "uniqueness_rate": 1.0
+      },
+      "message": "uniqueness check passed for event_type: 0 duplicate values",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "accepted_values": [
+          "r1",
+          "r2",
+          "r3"
+        ]
+      },
+      "check_id": "week5_events.record_id.enum",
+      "check_type": "enum",
+      "column_name": "record_id",
+      "expected": {
+        "accepted_values": [
+          "r1",
+          "r2",
+          "r3"
+        ],
+        "source": "inferred"
+      },
+      "message": "enum check passed for record_id: 0 enum violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "allow_null": false,
+        "null_count": 0
+      },
+      "check_id": "week5_events.v1.record_id.nullability",
+      "check_type": "nullability",
+      "column_name": "record_id",
+      "expected": {
+        "nullable": false
+      },
+      "message": "nullability check passed for record_id: 0 nullability violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "missing": 0
+      },
+      "check_id": "week5_events.record_id.required",
+      "check_type": "required",
+      "column_name": "record_id",
+      "expected": {
+        "presence_rate": 1.0,
+        "source": "inferred"
+      },
+      "message": "required check passed for record_id: 0 records missing required values",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "high",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "types": [
+          "str"
+        ]
+      },
+      "check_id": "week5_events.v1.record_id.type",
+      "check_type": "type",
+      "column_name": "record_id",
+      "expected": {
+        "types": [
+          "str"
+        ]
+      },
+      "message": "type check passed for record_id: 0 type mismatches",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "duplicates": 0,
+        "observed": 3
+      },
+      "check_id": "week5_events.record_id.uniqueness",
+      "check_type": "uniqueness",
+      "column_name": "record_id",
+      "expected": {
+        "source": "inferred",
+        "uniqueness_rate": 1.0
+      },
+      "message": "uniqueness check passed for record_id: 0 duplicate values",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "max": 3.0,
+        "mean": 2.0,
+        "min": 1.0,
+        "sample_size": 3,
+        "stddev": 0.816496580927726,
+        "z_score": 0.0
+      },
+      "check_id": "week5_events.v1.severity.drift",
+      "check_type": "drift",
+      "column_name": "severity",
+      "expected": {
+        "baseline_max": 3.0,
+        "baseline_mean": 2.0,
+        "baseline_min": 1.0,
+        "baseline_stddev": 0.816496580927726
+      },
+      "message": "No drift detected: z_score=0.0000",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "low",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "accepted_values": [
+          "1",
+          "2",
+          "3"
+        ]
+      },
+      "check_id": "week5_events.severity.enum",
+      "check_type": "enum",
+      "column_name": "severity",
+      "expected": {
+        "accepted_values": [
+          "1",
+          "2",
+          "3"
+        ],
+        "source": "inferred"
+      },
+      "message": "enum check passed for severity: 0 enum violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "allow_null": false,
+        "null_count": 0
+      },
+      "check_id": "week5_events.v1.severity.nullability",
+      "check_type": "nullability",
+      "column_name": "severity",
+      "expected": {
+        "nullable": false
+      },
+      "message": "nullability check passed for severity: 0 nullability violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "non_negative": true
+      },
+      "check_id": "week5_events.severity.positivity",
+      "check_type": "positivity",
+      "column_name": "severity",
+      "expected": {
+        "non_negative": true,
+        "source": "inferred"
+      },
+      "message": "positivity check passed for severity: 0 positivity violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "max": 3.0,
+        "min": 1.0
+      },
+      "check_id": "week5_events.severity.range",
+      "check_type": "range",
+      "column_name": "severity",
+      "expected": {
+        "max": 3.0,
+        "min": 1.0,
+        "source": "inferred"
+      },
+      "message": "range check passed for severity: 0 range violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "missing": 0
+      },
+      "check_id": "week5_events.severity.required",
+      "check_type": "required",
+      "column_name": "severity",
+      "expected": {
+        "presence_rate": 1.0,
+        "source": "inferred"
+      },
+      "message": "required check passed for severity: 0 records missing required values",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "high",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "types": [
+          "int"
+        ]
+      },
+      "check_id": "week5_events.v1.severity.type",
+      "check_type": "type",
+      "column_name": "severity",
+      "expected": {
+        "types": [
+          "int"
+        ]
+      },
+      "message": "type check passed for severity: 0 type mismatches",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "duplicates": 0,
+        "observed": 3
+      },
+      "check_id": "week5_events.severity.uniqueness",
+      "check_type": "uniqueness",
+      "column_name": "severity",
+      "expected": {
+        "source": "inferred",
+        "uniqueness_rate": 1.0
+      },
+      "message": "uniqueness check passed for severity: 0 duplicate values",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "accepted_values": [
+          "app-a",
+          "app-b"
+        ]
+      },
+      "check_id": "week5_events.source.enum",
+      "check_type": "enum",
+      "column_name": "source",
+      "expected": {
+        "accepted_values": [
+          "app-a",
+          "app-b"
+        ],
+        "source": "inferred"
+      },
+      "message": "enum check passed for source: 0 enum violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "allow_null": false,
+        "null_count": 0
+      },
+      "check_id": "week5_events.v1.source.nullability",
+      "check_type": "nullability",
+      "column_name": "source",
+      "expected": {
+        "nullable": false
+      },
+      "message": "nullability check passed for source: 0 nullability violations",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "missing": 0
+      },
+      "check_id": "week5_events.source.required",
+      "check_type": "required",
+      "column_name": "source",
+      "expected": {
+        "presence_rate": 1.0,
+        "source": "inferred"
+      },
+      "message": "required check passed for source: 0 records missing required values",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "high",
+      "status": "PASS"
+    },
+    {
+      "actual_value": {
+        "types": [
+          "str"
+        ]
+      },
+      "check_id": "week5_events.v1.source.type",
+      "check_type": "type",
+      "column_name": "source",
+      "expected": {
+        "types": [
+          "str"
+        ]
+      },
+      "message": "type check passed for source: 0 type mismatches",
+      "records_failing": 0,
+      "sample_failing": [],
+      "severity": "medium",
+      "status": "PASS"
+    }
+  ],
+  "run_timestamp": "2026-04-01T22:26:38.079154+00:00",
+  "snapshot_id": "26262141777075ee",
+  "total_checks": 29,
+  "warned": 0
+}

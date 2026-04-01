@@ -182,3 +182,20 @@ flowchart LR
 ## Complexity Tracking
 
 No constitution violations requiring exceptions.
+
+## Implementation Execution Notes
+
+- Validation runner executed successfully via `uv run python contracts/runner.py` on 2026-04-01.
+- Generated reports:
+  - `validation_reports/week3_extractions.v1_2026-04-01T22-33-26-689378_00-00.json`
+  - `validation_reports/week5_events.v1_2026-04-01T22-33-26-720075_00-00.json`
+- Baseline state written to `schema_snapshots/baselines.json` with numeric-field statistics for:
+  - `week3_extractions.v1.entity.score`
+  - `week5_events.v1.severity`
+- Final run summary:
+  - 2 contracts processed
+  - 2 validation reports generated
+  - 63 passed checks
+  - 0 failed checks
+  - 1 errored check (expected nested-object enum structural error)
+- Scope boundary confirmed: validation execution, drift detection, baseline storage, deterministic report writing, and partial-failure handling only.

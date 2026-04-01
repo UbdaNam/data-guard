@@ -11,7 +11,7 @@
 
 Primary entry point:
 
-1. Run validation orchestration from `contracts/runner.py`.
+1. Run validation orchestration from `contracts/runner.py` (for example, `uv run python contracts/runner.py`).
 2. Validate that one report per processed contract is written to `validation_reports/`.
 3. Confirm baseline file behavior in `schema_snapshots/baselines.json`:
    - created on first successful numeric-field validation

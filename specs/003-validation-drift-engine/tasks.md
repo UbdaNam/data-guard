@@ -17,10 +17,10 @@
 
 **Purpose**: Initialize validation-engine scaffolding and canonical CLI wiring.
 
-- [ ] T001 Create Feature 3 module scaffolding in src/validation/**init**.py, src/models/validation_models.py, and src/validators/validation_report_validator.py (Files: src/validation/**init**.py, src/models/validation_models.py, src/validators/validation_report_validator.py; AC: modules import cleanly and expose typed placeholders for runner orchestration).
-- [ ] T002 [P] Add validation-engine operational dependency declarations in pyproject.toml (Files: pyproject.toml; AC: dependencies cover YAML parsing and typed models used by Feature 3 without introducing non-required frameworks).
-- [ ] T003 Add runner CLI scaffold at contracts/runner.py with argument parsing for contract selection and baseline refresh mode (Files: contracts/runner.py; AC: command executes and prints structured run summary even before full check logic is added).
-- [ ] T004 [P] Add Feature 3 CLI dispatch option in src/cli/foundation.py for validation execution (Files: src/cli/foundation.py; AC: foundation CLI can invoke contracts/runner.py entrypoint).
+- [x] T001 Create Feature 3 module scaffolding in src/validation/**init**.py, src/models/validation_models.py, and src/validators/validation_report_validator.py (Files: src/validation/**init**.py, src/models/validation_models.py, src/validators/validation_report_validator.py; AC: modules import cleanly and expose typed placeholders for runner orchestration).
+- [x] T002 [P] Add validation-engine operational dependency declarations in pyproject.toml (Files: pyproject.toml; AC: dependencies cover YAML parsing and typed models used by Feature 3 without introducing non-required frameworks).
+- [x] T003 Add runner CLI scaffold at contracts/runner.py with argument parsing for contract selection and baseline refresh mode (Files: contracts/runner.py; AC: command executes and prints structured run summary even before full check logic is added).
+- [x] T004 [P] Add Feature 3 CLI dispatch option in src/cli/foundation.py for validation execution (Files: src/cli/foundation.py; AC: foundation CLI can invoke contracts/runner.py entrypoint).
 
 ---
 
@@ -30,13 +30,13 @@
 
 **⚠️ CRITICAL**: No user story work starts until this phase is complete.
 
-- [ ] T005 Implement typed data models for ExecutableCheck, ValidationResult, ValidationReport, BaselineStatistic, and ValidationRun in src/models/validation_models.py (Files: src/models/validation_models.py; AC: model fields exactly match spec-required schema and status enums).
-- [ ] T006 [P] Implement contract YAML loader and clause-to-check normalization in src/validation/contract_loader.py (Files: src/validation/contract_loader.py; AC: generated_contracts/\*.yaml are parsed into deterministic ExecutableCheck collections with scope classification).
-- [ ] T007 [P] Implement streaming JSONL snapshot loader with canonical ordering and malformed-line capture in src/validation/dataset_loader.py (Files: src/validation/dataset_loader.py; AC: loader yields deterministic record order, tracks malformed lines, and does not crash on bad lines).
-- [ ] T008 Implement check-engine orchestration skeleton with per-field/per-record/dataset dispatch and fail-safe wrapper in src/validation/check_engine.py (Files: src/validation/check_engine.py; AC: dispatch executes check handlers and converts handler exceptions into ERROR result rows without halting run).
-- [ ] T009 [P] Implement baseline storage repository for schema_snapshots/baselines.json in src/validation/baseline_store.py (Files: src/validation/baseline_store.py; AC: supports read/initialize/update-with-explicit-refresh and preserves immutable default behavior).
-- [ ] T010 [P] Implement result aggregation primitives in src/validation/result_aggregator.py (Files: src/validation/result_aggregator.py; AC: totals reconcile as total_checks = passed + failed + warned + errored).
-- [ ] T011 [P] Implement fixed-schema report validator in src/validators/validation_report_validator.py (Files: src/validators/validation_report_validator.py; AC: validator enforces required top-level and per-result fields).
+- [x] T005 Implement typed data models for ExecutableCheck, ValidationResult, ValidationReport, BaselineStatistic, and ValidationRun in src/models/validation_models.py (Files: src/models/validation_models.py; AC: model fields exactly match spec-required schema and status enums).
+- [x] T006 [P] Implement contract YAML loader and clause-to-check normalization in src/validation/contract_loader.py (Files: src/validation/contract_loader.py; AC: generated_contracts/\*.yaml are parsed into deterministic ExecutableCheck collections with scope classification).
+- [x] T007 [P] Implement streaming JSONL snapshot loader with canonical ordering and malformed-line capture in src/validation/dataset_loader.py (Files: src/validation/dataset_loader.py; AC: loader yields deterministic record order, tracks malformed lines, and does not crash on bad lines).
+- [x] T008 Implement check-engine orchestration skeleton with per-field/per-record/dataset dispatch and fail-safe wrapper in src/validation/check_engine.py (Files: src/validation/check_engine.py; AC: dispatch executes check handlers and converts handler exceptions into ERROR result rows without halting run).
+- [x] T009 [P] Implement baseline storage repository for schema_snapshots/baselines.json in src/validation/baseline_store.py (Files: src/validation/baseline_store.py; AC: supports read/initialize/update-with-explicit-refresh and preserves immutable default behavior).
+- [x] T010 [P] Implement result aggregation primitives in src/validation/result_aggregator.py (Files: src/validation/result_aggregator.py; AC: totals reconcile as total_checks = passed + failed + warned + errored).
+- [x] T011 [P] Implement fixed-schema report validator in src/validators/validation_report_validator.py (Files: src/validators/validation_report_validator.py; AC: validator enforces required top-level and per-result fields).
 
 **Checkpoint**: Foundation ready for story implementation.
 
@@ -50,12 +50,12 @@
 
 ### Implementation for User Story 1
 
-- [ ] T012 [US1] Implement structural field checks (`type`, `required`, `nullability`, `pattern`) in src/validation/check_engine.py (Files: src/validation/check_engine.py; AC: missing columns => ERROR, invalid types => FAIL, and structural-shape errors => ERROR).
-- [ ] T013 [US1] Implement semantic field checks (`range`, `enum`, `relationship`) in src/validation/check_engine.py (Files: src/validation/check_engine.py; AC: semantic violations are classified deterministically and include expected vs actual diagnostics).
-- [ ] T014 [US1] Implement dataset-level checks (`row_count`, `uniqueness`, `referential_integrity`) in src/validation/check_engine.py (Files: src/validation/check_engine.py; AC: dataset checks produce one result entry per attempted check with records_failing and message fields).
-- [ ] T015 [US1] Implement nested path resolution strategy (object schema-walk + array wildcard iteration) in src/validation/dataset_loader.py and src/validation/check_engine.py (Files: src/validation/dataset_loader.py, src/validation/check_engine.py; AC: paths like items[*].price resolve deterministically across records/indices).
-- [ ] T016 [US1] Implement error-handling and partial-execution policy in src/validation/check_engine.py and src/validation/result_aggregator.py (Files: src/validation/check_engine.py, src/validation/result_aggregator.py; AC: runner never halts full run due to bad data and all attempted checks emit result entries).
-- [ ] T017 [US1] Wire US1 end-to-end in contracts/runner.py using loader + engine + aggregator interfaces (Files: contracts/runner.py; AC: runner executes per contract and returns structured summary for generated, failed, and errored checks).
+- [x] T012 [US1] Implement structural field checks (`type`, `required`, `nullability`, `pattern`) in src/validation/check_engine.py (Files: src/validation/check_engine.py; AC: missing columns => ERROR, invalid types => FAIL, and structural-shape errors => ERROR).
+- [x] T013 [US1] Implement semantic field checks (`range`, `enum`, `relationship`) in src/validation/check_engine.py (Files: src/validation/check_engine.py; AC: semantic violations are classified deterministically and include expected vs actual diagnostics).
+- [x] T014 [US1] Implement dataset-level checks (`row_count`, `uniqueness`, `referential_integrity`) in src/validation/check_engine.py (Files: src/validation/check_engine.py; AC: dataset checks produce one result entry per attempted check with records_failing and message fields).
+- [x] T015 [US1] Implement nested path resolution strategy (object schema-walk + array wildcard iteration) in src/validation/dataset_loader.py and src/validation/check_engine.py (Files: src/validation/dataset_loader.py, src/validation/check_engine.py; AC: paths like items[*].price resolve deterministically across records/indices).
+- [x] T016 [US1] Implement error-handling and partial-execution policy in src/validation/check_engine.py and src/validation/result_aggregator.py (Files: src/validation/check_engine.py, src/validation/result_aggregator.py; AC: runner never halts full run due to bad data and all attempted checks emit result entries).
+- [x] T017 [US1] Wire US1 end-to-end in contracts/runner.py using loader + engine + aggregator interfaces (Files: contracts/runner.py; AC: runner executes per contract and returns structured summary for generated, failed, and errored checks).
 
 **Checkpoint**: US1 independently complete and reviewable.
 
@@ -69,11 +69,11 @@
 
 ### Implementation for User Story 2
 
-- [ ] T018 [US2] Implement numeric statistical profiling (`mean`, `stddev`, `min`, `max`, sample size) in src/validation/statistical_profiler.py (Files: src/validation/statistical_profiler.py; AC: profiler returns deterministic numeric summaries for drift-eligible fields only).
-- [ ] T019 [US2] Implement drift detection logic with z-score computation and threshold classification in src/validation/drift_detector.py (Files: src/validation/drift_detector.py; AC: WARN when deviation >2 and FAIL when deviation >3, applied only to numeric fields).
-- [ ] T020 [US2] Integrate baseline initialization and immutable-default update policy in src/validation/baseline_store.py and src/validation/drift_detector.py (Files: src/validation/baseline_store.py, src/validation/drift_detector.py; AC: first successful numeric run writes baseline and normal runs do not overwrite unless explicit refresh mode).
-- [ ] T021 [US2] Add drift check synthesis from executable checks and profiler outputs in src/validation/contract_loader.py and src/validation/check_engine.py (Files: src/validation/contract_loader.py, src/validation/check_engine.py; AC: drift checks are generated only for numeric fields and emitted as result rows).
-- [ ] T022 [US2] Wire baseline read/write and drift execution flow in contracts/runner.py (Files: contracts/runner.py; AC: runner reads baselines, executes drift checks, and persists baseline changes per policy).
+- [x] T018 [US2] Implement numeric statistical profiling (`mean`, `stddev`, `min`, `max`, sample size) in src/validation/statistical_profiler.py (Files: src/validation/statistical_profiler.py; AC: profiler returns deterministic numeric summaries for drift-eligible fields only).
+- [x] T019 [US2] Implement drift detection logic with z-score computation and threshold classification in src/validation/drift_detector.py (Files: src/validation/drift_detector.py; AC: WARN when deviation >2 and FAIL when deviation >3, applied only to numeric fields).
+- [x] T020 [US2] Integrate baseline initialization and immutable-default update policy in src/validation/baseline_store.py and src/validation/drift_detector.py (Files: src/validation/baseline_store.py, src/validation/drift_detector.py; AC: first successful numeric run writes baseline and normal runs do not overwrite unless explicit refresh mode).
+- [x] T021 [US2] Add drift check synthesis from executable checks and profiler outputs in src/validation/contract_loader.py and src/validation/check_engine.py (Files: src/validation/contract_loader.py, src/validation/check_engine.py; AC: drift checks are generated only for numeric fields and emitted as result rows).
+- [x] T022 [US2] Wire baseline read/write and drift execution flow in contracts/runner.py (Files: contracts/runner.py; AC: runner reads baselines, executes drift checks, and persists baseline changes per policy).
 
 **Checkpoint**: US2 independently complete and reviewable.
 
@@ -87,12 +87,12 @@
 
 ### Implementation for User Story 3
 
-- [ ] T023 [US3] Implement deterministic check and result ordering strategy in src/validation/result_aggregator.py (Files: src/validation/result_aggregator.py; AC: ordering key `(column_name, check_type, check_id)` is applied consistently across runs).
-- [ ] T024 [US3] Implement deterministic sample_failing selection (first N failing records in canonical order) in src/validation/check_engine.py (Files: src/validation/check_engine.py; AC: sample_failing values are stable for unchanged inputs).
-- [ ] T025 [US3] Implement validation report writer with fixed top-level schema and required per-result fields in src/validation/report*writer.py (Files: src/validation/report_writer.py; AC: output JSON exactly matches required schema and filename pattern validation_reports/{contract_id}*{timestamp}.json).
-- [ ] T026 [US3] Integrate report schema validation before write in src/validation/report_writer.py and src/validators/validation_report_validator.py (Files: src/validation/report_writer.py, src/validators/validation_report_validator.py; AC: report write fails safe to runner summary if schema invalid and records clear error diagnostics).
-- [ ] T027 [US3] Wire final report generation pipeline in contracts/runner.py using aggregator + writer modules (Files: contracts/runner.py; AC: one report per processed contract is always produced for attempted execution scope).
-- [ ] T028 [US3] Ensure out-of-scope guardrails in runner and docs (no attribution, schema evolution diffing, AI extension logic, or report-generation feature logic) in contracts/runner.py and specs/003-validation-drift-engine/quickstart.md (Files: contracts/runner.py, specs/003-validation-drift-engine/quickstart.md; AC: execution behavior is validation-only and boundary is explicitly documented).
+- [x] T023 [US3] Implement deterministic check and result ordering strategy in src/validation/result_aggregator.py (Files: src/validation/result_aggregator.py; AC: ordering key `(column_name, check_type, check_id)` is applied consistently across runs).
+- [x] T024 [US3] Implement deterministic sample_failing selection (first N failing records in canonical order) in src/validation/check_engine.py (Files: src/validation/check_engine.py; AC: sample_failing values are stable for unchanged inputs).
+- [x] T025 [US3] Implement validation report writer with fixed top-level schema and required per-result fields in src/validation/report*writer.py (Files: src/validation/report_writer.py; AC: output JSON exactly matches required schema and filename pattern validation_reports/{contract_id}*{timestamp}.json).
+- [x] T026 [US3] Integrate report schema validation before write in src/validation/report_writer.py and src/validators/validation_report_validator.py (Files: src/validation/report_writer.py, src/validators/validation_report_validator.py; AC: report write fails safe to runner summary if schema invalid and records clear error diagnostics).
+- [x] T027 [US3] Wire final report generation pipeline in contracts/runner.py using aggregator + writer modules (Files: contracts/runner.py; AC: one report per processed contract is always produced for attempted execution scope).
+- [x] T028 [US3] Ensure out-of-scope guardrails in runner and docs (no attribution, schema evolution diffing, AI extension logic, or report-generation feature logic) in contracts/runner.py and specs/003-validation-drift-engine/quickstart.md (Files: contracts/runner.py, specs/003-validation-drift-engine/quickstart.md; AC: execution behavior is validation-only and boundary is explicitly documented).
 
 **Checkpoint**: US3 independently complete and reviewable.
 
@@ -102,10 +102,10 @@
 
 **Purpose**: Complete operational guidance and final integration hardening.
 
-- [ ] T029 Update Feature 3 usage documentation in README.md (Files: README.md; AC: includes runner invocation, required inputs, baseline behavior, deterministic guarantees, and fixed report schema summary).
-- [ ] T030 [P] Update quickstart validation steps with final command and output verification details in specs/003-validation-drift-engine/quickstart.md (Files: specs/003-validation-drift-engine/quickstart.md; AC: quickstart reflects actual runner workflow and expected artifacts).
-- [ ] T031 [P] Finalize validation artifact interface documentation in specs/003-validation-drift-engine/contracts/validation-artifacts.md (Files: specs/003-validation-drift-engine/contracts/validation-artifacts.md; AC: docs match implemented check mapping, drift policy, error classification, and determinism contract).
-- [ ] T032 Run full end-to-end validation pass and capture completion evidence in specs/003-validation-drift-engine/plan.md (Files: specs/003-validation-drift-engine/plan.md; AC: plan records execution evidence for generated reports and baseline behavior without introducing out-of-scope capabilities).
+- [x] T029 Update Feature 3 usage documentation in README.md (Files: README.md; AC: includes runner invocation, required inputs, baseline behavior, deterministic guarantees, and fixed report schema summary).
+- [x] T030 [P] Update quickstart validation steps with final command and output verification details in specs/003-validation-drift-engine/quickstart.md (Files: specs/003-validation-drift-engine/quickstart.md; AC: quickstart reflects actual runner workflow and expected artifacts).
+- [x] T031 [P] Finalize validation artifact interface documentation in specs/003-validation-drift-engine/contracts/validation-artifacts.md (Files: specs/003-validation-drift-engine/contracts/validation-artifacts.md; AC: docs match implemented check mapping, drift policy, error classification, and determinism contract).
+- [x] T032 Run full end-to-end validation pass and capture completion evidence in specs/003-validation-drift-engine/plan.md (Files: specs/003-validation-drift-engine/plan.md; AC: plan records execution evidence for generated reports and baseline behavior without introducing out-of-scope capabilities).
 
 ---
 

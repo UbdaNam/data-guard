@@ -31,7 +31,24 @@
 
 _GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
-[Gates determined based on constitution file]
+- [ ] Spec-first gate: Active spec exists and defines behavior, boundaries, and
+      acceptance scenarios before implementation work.
+- [ ] Canonical structure gate: Plan uses challenge-required canonical repository
+      layout, or explicitly documents approved deviations.
+- [ ] Compounding design gate: Deliverables are durable assets reusable by later
+      features; no isolated throwaway artifacts.
+- [ ] Data contract gate: Schemas, clauses, lineage mappings, validation outputs,
+      and violation records are treated as first-class artifacts with stable paths.
+- [ ] Evidence gate: Plan defines how mismatch evidence, validation runs, and
+      operational reports are generated from real or explicitly injected test data.
+- [ ] Python production gate: Module boundaries, typed structures where
+      appropriate, deterministic paths, and reproducible CLI commands are defined.
+- [ ] Downstream impact gate: Schema/interface changes capture owners,
+      dependents, blast radius, and migration expectations.
+- [ ] Operability gate: Outputs are structured for translation into plain-language
+      operational guidance.
+- [ ] Prompt architecture gate: Feature framing builds on approved specs and
+      enduring platform capabilities, not temporary checkpoint framing.
 
 ## Project Structure
 
@@ -57,43 +74,31 @@ specs/[###-feature]/
 -->
 
 ```text
-# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
 src/
-├── models/
-├── services/
-├── cli/
-└── lib/
+├── contracts/          # canonical schemas, clauses, lineage maps
+├── validators/         # contract and quality validation logic
+├── pipelines/          # ingestion/normalization/enforcement flows
+├── reporting/          # plain-language-ready summaries and exports
+├── cli/                # reproducible command entry points
+└── lib/                # shared typed utilities and domain primitives
+
+data/
+├── samples/            # explicitly injected test data
+└── baselines/          # schema drift and comparison baselines
+
+artifacts/
+├── validation/         # generated validation outputs
+├── violations/         # generated violation records
+└── snapshots/          # generated schema snapshots
 
 tests/
 ├── contract/
 ├── integration/
 └── unit/
-
-# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
-backend/
-├── src/
-│   ├── models/
-│   ├── services/
-│   └── api/
-└── tests/
-
-frontend/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   └── services/
-└── tests/
-
-# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
-api/
-└── [same as backend above]
-
-ios/ or android/
-└── [platform-specific structure: feature modules, UI flows, platform tests]
 ```
 
-**Structure Decision**: [Document the selected structure and reference the real
-directories captured above]
+**Structure Decision**: Document the selected canonical structure and reference the
+real directories captured above. Any deviation MUST be justified in spec and plan.
 
 ## Complexity Tracking
 

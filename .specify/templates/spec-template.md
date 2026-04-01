@@ -89,6 +89,16 @@
 - **FR-003**: Users MUST be able to [key interaction, e.g., "reset their password"]
 - **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
 - **FR-005**: System MUST [behavior, e.g., "log all security events"]
+- **FR-006**: Feature MUST identify the canonical repository locations for schemas,
+  contract clauses, lineage mappings, validation outputs, and violation records.
+- **FR-007**: If source data diverges from canonical schema, feature MUST record
+  mismatch evidence and define migration/normalization requirements.
+- **FR-008**: Feature MUST define downstream consumer and ownership impact for any
+  schema, field, or interface introduced or changed.
+- **FR-009**: Feature outputs intended for stakeholder reporting MUST be structured
+  for plain-language operational translation.
+- **FR-010**: Operational artifacts (reports, snapshots, violations) MUST be
+  generated from real executions or explicitly injected test data.
 
 _Example of marking unclear requirements:_
 
@@ -99,6 +109,21 @@ _Example of marking unclear requirements:_
 
 - **[Entity 1]**: [What it represents, key attributes without implementation]
 - **[Entity 2]**: [What it represents, relationships to other entities]
+
+### Data Contract & Evidence Artifacts _(mandatory for this project)_
+
+- **Canonical Schema Asset(s)**: [Path + ownership + versioning expectations]
+- **Lineage Mapping Asset(s)**: [Path + producer/consumer mapping]
+- **Validation Output Artifact(s)**: [Path + generation command]
+- **Violation Record Artifact(s)**: [Path + generation command]
+- **Schema Drift/Mismatch Evidence**: [How divergence is captured and reviewed]
+
+### Downstream Impact _(mandatory for schema/interface changes)_
+
+- **Affected Consumers**: [Systems, teams, and interfaces]
+- **Blast Radius**: [What breaks or degrades if change is uncoordinated]
+- **Migration Plan**: [Normalization/backfill/rollout expectations]
+- **Compatibility Window**: [If transitional support exists, define bounds]
 
 ## Success Criteria _(mandatory)_
 
@@ -126,3 +151,14 @@ _Example of marking unclear requirements:_
 - [Assumption about scope boundaries, e.g., "Mobile support is out of scope for v1"]
 - [Assumption about data/environment, e.g., "Existing authentication system will be reused"]
 - [Dependency on existing system/service, e.g., "Requires access to the existing user profile API"]
+
+## Canonical Structure Notes _(mandatory)_
+
+- Confirm how this feature preserves canonical repository layout.
+- Document every approved structure deviation (if any) and justification.
+
+## Implementation Prompt Integrity Checklist _(mandatory)_
+
+- Prompt builds on prior approved specs and platform architecture.
+- Prompt describes durable product capability, not submission checkpoint milestones.
+- Prompt preserves data contract first-class artifact expectations.

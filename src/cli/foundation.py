@@ -7,6 +7,8 @@ import json
 from pathlib import Path
 from typing import Any, cast
 
+import yaml
+
 from src.models.readiness_models import ArtifactStatus, CanonicalPathEntry, DatasetReadinessEntry
 from src.validators.path_validator import validate_canonical_paths
 from src.validators.readiness_validator import validate_dataset_readiness
@@ -16,7 +18,10 @@ CONTRACTS_DIR = REPO_ROOT / "contracts"
 
 
 def load_json_file(path: Path) -> object:
-    return json.loads(path.read_text(encoding="utf-8"))
+    text = path.read_text(encoding="utf-8")
+    if path.suffix.lower() == ".json":
+        return json.loads(text)
+    return yaml.safe_load(text)
 
 
 def build_manifest() -> dict[str, object]:
@@ -32,7 +37,10 @@ def build_manifest() -> dict[str, object]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Foundation validation CLI")
-    parser.add_argument("command", choices=["manifest", "validate-paths", "validate-readiness"])
+    parser.add_argument(
+        "command",
+        choices=["manifest", "validate-paths", "validate-readiness", "generate-contracts"],
+    )
     args = parser.parse_args()
 
     if args.command == "manifest":
@@ -50,6 +58,12 @@ def main() -> int:
         readiness_entries = cast(list[dict[str, Any]], load_json_file(CONTRACTS_DIR / "dataset_readiness.json") or [])
         datasets = [DatasetReadinessEntry.model_validate(item) for item in readiness_entries]
         print(json.dumps(validate_dataset_readiness(datasets), indent=2))
+        return 0
+
+    if args.command == "generate-contracts":
+        from contracts.generator import run_generation
+
+        print(json.dumps(run_generation(), indent=2))
         return 0
 
     return 1

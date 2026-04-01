@@ -10,5 +10,6 @@
     ".specify/scripts/bash/": true,
     ".specify/scripts/powershell/": true,
     "&": true
-  }
+  },
+  "python-envs.defaultEnvManager": "ms-python.python:venv"
 }

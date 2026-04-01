@@ -1,0 +1,55 @@
+models:
+- columns:
+  - description: Generated contract field
+    name: event_id
+    tests:
+    - accepted_values:
+        values:
+        - e1
+        - e2
+        - e3
+    - not_null
+    - unique
+  - description: Generated contract field
+    name: event_type
+    tests:
+    - accepted_values:
+        values:
+        - create
+        - update
+        - delete
+    - not_null
+    - unique
+  - description: Generated contract field
+    name: record_id
+    tests:
+    - accepted_values:
+        values:
+        - r1
+        - r2
+        - r3
+    - not_null
+    - unique
+  - description: Generated contract field
+    name: severity
+    tests:
+    - accepted_values:
+        values:
+        - '1'
+        - '2'
+        - '3'
+    - not_null
+    - unique
+  - description: Generated contract field
+    name: source
+    tests:
+    - accepted_values:
+        values:
+        - app-a
+        - app-b
+    - not_null
+  name: week5_events
+unsupported_clause_mappings:
+- severity:positivity
+- severity:range
+version: 2

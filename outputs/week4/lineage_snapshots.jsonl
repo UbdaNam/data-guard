@@ -1,0 +1,2 @@
+{"dataset_id":"week3.extractions","consumed_fields":["record_id","entity.name","entity.score","category"]}
+{"dataset_id":"week5.events","consumed_fields":["event_id","event_type","severity","record_id"]}

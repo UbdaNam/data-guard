@@ -17,10 +17,10 @@
 
 **Purpose**: Initialize durable generator scaffolding and canonical feature wiring.
 
-- [ ] T001 Create Feature 2 generation package scaffolding in src/generation/**init**.py, src/models/contract_models.py, and src/validators/contract_quality_validator.py (Files: src/generation/**init**.py, src/models/contract_models.py, src/validators/contract_quality_validator.py; AC: modules import cleanly and expose typed stubs used by later tasks).
-- [ ] T002 [P] Add YAML rendering dependency and generation extras in pyproject.toml (Files: pyproject.toml; AC: dependency set includes PyYAML and install resolves without altering canonical project layout).
-- [ ] T003 [P] Add generator command entry wiring in contracts/generator.py and src/cli/foundation.py (Files: contracts/generator.py, src/cli/foundation.py; AC: generator entrypoint callable exists and routes to orchestration without implementing validation/attribution/reporting behavior).
-- [ ] T004 Capture Feature 2 operational guidance skeleton in specs/002-contract-generation-engine/quickstart.md (Files: specs/002-contract-generation-engine/quickstart.md; AC: quickstart references canonical Week 3/Week 5 inputs and canonical generated_contracts output paths).
+- [x] T001 Create Feature 2 generation package scaffolding in src/generation/**init**.py, src/models/contract_models.py, and src/validators/contract_quality_validator.py (Files: src/generation/**init**.py, src/models/contract_models.py, src/validators/contract_quality_validator.py; AC: modules import cleanly and expose typed stubs used by later tasks).
+- [x] T002 [P] Add YAML rendering dependency and generation extras in pyproject.toml (Files: pyproject.toml; AC: dependency set includes PyYAML and install resolves without altering canonical project layout).
+- [x] T003 [P] Add generator command entry wiring in contracts/generator.py and src/cli/foundation.py (Files: contracts/generator.py, src/cli/foundation.py; AC: generator entrypoint callable exists and routes to orchestration without implementing validation/attribution/reporting behavior).
+- [x] T004 Capture Feature 2 operational guidance skeleton in specs/002-contract-generation-engine/quickstart.md (Files: specs/002-contract-generation-engine/quickstart.md; AC: quickstart references canonical Week 3/Week 5 inputs and canonical generated_contracts output paths).
 
 ---
 
@@ -30,12 +30,12 @@
 
 **⚠️ CRITICAL**: No user story work starts until this phase is complete.
 
-- [ ] T005 Implement canonical artifact resolver for Feature 1 dependencies in src/generation/dataset_loader.py (Files: src/generation/dataset_loader.py; AC: loader reads contracts/canonical_paths.yaml, contracts/dataset_readiness.json, contracts/interface_registry.yaml, contracts/schema_ownership_map.yaml, contracts/requirement_traceability.yaml, DOMAIN_NOTES.md without path drift).
-- [ ] T006 Implement internal contract data model types in src/models/contract_models.py (Files: src/models/contract_models.py; AC: typed entities cover DatasetTarget, ProfiledField, InvariantClause, DownstreamContextAnnotation, CanonicalMismatchRecord, GeneratedContract, DbtSchemaArtifact, GenerationMetadata).
-- [ ] T007 [P] Implement deterministic writer and metadata signature utility in src/generation/deterministic_writer.py (Files: src/generation/deterministic_writer.py; AC: stable ordering + atomic write + deterministic signature are implemented, with only timestamp/version metadata allowed to vary).
-- [ ] T008 [P] Implement generation quality guardrails in src/validators/contract_quality_validator.py (Files: src/validators/contract_quality_validator.py; AC: validator enforces canonical output names, required metadata fields, and prohibition of out-of-scope runner/attribution/evolution/report execution behavior).
-- [ ] T009 Add shared orchestration interfaces in contracts/schema_analyzer.py and src/generation/schema_inference.py (Files: contracts/schema_analyzer.py, src/generation/schema_inference.py; AC: schema analyzer delegates to generation modules and supports nested path representation + parent-child retention).
-- [ ] T010 Create renderer interfaces for Bitol and dbt outputs in src/generation/renderers.py (Files: src/generation/renderers.py; AC: renderer contracts support primary Bitol YAML + dbt YAML counterpart generation and explicit unsupported mapping notes).
+- [x] T005 Implement canonical artifact resolver for Feature 1 dependencies in src/generation/dataset_loader.py (Files: src/generation/dataset_loader.py; AC: loader reads contracts/canonical_paths.yaml, contracts/dataset_readiness.json, contracts/interface_registry.yaml, contracts/schema_ownership_map.yaml, contracts/requirement_traceability.yaml, DOMAIN_NOTES.md without path drift).
+- [x] T006 Implement internal contract data model types in src/models/contract_models.py (Files: src/models/contract_models.py; AC: typed entities cover DatasetTarget, ProfiledField, InvariantClause, DownstreamContextAnnotation, CanonicalMismatchRecord, GeneratedContract, DbtSchemaArtifact, GenerationMetadata).
+- [x] T007 [P] Implement deterministic writer and metadata signature utility in src/generation/deterministic_writer.py (Files: src/generation/deterministic_writer.py; AC: stable ordering + atomic write + deterministic signature are implemented, with only timestamp/version metadata allowed to vary).
+- [x] T008 [P] Implement generation quality guardrails in src/validators/contract_quality_validator.py (Files: src/validators/contract_quality_validator.py; AC: validator enforces canonical output names, required metadata fields, and prohibition of out-of-scope runner/attribution/evolution/report execution behavior).
+- [x] T009 Add shared orchestration interfaces in contracts/schema_analyzer.py and src/generation/schema_inference.py (Files: contracts/schema_analyzer.py, src/generation/schema_inference.py; AC: schema analyzer delegates to generation modules and supports nested path representation + parent-child retention).
+- [x] T010 Create renderer interfaces for Bitol and dbt outputs in src/generation/renderers.py (Files: src/generation/renderers.py; AC: renderer contracts support primary Bitol YAML + dbt YAML counterpart generation and explicit unsupported mapping notes).
 
 **Checkpoint**: Foundation ready for story implementation.
 
@@ -47,13 +47,13 @@
 
 **Independent Test**: Running generator produces both canonical primary contract files for week3/week5 with structural profiles, statistical summaries, inferred + requirement-defined invariants, and uncertainty/mismatch annotations when needed.
 
-- [ ] T011 [US1] Implement canonical JSONL dataset loader with malformed-line tolerance in src/generation/dataset_loader.py (Files: src/generation/dataset_loader.py; AC: supports outputs/week3/extractions.jsonl and outputs/week5/events.jsonl, records malformed-line diagnostics, and preserves run continuity when possible).
-- [ ] T012 [P] [US1] Implement structural profiling engine for fields and nested fields in src/generation/profilers.py (Files: src/generation/profilers.py; AC: outputs field paths, parent paths, type frequencies, presence/null rates, and nested coverage where feasible).
-- [ ] T013 [P] [US1] Implement statistical profiling engine in src/generation/profilers.py (Files: src/generation/profilers.py; AC: computes numeric summaries, enum candidacy frequencies, uniqueness indicators, and sparse-field signals for clause synthesis).
-- [ ] T014 [US1] Implement invariant synthesis from observed data plus requirement-defined rules for Week 3/Week 5 in src/generation/invariant_synthesizer.py (Files: src/generation/invariant_synthesizer.py; AC: emits required/range/enum/pattern/positivity/monotonicity_candidate/relationship/dataset_check clauses, preserving requirement-document constraints even when samples currently comply).
-- [ ] T015 [US1] Implement weak-semantic-confidence handling in src/generation/invariant_synthesizer.py and src/models/contract_models.py (Files: src/generation/invariant_synthesizer.py, src/models/contract_models.py; AC: unsupported business meaning is never invented, explicit uncertainty placeholders/notes are emitted, and structural baseline generation never fails solely due to low semantic confidence).
-- [ ] T016 [US1] Implement Bitol-compatible contract rendering for Week 3 and Week 5 in src/generation/renderers.py and contracts/generator.py (Files: src/generation/renderers.py, contracts/generator.py; AC: writes generated_contracts/week3_extractions.yaml and generated_contracts/week5_events.yaml with canonical schema targeting + mismatch evidence sections).
-- [ ] T017 [US1] Wire US1 end-to-end orchestration in contracts/generator.py (Files: contracts/generator.py; AC: single run resolves canonical inputs, profiles datasets, synthesizes invariants, and emits primary outputs + generation metadata without invoking validation runner responsibilities).
+- [x] T011 [US1] Implement canonical JSONL dataset loader with malformed-line tolerance in src/generation/dataset_loader.py (Files: src/generation/dataset_loader.py; AC: supports outputs/week3/extractions.jsonl and outputs/week5/events.jsonl, records malformed-line diagnostics, and preserves run continuity when possible).
+- [x] T012 [P] [US1] Implement structural profiling engine for fields and nested fields in src/generation/profilers.py (Files: src/generation/profilers.py; AC: outputs field paths, parent paths, type frequencies, presence/null rates, and nested coverage where feasible).
+- [x] T013 [P] [US1] Implement statistical profiling engine in src/generation/profilers.py (Files: src/generation/profilers.py; AC: computes numeric summaries, enum candidacy frequencies, uniqueness indicators, and sparse-field signals for clause synthesis).
+- [x] T014 [US1] Implement invariant synthesis from observed data plus requirement-defined rules for Week 3/Week 5 in src/generation/invariant_synthesizer.py (Files: src/generation/invariant_synthesizer.py; AC: emits required/range/enum/pattern/positivity/monotonicity_candidate/relationship/dataset_check clauses, preserving requirement-document constraints even when samples currently comply).
+- [x] T015 [US1] Implement weak-semantic-confidence handling in src/generation/invariant_synthesizer.py and src/models/contract_models.py (Files: src/generation/invariant_synthesizer.py, src/models/contract_models.py; AC: unsupported business meaning is never invented, explicit uncertainty placeholders/notes are emitted, and structural baseline generation never fails solely due to low semantic confidence).
+- [x] T016 [US1] Implement Bitol-compatible contract rendering for Week 3 and Week 5 in src/generation/renderers.py and contracts/generator.py (Files: src/generation/renderers.py, contracts/generator.py; AC: writes generated_contracts/week3_extractions.yaml and generated_contracts/week5_events.yaml with canonical schema targeting + mismatch evidence sections).
+- [x] T017 [US1] Wire US1 end-to-end orchestration in contracts/generator.py (Files: contracts/generator.py; AC: single run resolves canonical inputs, profiles datasets, synthesizes invariants, and emits primary outputs + generation metadata without invoking validation runner responsibilities).
 
 **Checkpoint**: US1 independently complete and reviewable.
 
@@ -65,10 +65,10 @@
 
 **Independent Test**: Generated contracts include downstream systems, consumed fields, likely breaking fields, and consumer-facing change sensitivity with explicit partial/unknown markers when lineage metadata is incomplete.
 
-- [ ] T018 [US2] Implement lineage/interface metadata ingestion in src/generation/lineage_injector.py (Files: src/generation/lineage_injector.py; AC: consumes contracts/interface_registry.yaml, contracts/schema_ownership_map.yaml, and outputs/week4/lineage_snapshots.jsonl when available).
-- [ ] T019 [US2] Implement downstream context injection model mapping in src/generation/lineage_injector.py and src/models/contract_models.py (Files: src/generation/lineage_injector.py, src/models/contract_models.py; AC: populates downstream_systems, consumed_fields, likely_breaking_fields, consumer_change_sensitivity, and coverage_status).
-- [ ] T020 [US2] Integrate lineage context injection into generator orchestration in contracts/generator.py (Files: contracts/generator.py; AC: every generated contract carries downstream context annotations or explicit partial_context markers with source references).
-- [ ] T021 [US2] Add canonical mismatch/context evidence logging in src/generation/deterministic_writer.py and validation_reports/readiness_index.json metadata flow (Files: src/generation/deterministic_writer.py, validation_reports/readiness_index.json; AC: output metadata captures lineage coverage state and mismatch evidence references without implementing blast-radius calculations).
+- [x] T018 [US2] Implement lineage/interface metadata ingestion in src/generation/lineage_injector.py (Files: src/generation/lineage_injector.py; AC: consumes contracts/interface_registry.yaml, contracts/schema_ownership_map.yaml, and outputs/week4/lineage_snapshots.jsonl when available).
+- [x] T019 [US2] Implement downstream context injection model mapping in src/generation/lineage_injector.py and src/models/contract_models.py (Files: src/generation/lineage_injector.py, src/models/contract_models.py; AC: populates downstream_systems, consumed_fields, likely_breaking_fields, consumer_change_sensitivity, and coverage_status).
+- [x] T020 [US2] Integrate lineage context injection into generator orchestration in contracts/generator.py (Files: contracts/generator.py; AC: every generated contract carries downstream context annotations or explicit partial_context markers with source references).
+- [x] T021 [US2] Add canonical mismatch/context evidence logging in src/generation/deterministic_writer.py and validation_reports/readiness_index.json metadata flow (Files: src/generation/deterministic_writer.py, validation_reports/readiness_index.json; AC: output metadata captures lineage coverage state and mismatch evidence references without implementing blast-radius calculations).
 
 **Checkpoint**: US2 independently complete and reviewable.
 
@@ -80,11 +80,11 @@
 
 **Independent Test**: Generator emits canonical dbt counterparts for Week 3/Week 5, deterministic outputs across unchanged runs, and remains dataset-config extensible without core pipeline rewrites.
 
-- [ ] T022 [US3] Implement dbt-compatible schema YAML renderer in src/generation/renderers.py (Files: src/generation/renderers.py; AC: outputs generated_contracts/week3_extractions_dbt.yml and generated_contracts/week5_events_dbt.yml with supported mappings: not_null, accepted_values, relationships, unique).
-- [ ] T023 [US3] Add unsupported-clause mapping notes and counterpart trace metadata in src/generation/renderers.py and src/models/contract_models.py (Files: src/generation/renderers.py, src/models/contract_models.py; AC: unsupported clause mappings are explicitly recorded, not dropped silently).
-- [ ] T024 [US3] Implement deterministic output write policy and run metadata in src/generation/deterministic_writer.py and contracts/generator.py (Files: src/generation/deterministic_writer.py, contracts/generator.py; AC: repeated unchanged-input runs produce diff-stable artifacts except allowed timestamp/version metadata fields).
-- [ ] T025 [US3] Implement dataset-target configuration routing for future governed datasets in src/generation/dataset_loader.py and contracts/generator.py (Files: src/generation/dataset_loader.py, contracts/generator.py; AC: architecture supports adding week1/week2/week4/traces via configuration/artifact registration without per-dataset code forks).
-- [ ] T026 [US3] Finalize output naming/versioning enforcement in src/validators/contract_quality_validator.py and src/generation/deterministic_writer.py (Files: src/validators/contract_quality_validator.py, src/generation/deterministic_writer.py; AC: canonical output filenames and required metadata contracts are strictly enforced for week3/week5 artifacts).
+- [x] T022 [US3] Implement dbt-compatible schema YAML renderer in src/generation/renderers.py (Files: src/generation/renderers.py; AC: outputs generated_contracts/week3_extractions_dbt.yml and generated_contracts/week5_events_dbt.yml with supported mappings: not_null, accepted_values, relationships, unique).
+- [x] T023 [US3] Add unsupported-clause mapping notes and counterpart trace metadata in src/generation/renderers.py and src/models/contract_models.py (Files: src/generation/renderers.py, src/models/contract_models.py; AC: unsupported clause mappings are explicitly recorded, not dropped silently).
+- [x] T024 [US3] Implement deterministic output write policy and run metadata in src/generation/deterministic_writer.py and contracts/generator.py (Files: src/generation/deterministic_writer.py, contracts/generator.py; AC: repeated unchanged-input runs produce diff-stable artifacts except allowed timestamp/version metadata fields).
+- [x] T025 [US3] Implement dataset-target configuration routing for future governed datasets in src/generation/dataset_loader.py and contracts/generator.py (Files: src/generation/dataset_loader.py, contracts/generator.py; AC: architecture supports adding week1/week2/week4/traces via configuration/artifact registration without per-dataset code forks).
+- [x] T026 [US3] Finalize output naming/versioning enforcement in src/validators/contract_quality_validator.py and src/generation/deterministic_writer.py (Files: src/validators/contract_quality_validator.py, src/generation/deterministic_writer.py; AC: canonical output filenames and required metadata contracts are strictly enforced for week3/week5 artifacts).
 
 **Checkpoint**: US3 independently complete and reviewable.
 
@@ -94,10 +94,10 @@
 
 **Purpose**: Documentation and capability hardening across all stories.
 
-- [ ] T027 Update user-facing generator usage in README.md (Files: README.md; AC: documents generator invocation, required Feature 1 artifacts, canonical input/output paths, and explicit out-of-scope responsibilities).
-- [ ] T028 [P] Align feature quickstart with finalized command/outputs in specs/002-contract-generation-engine/quickstart.md (Files: specs/002-contract-generation-engine/quickstart.md; AC: quickstart reflects actual generator workflow and all four canonical output files).
-- [ ] T029 [P] Update generator artifact contract documentation in specs/002-contract-generation-engine/contracts/generator-artifacts.md (Files: specs/002-contract-generation-engine/contracts/generator-artifacts.md; AC: docs match implemented Bitol/dbt rendering, metadata, determinism, and failure-status behavior).
-- [ ] T030 Run full end-to-end generation sanity pass and capture completion notes in specs/002-contract-generation-engine/plan.md (Files: specs/002-contract-generation-engine/plan.md; AC: plan records completion evidence for Week 3/Week 5 outputs and confirms no validation-runner/attribution/evolution/report behavior was implemented).
+- [x] T027 Update user-facing generator usage in README.md (Files: README.md; AC: documents generator invocation, required Feature 1 artifacts, canonical input/output paths, and explicit out-of-scope responsibilities).
+- [x] T028 [P] Align feature quickstart with finalized command/outputs in specs/002-contract-generation-engine/quickstart.md (Files: specs/002-contract-generation-engine/quickstart.md; AC: quickstart reflects actual generator workflow and all four canonical output files).
+- [x] T029 [P] Update generator artifact contract documentation in specs/002-contract-generation-engine/contracts/generator-artifacts.md (Files: specs/002-contract-generation-engine/contracts/generator-artifacts.md; AC: docs match implemented Bitol/dbt rendering, metadata, determinism, and failure-status behavior).
+- [x] T030 Run full end-to-end generation sanity pass and capture completion notes in specs/002-contract-generation-engine/plan.md (Files: specs/002-contract-generation-engine/plan.md; AC: plan records completion evidence for Week 3/Week 5 outputs and confirms no validation-runner/attribution/evolution/report behavior was implemented).
 
 ---
 

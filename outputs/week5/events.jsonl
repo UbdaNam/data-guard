@@ -1,0 +1,3 @@
+{"event_id":"e1","event_type":"create","severity":1,"source":"app-a","record_id":"r1"}
+{"event_id":"e2","event_type":"update","severity":2,"source":"app-a","record_id":"r2"}
+{"event_id":"e3","event_type":"delete","severity":3,"source":"app-b","record_id":"r3"}

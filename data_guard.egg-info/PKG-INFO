@@ -1,3 +1,16 @@
+Metadata-Version: 2.4
+Name: data-guard
+Version: 0.1.0
+Summary: Production-grade Python platform for data contract enforcement
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pydantic>=2.6
+Requires-Dist: PyYAML>=6.0
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0; extra == "dev"
+Dynamic: license-file
+
 # data-guard
 
 Production-grade Python platform for data contract enforcement across internal

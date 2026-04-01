@@ -13,6 +13,16 @@
   - downstream context annotation
   - generation metadata
 
+### 1b) Generation Metadata JSON
+
+- **Path**: `generated_contracts/week3_extractions.metadata.json`, `generated_contracts/week5_events.metadata.json`
+- **Contains**:
+  - run_id and generated_at
+  - input artifact and record count diagnostics
+  - malformed line diagnostics
+  - deterministic signature
+  - quality issue list
+
 ### 2) dbt-Compatible Schema YAML
 
 - **Path**: `generated_contracts/week3_extractions_dbt.yml`, `generated_contracts/week5_events_dbt.yml`
@@ -38,3 +48,4 @@
 - Missing inputs and malformed lines are represented in generation metadata and status records.
 - Canonical mismatch records are always emitted when observed data diverges from canonical target.
 - Weak semantic confidence never blocks structural baseline generation.
+- Dataset-level generation outcome summary is emitted in `validation_reports/readiness_index.json`.

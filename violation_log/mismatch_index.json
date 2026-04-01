@@ -1,0 +1,22 @@
+[
+  {
+    "mismatch_id": "mismatch-week3-shape-001",
+    "dataset_id": "week3.extractions",
+    "mismatch_type": "shape",
+    "observed_value": "upstream shape not yet confirmed",
+    "canonical_value": "extraction_v1 canonical shape",
+    "business_meaning_risk": "upstream records may collapse distinct extraction semantics",
+    "resolution_type": "migration",
+    "status": "blocked_by_missing_upstream_data"
+  },
+  {
+    "mismatch_id": "mismatch-week5-semantics-001",
+    "dataset_id": "week5.events",
+    "mismatch_type": "field_semantics",
+    "observed_value": "event fields may be semantically overloaded",
+    "canonical_value": "event_v1 canonical semantics",
+    "business_meaning_risk": "silent rewrite would obscure operational meaning",
+    "resolution_type": "normalization",
+    "status": "pending_migration_or_normalization"
+  }
+]

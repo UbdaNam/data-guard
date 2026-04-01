@@ -1,0 +1,1 @@
+"""Data Guard foundation package."""

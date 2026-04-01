@@ -1,0 +1,28 @@
+flowchart LR
+    W1[outputs/week1/intent_records.jsonl] --> I1[week1-intent-to-contract]
+    W2[outputs/week2/verdicts.jsonl] --> I2[week2-verdict-to-validation]
+    W3[outputs/week3/extractions.jsonl] --> I3[week3-extraction-to-attribution]
+    W4[outputs/week4/lineage_snapshots.jsonl] --> I4[week4-lineage-to-evolution]
+    W5[outputs/week5/events.jsonl] --> I5[week5-events-to-reporting]
+    RT[outputs/traces/runs.jsonl] --> I6[trace-runs-to-reporting]
+
+    I1 --> CP[contracts/generator.py]
+    I2 --> RV[contracts/runner.py]
+    I3 --> AT[contracts/attributor.py]
+    I4 --> SA[contracts/schema_analyzer.py]
+    I5 --> RE[contracts/report_generator.py]
+    I6 --> RE
+
+    I1 --> O1[contracts/schema_ownership_map.yaml]
+    I2 --> O2[contracts/schema_ownership_map.yaml]
+    I3 --> O3[contracts/schema_ownership_map.yaml]
+    I4 --> O4[contracts/schema_ownership_map.yaml]
+    I5 --> O5[contracts/schema_ownership_map.yaml]
+    I6 --> O6[contracts/schema_ownership_map.yaml]
+
+    O1 --> R[contracts/dataset_readiness.json]
+    O2 --> R
+    O3 --> R
+    O4 --> R
+    O5 --> R
+    O6 --> R

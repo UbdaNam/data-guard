@@ -1,0 +1,38 @@
+[
+  {
+    "dataset_id": "week1.intent_records",
+    "canonical_path": "outputs/week1/intent_records.jsonl",
+    "readiness_status": "inferred_from_requirement_document",
+    "evidence_notes": "Canonical path registered and target exists in foundation inventory."
+  },
+  {
+    "dataset_id": "week2.verdicts",
+    "canonical_path": "outputs/week2/verdicts.jsonl",
+    "readiness_status": "inferred_from_requirement_document",
+    "evidence_notes": "Canonical path registered and target exists in foundation inventory."
+  },
+  {
+    "dataset_id": "week3.extractions",
+    "canonical_path": "outputs/week3/extractions.jsonl",
+    "readiness_status": "blocked_by_missing_upstream_data",
+    "evidence_notes": "Upstream mismatch remains open and requires migration/normalization."
+  },
+  {
+    "dataset_id": "week4.lineage_snapshots",
+    "canonical_path": "outputs/week4/lineage_snapshots.jsonl",
+    "readiness_status": "inferred_from_requirement_document",
+    "evidence_notes": "Canonical lineage target defined; content evidence still pending."
+  },
+  {
+    "dataset_id": "week5.events",
+    "canonical_path": "outputs/week5/events.jsonl",
+    "readiness_status": "pending_migration_or_normalization",
+    "evidence_notes": "Semantic normalization required before downstream feature use."
+  },
+  {
+    "dataset_id": "traces.runs",
+    "canonical_path": "outputs/traces/runs.jsonl",
+    "readiness_status": "confirmed_from_repository_evidence",
+    "evidence_notes": "Repository structure and canonical path align with foundation inventory."
+  }
+]

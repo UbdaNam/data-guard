@@ -17,10 +17,10 @@
 
 **Purpose**: Establish canonical Python project skeleton and required repository surfaces.
 
-- [ ] T001 Create canonical directories for foundation assets and outputs scaffold in contracts/, generated_contracts/, validation_reports/, violation_log/, schema_snapshots/, enforcer_report/, outputs/week1/, outputs/week2/, outputs/week3/, outputs/week4/, outputs/week5/, outputs/traces/ (Files: contracts/.gitkeep, generated_contracts/.gitkeep, validation_reports/.gitkeep, violation_log/.gitkeep, schema_snapshots/.gitkeep, enforcer_report/.gitkeep, outputs/week1/.gitkeep, outputs/week2/.gitkeep, outputs/week3/.gitkeep, outputs/week4/.gitkeep, outputs/week5/.gitkeep, outputs/traces/.gitkeep; AC: all canonical directories exist and are commit-visible).
-- [ ] T002 [P] Scaffold required Python entrypoint stubs without implementing runtime capabilities in contracts/generator.py, contracts/runner.py, contracts/attributor.py, contracts/schema_analyzer.py, contracts/ai_extensions.py, contracts/report_generator.py (Files: six contracts/\*.py files; AC: each file has module docstring + NotImplementedError placeholder and explicitly states deferred capability scope).
-- [ ] T003 [P] Initialize Python foundation package layout in src/cli/foundation.py, src/models/registry_models.py, src/models/readiness_models.py, src/validators/path_validator.py, src/validators/readiness_validator.py (Files: listed src/\*.py files; AC: import-safe modules exist with typed placeholders and no later-feature business logic).
-- [ ] T004 Add project dependency/config baseline for Python foundation metadata handling in pyproject.toml and .gitignore (Files: pyproject.toml, .gitignore; AC: includes Python 3.11+, pydantic, PyYAML, pytest, and ignores generated runtime artifacts where appropriate).
+- [x] T001 Create canonical directories for foundation assets and outputs scaffold in contracts/, generated_contracts/, validation_reports/, violation_log/, schema_snapshots/, enforcer_report/, outputs/week1/, outputs/week2/, outputs/week3/, outputs/week4/, outputs/week5/, outputs/traces/ (Files: contracts/.gitkeep, generated_contracts/.gitkeep, validation_reports/.gitkeep, violation_log/.gitkeep, schema_snapshots/.gitkeep, enforcer_report/.gitkeep, outputs/week1/.gitkeep, outputs/week2/.gitkeep, outputs/week3/.gitkeep, outputs/week4/.gitkeep, outputs/week5/.gitkeep, outputs/traces/.gitkeep; AC: all canonical directories exist and are commit-visible).
+- [x] T002 [P] Scaffold required Python entrypoint stubs without implementing runtime capabilities in contracts/generator.py, contracts/runner.py, contracts/attributor.py, contracts/schema_analyzer.py, contracts/ai_extensions.py, contracts/report_generator.py (Files: six contracts/\*.py files; AC: each file has module docstring + NotImplementedError placeholder and explicitly states deferred capability scope).
+- [x] T003 [P] Initialize Python foundation package layout in src/cli/foundation.py, src/models/registry_models.py, src/models/readiness_models.py, src/validators/path_validator.py, src/validators/readiness_validator.py (Files: listed src/\*.py files; AC: import-safe modules exist with typed placeholders and no later-feature business logic).
+- [x] T004 Add project dependency/config baseline for Python foundation metadata handling in pyproject.toml and .gitignore (Files: pyproject.toml, .gitignore; AC: includes Python 3.11+, pydantic, PyYAML, pytest, and ignores generated runtime artifacts where appropriate).
 
 ---
 
@@ -28,11 +28,11 @@
 
 **Purpose**: Define shared contracts and validation rules required before user-story artifact authoring.
 
-- [ ] T005 Define shared provenance/readiness enum and core metadata schemas in src/models/readiness_models.py and src/models/registry_models.py (Files: src/models/readiness_models.py, src/models/registry_models.py; AC: enum exactly matches four canonical statuses and base models align with data-model.md).
-- [ ] T006 [P] Implement canonical path validator scaffolding and strict path normalization rules in src/validators/path_validator.py (Files: src/validators/path_validator.py; AC: validator checks required paths against canonical inventory and reports missing/invalid paths deterministically).
-- [ ] T007 [P] Implement dataset readiness validator scaffolding for existence/parseability/schema-semantic mismatch flags in src/validators/readiness_validator.py (Files: src/validators/readiness_validator.py; AC: validator emits readiness status + mismatch categories without altering canonical semantics).
-- [ ] T008 Create foundation CLI orchestration skeleton for validation entrypoints in src/cli/foundation.py (Files: src/cli/foundation.py; AC: CLI commands route to path/readiness validators and only produce foundational metadata outputs).
-- [ ] T009 Define artifact contract documentation for all foundational source-of-truth assets in contracts/artifact_contracts.md (Files: contracts/artifact_contracts.md; AC: required keys and enum usage are fully specified for canonical_paths, dataset_readiness, interface_registry, schema_ownership_map, requirement_traceability, and architecture source).
+- [x] T005 Define shared provenance/readiness enum and core metadata schemas in src/models/readiness_models.py and src/models/registry_models.py (Files: src/models/readiness_models.py, src/models/registry_models.py; AC: enum exactly matches four canonical statuses and base models align with data-model.md).
+- [x] T006 [P] Implement canonical path validator scaffolding and strict path normalization rules in src/validators/path_validator.py (Files: src/validators/path_validator.py; AC: validator checks required paths against canonical inventory and reports missing/invalid paths deterministically).
+- [x] T007 [P] Implement dataset readiness validator scaffolding for existence/parseability/schema-semantic mismatch flags in src/validators/readiness_validator.py (Files: src/validators/readiness_validator.py; AC: validator emits readiness status + mismatch categories without altering canonical semantics).
+- [x] T008 Create foundation CLI orchestration skeleton for validation entrypoints in src/cli/foundation.py (Files: src/cli/foundation.py; AC: CLI commands route to path/readiness validators and only produce foundational metadata outputs).
+- [x] T009 Define artifact contract documentation for all foundational source-of-truth assets in contracts/artifact_contracts.md (Files: contracts/artifact_contracts.md; AC: required keys and enum usage are fully specified for canonical_paths, dataset_readiness, interface_registry, schema_ownership_map, requirement_traceability, and architecture source).
 
 **Checkpoint**: Foundation code/contracts in place; user-story artifact authoring can proceed.
 
@@ -44,11 +44,11 @@
 
 **Independent Test**: Reviewer can locate canonical repository structure, canonical output datasets, and path/readiness baseline artifacts without rediscovery.
 
-- [ ] T010 [US1] Author canonical path inventory with required root targets and output dataset paths in contracts/canonical_paths.yaml (Files: contracts/canonical_paths.yaml; AC: includes all authoritative paths from plan with path_type, required flag, owner_team, and status fields).
-- [ ] T011 [P] [US1] Register canonical dataset surface entries for six governed outputs in contracts/dataset_readiness.json (Files: contracts/dataset_readiness.json; AC: contains dataset_id, canonical_path, schema_name, producer_system, consumer_systems, readiness_status, mismatch_refs for all six datasets).
-- [ ] T012 [US1] Seed readiness validation output index from current repository evidence in validation_reports/readiness_index.json (Files: validation_reports/readiness_index.json; AC: each governed dataset has readiness entry with one allowed status and evidence notes).
-- [ ] T013 [US1] Seed mismatch/violation index capturing current actual-vs-canonical gaps in violation_log/mismatch_index.json (Files: violation_log/mismatch_index.json; AC: mismatches are explicit, canonical target remains unchanged, and resolution_type is migration/normalization/both).
-- [ ] T014 [US1] Update root README guidance for platform foundation artifacts and canonical path policy in README.md (Files: README.md; AC: README documents where each foundational artifact lives and states that later features must consume, not redefine, these assets).
+- [x] T010 [US1] Author canonical path inventory with required root targets and output dataset paths in contracts/canonical_paths.yaml (Files: contracts/canonical_paths.yaml; AC: includes all authoritative paths from plan with path_type, required flag, owner_team, and status fields).
+- [x] T011 [P] [US1] Register canonical dataset surface entries for six governed outputs in contracts/dataset_readiness.json (Files: contracts/dataset_readiness.json; AC: contains dataset_id, canonical_path, schema_name, producer_system, consumer_systems, readiness_status, mismatch_refs for all six datasets).
+- [x] T012 [US1] Seed readiness validation output index from current repository evidence in validation_reports/readiness_index.json (Files: validation_reports/readiness_index.json; AC: each governed dataset has readiness entry with one allowed status and evidence notes).
+- [x] T013 [US1] Seed mismatch/violation index capturing current actual-vs-canonical gaps in violation_log/mismatch_index.json (Files: violation_log/mismatch_index.json; AC: mismatches are explicit, canonical target remains unchanged, and resolution_type is migration/normalization/both).
+- [x] T014 [US1] Update root README guidance for platform foundation artifacts and canonical path policy in README.md (Files: README.md; AC: README documents where each foundational artifact lives and states that later features must consume, not redefine, these assets).
 
 **Checkpoint**: Canonical project surface is defined and reviewable as MVP foundation.
 
@@ -60,11 +60,11 @@
 
 **Independent Test**: Reviewer can trace every interface arrow to producer/consumer ownership and view governed flow in architecture source.
 
-- [ ] T015 [US2] Create versioned inter-system interface registry aligned to required contract arrows in contracts/interface_registry.yaml (Files: contracts/interface_registry.yaml; AC: every interface has interface_id, version, source_system, target_system, dataset_refs, ownership_ref, status).
-- [ ] T016 [P] [US2] Create schema ownership map for producer/consumer accountability and blast-radius context in contracts/schema_ownership_map.yaml (Files: contracts/schema_ownership_map.yaml; AC: each schema ownership record includes producer_owner, consumer_owners, migration_required, blast_radius_notes, and status).
-- [ ] T017 [US2] Author reusable Mermaid data flow architecture source covering six datasets and interface links in contracts/data_flow_architecture.mmd (Files: contracts/data_flow_architecture.mmd; AC: diagram includes all governed datasets, interface transitions, and ownership/readiness dependency edges).
-- [ ] T018 [US2] Document architecture artifact maintenance and versioning rules in contracts/architecture.md (Files: contracts/architecture.md; AC: defines update workflow, versioning conventions, and consistency checks against interface and ownership registries).
-- [ ] T019 [US2] Initialize schema snapshot index baseline for future schema evolution features in schema_snapshots/index.json (Files: schema_snapshots/index.json; AC: index references governed datasets/interfaces and clearly indicates baseline-only state without implementing diffing).
+- [x] T015 [US2] Create versioned inter-system interface registry aligned to required contract arrows in contracts/interface_registry.yaml (Files: contracts/interface_registry.yaml; AC: every interface has interface_id, version, source_system, target_system, dataset_refs, ownership_ref, status).
+- [x] T016 [P] [US2] Create schema ownership map for producer/consumer accountability and blast-radius context in contracts/schema_ownership_map.yaml (Files: contracts/schema_ownership_map.yaml; AC: each schema ownership record includes producer_owner, consumer_owners, migration_required, blast_radius_notes, and status).
+- [x] T017 [US2] Author reusable Mermaid data flow architecture source covering six datasets and interface links in contracts/data_flow_architecture.mmd (Files: contracts/data_flow_architecture.mmd; AC: diagram includes all governed datasets, interface transitions, and ownership/readiness dependency edges).
+- [x] T018 [US2] Document architecture artifact maintenance and versioning rules in contracts/architecture.md (Files: contracts/architecture.md; AC: defines update workflow, versioning conventions, and consistency checks against interface and ownership registries).
+- [x] T019 [US2] Initialize schema snapshot index baseline for future schema evolution features in schema_snapshots/index.json (Files: schema_snapshots/index.json; AC: index references governed datasets/interfaces and clearly indicates baseline-only state without implementing diffing).
 
 **Checkpoint**: Interface and architecture boundaries are stable and consumable by downstream capabilities.
 
@@ -76,10 +76,10 @@
 
 **Independent Test**: Reviewer can verify requirement coverage, mismatch documentation, migration intent, and dataset readiness statuses from foundation artifacts alone.
 
-- [ ] T020 [US3] Build platform requirement traceability map linking FR/SC items to concrete artifacts in contracts/requirement_traceability.yaml (Files: contracts/requirement_traceability.yaml; AC: each requirement entry has artifact_paths, coverage_type, status; no orphaned high-priority requirements).
-- [ ] T021 [US3] Author foundational domain and schema notes linked to datasets/interfaces and mismatch records in DOMAIN_NOTES.md (Files: DOMAIN_NOTES.md; AC: includes actual-vs-canonical differences, migration/normalization requirements, semantic risk notes, and references to readiness/mismatch artifacts).
-- [ ] T022 [P] [US3] Produce foundation report scaffold summarizing readiness posture and unresolved gaps in enforcer_report/foundation_report.md (Files: enforcer_report/foundation_report.md; AC: summarizes status counts and open blockers without implementing operational reporting engine behavior).
-- [ ] T023 [US3] Backfill statuses across all foundational artifacts to enforce controlled enum consistency in contracts/canonical_paths.yaml, contracts/dataset_readiness.json, contracts/interface_registry.yaml, contracts/schema_ownership_map.yaml, contracts/requirement_traceability.yaml, validation_reports/readiness_index.json, violation_log/mismatch_index.json (Files: listed artifact files; AC: every record has exactly one allowed status and zero ad hoc labels).
+- [x] T020 [US3] Build platform requirement traceability map linking FR/SC items to concrete artifacts in contracts/requirement_traceability.yaml (Files: contracts/requirement_traceability.yaml; AC: each requirement entry has artifact_paths, coverage_type, status; no orphaned high-priority requirements).
+- [x] T021 [US3] Author foundational domain and schema notes linked to datasets/interfaces and mismatch records in DOMAIN_NOTES.md (Files: DOMAIN_NOTES.md; AC: includes actual-vs-canonical differences, migration/normalization requirements, semantic risk notes, and references to readiness/mismatch artifacts).
+- [x] T022 [P] [US3] Produce foundation report scaffold summarizing readiness posture and unresolved gaps in enforcer_report/foundation_report.md (Files: enforcer_report/foundation_report.md; AC: summarizes status counts and open blockers without implementing operational reporting engine behavior).
+- [x] T023 [US3] Backfill statuses across all foundational artifacts to enforce controlled enum consistency in contracts/canonical_paths.yaml, contracts/dataset_readiness.json, contracts/interface_registry.yaml, contracts/schema_ownership_map.yaml, contracts/requirement_traceability.yaml, validation_reports/readiness_index.json, violation_log/mismatch_index.json (Files: listed artifact files; AC: every record has exactly one allowed status and zero ad hoc labels).
 
 **Checkpoint**: Readiness, gaps, and traceability baseline is complete and independently reviewable.
 
@@ -89,9 +89,9 @@
 
 **Purpose**: Final consistency validation and documentation hardening for handoff to later features.
 
-- [ ] T024 [P] Add artifact schema/examples and maintenance notes to specs feature contracts doc in specs/001-platform-data-surface/contracts/artifact-contracts.md (Files: specs/001-platform-data-surface/contracts/artifact-contracts.md; AC: examples reflect final artifact keys/status enum and align with repository artifacts).
-- [ ] T025 Run foundation quickstart validation walkthrough and update any stale instructions in specs/001-platform-data-surface/quickstart.md (Files: specs/001-platform-data-surface/quickstart.md; AC: all steps reflect actual file names/paths created by this feature).
-- [ ] T026 Produce final structure-and-constraints handoff note clarifying deferred capabilities in specs/001-platform-data-surface/research.md and specs/001-platform-data-surface/plan.md (Files: specs/001-platform-data-surface/research.md, specs/001-platform-data-surface/plan.md; AC: explicitly states Feature 1 does not implement contract execution, violation attribution, schema diffing, AI drift analysis, or operational report generation).
+- [x] T024 [P] Add artifact schema/examples and maintenance notes to specs feature contracts doc in specs/001-platform-data-surface/contracts/artifact-contracts.md (Files: specs/001-platform-data-surface/contracts/artifact-contracts.md; AC: examples reflect final artifact keys/status enum and align with repository artifacts).
+- [x] T025 Run foundation quickstart validation walkthrough and update any stale instructions in specs/001-platform-data-surface/quickstart.md (Files: specs/001-platform-data-surface/quickstart.md; AC: all steps reflect actual file names/paths created by this feature).
+- [x] T026 Produce final structure-and-constraints handoff note clarifying deferred capabilities in specs/001-platform-data-surface/research.md and specs/001-platform-data-surface/plan.md (Files: specs/001-platform-data-surface/research.md, specs/001-platform-data-surface/plan.md; AC: explicitly states Feature 1 does not implement contract execution, violation attribution, schema diffing, AI drift analysis, or operational report generation).
 
 ---
 

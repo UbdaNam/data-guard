@@ -1,0 +1,68 @@
+- requirement_id: FR-001
+  artifact_paths:
+    - contracts/canonical_paths.yaml
+    - README.md
+  coverage_type: direct
+  status: confirmed_from_repository_evidence
+- requirement_id: FR-002
+  artifact_paths:
+    - contracts/canonical_paths.yaml
+    - contracts/dataset_readiness.json
+  coverage_type: direct
+  status: inferred_from_requirement_document
+- requirement_id: FR-003
+  artifact_paths:
+    - contracts/interface_registry.yaml
+  coverage_type: direct
+  status: inferred_from_requirement_document
+- requirement_id: FR-004
+  artifact_paths:
+    - contracts/interface_registry.yaml
+    - contracts/schema_ownership_map.yaml
+  coverage_type: direct
+  status: inferred_from_requirement_document
+- requirement_id: FR-005
+  artifact_paths:
+    - contracts/data_flow_architecture.mmd
+    - contracts/architecture.md
+  coverage_type: direct
+  status: inferred_from_requirement_document
+- requirement_id: FR-006
+  artifact_paths:
+    - violation_log/mismatch_index.json
+    - DOMAIN_NOTES.md
+  coverage_type: direct
+  status: blocked_by_missing_upstream_data
+- requirement_id: FR-007
+  artifact_paths:
+    - DOMAIN_NOTES.md
+    - violation_log/mismatch_index.json
+  coverage_type: direct
+  status: blocked_by_missing_upstream_data
+- requirement_id: FR-008
+  artifact_paths:
+    - contracts/dataset_readiness.json
+    - validation_reports/readiness_index.json
+  coverage_type: direct
+  status: inferred_from_requirement_document
+- requirement_id: FR-009
+  artifact_paths:
+    - contracts/requirement_traceability.yaml
+  coverage_type: direct
+  status: confirmed_from_repository_evidence
+- requirement_id: FR-010
+  artifact_paths:
+    - contracts/generator.py
+    - contracts/runner.py
+    - contracts/attributor.py
+    - contracts/schema_analyzer.py
+    - contracts/ai_extensions.py
+    - contracts/report_generator.py
+  coverage_type: direct
+  status: confirmed_from_repository_evidence
+- requirement_id: FR-011
+  artifact_paths:
+    - spec.md
+    - tasks.md
+  coverage_type: direct
+  status: confirmed_from_repository_evidence

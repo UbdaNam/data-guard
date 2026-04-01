@@ -1,0 +1,32 @@
+[
+  {
+    "dataset_id": "week1.intent_records",
+    "snapshot_ref": "baseline",
+    "status": "inferred_from_requirement_document"
+  },
+  {
+    "dataset_id": "week2.verdicts",
+    "snapshot_ref": "baseline",
+    "status": "inferred_from_requirement_document"
+  },
+  {
+    "dataset_id": "week3.extractions",
+    "snapshot_ref": "baseline",
+    "status": "blocked_by_missing_upstream_data"
+  },
+  {
+    "dataset_id": "week4.lineage_snapshots",
+    "snapshot_ref": "baseline",
+    "status": "inferred_from_requirement_document"
+  },
+  {
+    "dataset_id": "week5.events",
+    "snapshot_ref": "baseline",
+    "status": "pending_migration_or_normalization"
+  },
+  {
+    "dataset_id": "traces.runs",
+    "snapshot_ref": "baseline",
+    "status": "confirmed_from_repository_evidence"
+  }
+]

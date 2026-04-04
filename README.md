@@ -75,6 +75,44 @@ Operational guarantees:
 - Duplicate violation IDs are suppressed on reruns by default.
 - Unsupported validation, schema-evolution, AI-check, or report modes are rejected.
 
+## Schema Evolution Intelligence (Feature 5)
+
+Primary entry point:
+
+- contracts/schema_analyzer.py
+
+Primary governed inputs:
+
+- generated_contracts/*.yaml
+- schema_snapshots/{contract_id}/snapshot_{timestamp}_{schema_hash}.json
+- contracts/interface_registry.yaml
+- contracts/schema_ownership_map.yaml
+- optional: validation_reports/*.json and violation_log/violations.jsonl
+
+Primary generated outputs:
+
+- validation_reports/schema_evolution_{contract_id}.json
+- migration_impact_{contract_id}_{timestamp}.json
+- validation_reports/schema_evolution_run_summary.json
+
+Schema evolution can also be triggered via:
+
+- contracts/schema_analyzer.py --snapshot
+
+Operational guarantees:
+
+- Snapshot writes are deduplicated for no-material-change hashes.
+- Diff output is deterministic (class order then canonical field path order).
+- Compatibility classification is dual-axis (backward/forward) with derived verdict.
+- Migration guidance includes affected consumers, failure modes, checklist actions, and rollback for breaking changes.
+- Missing optional Feature 3/4 context degrades with warnings and completeness flags.
+
+Out-of-scope for Feature 5:
+
+- validation execution
+- git-blame attribution
+- final stakeholder-facing report generation
+
 ## Contract Generation (Feature 2)
 
 Primary entry point:

@@ -1,0 +1,113 @@
+{
+  "affected_consumers": [
+    {
+      "consumer_id": "contract-generation-team",
+      "impact_severity": "medium",
+      "interface_id": "week1-intent-to-contract",
+      "likely_failure_modes": [],
+      "ownership_id": "intent-record-ownership"
+    },
+    {
+      "consumer_id": "platform-foundation",
+      "impact_severity": "medium",
+      "interface_id": "week1-intent-to-contract",
+      "likely_failure_modes": [],
+      "ownership_id": "intent-record-ownership"
+    },
+    {
+      "consumer_id": "report-generation-team",
+      "impact_severity": "medium",
+      "interface_id": "week5-events-to-reporting",
+      "likely_failure_modes": [],
+      "ownership_id": "event-ownership"
+    },
+    {
+      "consumer_id": "schema-evolution-team",
+      "impact_severity": "medium",
+      "interface_id": "week4-lineage-to-evolution",
+      "likely_failure_modes": [],
+      "ownership_id": "lineage-ownership"
+    },
+    {
+      "consumer_id": "validation-runtime-team",
+      "impact_severity": "medium",
+      "interface_id": "week2-verdict-to-validation",
+      "likely_failure_modes": [],
+      "ownership_id": "verdict-ownership"
+    },
+    {
+      "consumer_id": "violation-attribution-team",
+      "impact_severity": "medium",
+      "interface_id": "week3-extraction-to-attribution",
+      "likely_failure_modes": [],
+      "ownership_id": "extraction-ownership"
+    }
+  ],
+  "analysis_id": "3a4b6243a48dd905",
+  "compatibility_verdict": {
+    "is_backward_compatible": true,
+    "is_forward_compatible": true,
+    "rationale": "Baseline established: no comparison snapshot available.",
+    "verdict": "fully-compatible"
+  },
+  "confidence_change_caused_breakage": 0.0,
+  "contract_id": "week3_extractions.v1",
+  "enrichment_sources": {
+    "baseline_only": true
+  },
+  "human_diff_summary": "week3_extractions.v1 changed with 0 change(s); compatibility verdict is fully-compatible.",
+  "migration_checklist": [
+    {
+      "action": "Validate consumer mapping compatibility for week3_extractions.v1",
+      "order": 1,
+      "owner": "contract-generation-team",
+      "rollback_step": "Restore previous schema snapshot and redeploy consumer adapter",
+      "target": "week1-intent-to-contract",
+      "verification": "Run integration validation against updated schema evolution report"
+    },
+    {
+      "action": "Validate consumer mapping compatibility for week3_extractions.v1",
+      "order": 2,
+      "owner": "platform-foundation",
+      "rollback_step": "Restore previous schema snapshot and redeploy consumer adapter",
+      "target": "week1-intent-to-contract",
+      "verification": "Run integration validation against updated schema evolution report"
+    },
+    {
+      "action": "Validate consumer mapping compatibility for week3_extractions.v1",
+      "order": 3,
+      "owner": "report-generation-team",
+      "rollback_step": "Restore previous schema snapshot and redeploy consumer adapter",
+      "target": "week5-events-to-reporting",
+      "verification": "Run integration validation against updated schema evolution report"
+    },
+    {
+      "action": "Validate consumer mapping compatibility for week3_extractions.v1",
+      "order": 4,
+      "owner": "schema-evolution-team",
+      "rollback_step": "Restore previous schema snapshot and redeploy consumer adapter",
+      "target": "week4-lineage-to-evolution",
+      "verification": "Run integration validation against updated schema evolution report"
+    },
+    {
+      "action": "Validate consumer mapping compatibility for week3_extractions.v1",
+      "order": 5,
+      "owner": "validation-runtime-team",
+      "rollback_step": "Restore previous schema snapshot and redeploy consumer adapter",
+      "target": "week2-verdict-to-validation",
+      "verification": "Run integration validation against updated schema evolution report"
+    },
+    {
+      "action": "Validate consumer mapping compatibility for week3_extractions.v1",
+      "order": 6,
+      "owner": "violation-attribution-team",
+      "rollback_step": "Restore previous schema snapshot and redeploy consumer adapter",
+      "target": "week3-extraction-to-attribution",
+      "verification": "Run integration validation against updated schema evolution report"
+    }
+  ],
+  "report_id": "7b22616e616c7973",
+  "rollback_guidance": [],
+  "structured_diff": [],
+  "urgency": "low"
+}

@@ -1,0 +1,397 @@
+{
+  "contract_id": "week3_extractions.v1",
+  "fields": [
+    {
+      "enum_values": [
+        "gold",
+        "silver",
+        "bronze"
+      ],
+      "maximum": null,
+      "minimum": null,
+      "nested_kind": "scalar",
+      "nullable": false,
+      "path": "category",
+      "pattern": null,
+      "raw_constraints": {
+        "enum": {
+          "accepted_values": [
+            "gold",
+            "silver",
+            "bronze"
+          ]
+        },
+        "required": {
+          "presence_rate": 1.0
+        },
+        "uniqueness": {
+          "uniqueness_rate": 1.0
+        }
+      },
+      "required": true,
+      "type": "str"
+    },
+    {
+      "enum_values": [
+        "{'name': 'Acme', 'score': 92.5}",
+        "{'name': 'Beta', 'score': 81.0}",
+        "{'name': 'Gamma', 'score': 77.3}"
+      ],
+      "maximum": null,
+      "minimum": null,
+      "nested_kind": "object",
+      "nullable": false,
+      "path": "entity",
+      "pattern": null,
+      "raw_constraints": {
+        "enum": {
+          "accepted_values": [
+            "{'name': 'Acme', 'score': 92.5}",
+            "{'name': 'Beta', 'score': 81.0}",
+            "{'name': 'Gamma', 'score': 77.3}"
+          ]
+        },
+        "required": {
+          "presence_rate": 1.0
+        },
+        "uniqueness": {
+          "uniqueness_rate": 1.0
+        }
+      },
+      "required": true,
+      "type": "object"
+    },
+    {
+      "enum_values": [
+        "Acme",
+        "Beta",
+        "Gamma"
+      ],
+      "maximum": null,
+      "minimum": null,
+      "nested_kind": "scalar",
+      "nullable": false,
+      "path": "entity.name",
+      "pattern": null,
+      "raw_constraints": {
+        "enum": {
+          "accepted_values": [
+            "Acme",
+            "Beta",
+            "Gamma"
+          ]
+        },
+        "required": {
+          "presence_rate": 1.0
+        },
+        "uniqueness": {
+          "uniqueness_rate": 1.0
+        }
+      },
+      "required": true,
+      "type": "str"
+    },
+    {
+      "enum_values": [
+        "92.5",
+        "81.0",
+        "77.3"
+      ],
+      "maximum": 92.5,
+      "minimum": 77.3,
+      "nested_kind": "scalar",
+      "nullable": false,
+      "path": "entity.score",
+      "pattern": null,
+      "raw_constraints": {
+        "enum": {
+          "accepted_values": [
+            "92.5",
+            "81.0",
+            "77.3"
+          ]
+        },
+        "positivity": {
+          "non_negative": true
+        },
+        "range": {
+          "max": 92.5,
+          "min": 77.3
+        },
+        "required": {
+          "presence_rate": 1.0
+        },
+        "uniqueness": {
+          "uniqueness_rate": 1.0
+        }
+      },
+      "required": true,
+      "type": "float"
+    },
+    {
+      "enum_values": [
+        "2026-04-01T10:00:00Z",
+        "2026-04-01T10:01:00Z",
+        "2026-04-01T10:02:00Z"
+      ],
+      "maximum": null,
+      "minimum": null,
+      "nested_kind": "scalar",
+      "nullable": false,
+      "path": "event_ts",
+      "pattern": null,
+      "raw_constraints": {
+        "enum": {
+          "accepted_values": [
+            "2026-04-01T10:00:00Z",
+            "2026-04-01T10:01:00Z",
+            "2026-04-01T10:02:00Z"
+          ]
+        },
+        "required": {
+          "presence_rate": 1.0
+        },
+        "uniqueness": {
+          "uniqueness_rate": 1.0
+        }
+      },
+      "required": true,
+      "type": "str"
+    },
+    {
+      "enum_values": [
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "maximum": null,
+      "minimum": null,
+      "nested_kind": "scalar",
+      "nullable": false,
+      "path": "record_id",
+      "pattern": null,
+      "raw_constraints": {
+        "enum": {
+          "accepted_values": [
+            "r1",
+            "r2",
+            "r3"
+          ]
+        },
+        "required": {
+          "presence_rate": 1.0
+        },
+        "uniqueness": {
+          "uniqueness_rate": 1.0
+        }
+      },
+      "required": true,
+      "type": "str"
+    }
+  ],
+  "metadata": {
+    "dataset_id": "week3.extractions",
+    "normalization_version": "feature5.v1",
+    "schema_name": "extraction_v1"
+  },
+  "rules": [
+    {
+      "rule_id": "week3_extractions.category.enum",
+      "rule_payload": {
+        "accepted_values": [
+          "gold",
+          "silver",
+          "bronze"
+        ]
+      },
+      "rule_scope": "field",
+      "rule_type": "enum"
+    },
+    {
+      "rule_id": "week3_extractions.category.required",
+      "rule_payload": {
+        "presence_rate": 1.0
+      },
+      "rule_scope": "field",
+      "rule_type": "required"
+    },
+    {
+      "rule_id": "week3_extractions.category.uniqueness",
+      "rule_payload": {
+        "uniqueness_rate": 1.0
+      },
+      "rule_scope": "field",
+      "rule_type": "uniqueness"
+    },
+    {
+      "rule_id": "week3_extractions.dataset.required_schema",
+      "rule_payload": {
+        "rule": "must_align_to_canonical_schema"
+      },
+      "rule_scope": "dataset",
+      "rule_type": "dataset_check"
+    },
+    {
+      "rule_id": "week3_extractions.entity.enum",
+      "rule_payload": {
+        "accepted_values": [
+          "{'name': 'Acme', 'score': 92.5}",
+          "{'name': 'Beta', 'score': 81.0}",
+          "{'name': 'Gamma', 'score': 77.3}"
+        ]
+      },
+      "rule_scope": "field",
+      "rule_type": "enum"
+    },
+    {
+      "rule_id": "week3_extractions.entity.name.enum",
+      "rule_payload": {
+        "accepted_values": [
+          "Acme",
+          "Beta",
+          "Gamma"
+        ]
+      },
+      "rule_scope": "field",
+      "rule_type": "enum"
+    },
+    {
+      "rule_id": "week3_extractions.entity.name.required",
+      "rule_payload": {
+        "presence_rate": 1.0
+      },
+      "rule_scope": "field",
+      "rule_type": "required"
+    },
+    {
+      "rule_id": "week3_extractions.entity.name.uniqueness",
+      "rule_payload": {
+        "uniqueness_rate": 1.0
+      },
+      "rule_scope": "field",
+      "rule_type": "uniqueness"
+    },
+    {
+      "rule_id": "week3_extractions.entity.required",
+      "rule_payload": {
+        "presence_rate": 1.0
+      },
+      "rule_scope": "field",
+      "rule_type": "required"
+    },
+    {
+      "rule_id": "week3_extractions.entity.score.enum",
+      "rule_payload": {
+        "accepted_values": [
+          "92.5",
+          "81.0",
+          "77.3"
+        ]
+      },
+      "rule_scope": "field",
+      "rule_type": "enum"
+    },
+    {
+      "rule_id": "week3_extractions.entity.score.positivity",
+      "rule_payload": {
+        "non_negative": true
+      },
+      "rule_scope": "field",
+      "rule_type": "positivity"
+    },
+    {
+      "rule_id": "week3_extractions.entity.score.range",
+      "rule_payload": {
+        "max": 92.5,
+        "min": 77.3
+      },
+      "rule_scope": "field",
+      "rule_type": "range"
+    },
+    {
+      "rule_id": "week3_extractions.entity.score.required",
+      "rule_payload": {
+        "presence_rate": 1.0
+      },
+      "rule_scope": "field",
+      "rule_type": "required"
+    },
+    {
+      "rule_id": "week3_extractions.entity.score.uniqueness",
+      "rule_payload": {
+        "uniqueness_rate": 1.0
+      },
+      "rule_scope": "field",
+      "rule_type": "uniqueness"
+    },
+    {
+      "rule_id": "week3_extractions.entity.uniqueness",
+      "rule_payload": {
+        "uniqueness_rate": 1.0
+      },
+      "rule_scope": "field",
+      "rule_type": "uniqueness"
+    },
+    {
+      "rule_id": "week3_extractions.event_ts.enum",
+      "rule_payload": {
+        "accepted_values": [
+          "2026-04-01T10:00:00Z",
+          "2026-04-01T10:01:00Z",
+          "2026-04-01T10:02:00Z"
+        ]
+      },
+      "rule_scope": "field",
+      "rule_type": "enum"
+    },
+    {
+      "rule_id": "week3_extractions.event_ts.required",
+      "rule_payload": {
+        "presence_rate": 1.0
+      },
+      "rule_scope": "field",
+      "rule_type": "required"
+    },
+    {
+      "rule_id": "week3_extractions.event_ts.uniqueness",
+      "rule_payload": {
+        "uniqueness_rate": 1.0
+      },
+      "rule_scope": "field",
+      "rule_type": "uniqueness"
+    },
+    {
+      "rule_id": "week3_extractions.record_id.enum",
+      "rule_payload": {
+        "accepted_values": [
+          "r1",
+          "r2",
+          "r3"
+        ]
+      },
+      "rule_scope": "field",
+      "rule_type": "enum"
+    },
+    {
+      "rule_id": "week3_extractions.record_id.required",
+      "rule_payload": {
+        "presence_rate": 1.0
+      },
+      "rule_scope": "field",
+      "rule_type": "required"
+    },
+    {
+      "rule_id": "week3_extractions.record_id.uniqueness",
+      "rule_payload": {
+        "uniqueness_rate": 1.0
+      },
+      "rule_scope": "field",
+      "rule_type": "uniqueness"
+    }
+  ],
+  "schema_hash": "8abf8132cda74dca",
+  "schema_version": "1.0",
+  "snapshot_id": "8abf8132cda74dca",
+  "snapshot_timestamp": "2026-04-04T12:56:18Z",
+  "source_contract_path": "C:/Abdu/data-guard/generated_contracts/week3_extractions.yaml"
+}

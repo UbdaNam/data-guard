@@ -1,0 +1,37 @@
+{
+  "failed_contracts": 0,
+  "failures": [],
+  "processed_contracts": 2,
+  "results": [
+    {
+      "contract_id": "week3_extractions.v1",
+      "evolution_report": "C:/Abdu/data-guard/validation_reports/schema_evolution_week3_extractions.v1.json",
+      "mode": "baseline_established",
+      "snapshot": {
+        "no_material_change": true,
+        "snapshot_id": "8abf8132cda74dca",
+        "snapshot_path": "C:/Abdu/data-guard/schema_snapshots/week3_extractions.v1/snapshot_20260404_125618_8abf8132cda74dca.json",
+        "written": false
+      },
+      "warnings": [
+        "no_prior_snapshot"
+      ]
+    },
+    {
+      "contract_id": "week5_events.v1",
+      "evolution_report": "C:/Abdu/data-guard/validation_reports/schema_evolution_week5_events.v1.json",
+      "mode": "baseline_established",
+      "snapshot": {
+        "no_material_change": true,
+        "snapshot_id": "0da27c4fec02171a",
+        "snapshot_path": "C:/Abdu/data-guard/schema_snapshots/week5_events.v1/snapshot_20260404_125618_0da27c4fec02171a.json",
+        "written": false
+      },
+      "warnings": [
+        "no_prior_snapshot"
+      ]
+    }
+  ],
+  "snapshot_only": false,
+  "successful_contracts": 2
+}

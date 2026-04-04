@@ -56,3 +56,12 @@
 - This feature does not execute validation.
 - This feature does not perform git-blame attribution.
 - This feature does not produce final stakeholder-facing reports.
+
+## Validation run notes (2026-04-04)
+
+- Ran `contracts/schema_analyzer.py --snapshot` successfully for Week 3 and Week 5 contracts.
+- Verified snapshot dedupe behavior (`no_material_change=true`) when schema hash matched latest snapshot.
+- Ran `contracts/schema_analyzer.py` successfully and generated baseline-established evolution outputs:
+  - `validation_reports/schema_evolution_week3_extractions.v1.json`
+  - `validation_reports/schema_evolution_week5_events.v1.json`
+- Verified boundary enforcement: `contracts/schema_analyzer.py --validate` is rejected as out of scope.

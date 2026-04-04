@@ -1,0 +1,325 @@
+{
+  "contract_id": "week5_events.v1",
+  "fields": [
+    {
+      "enum_values": [
+        "e1",
+        "e2",
+        "e3"
+      ],
+      "maximum": null,
+      "minimum": null,
+      "nested_kind": "scalar",
+      "nullable": false,
+      "path": "event_id",
+      "pattern": null,
+      "raw_constraints": {
+        "enum": {
+          "accepted_values": [
+            "e1",
+            "e2",
+            "e3"
+          ]
+        },
+        "required": {
+          "presence_rate": 1.0
+        },
+        "uniqueness": {
+          "uniqueness_rate": 1.0
+        }
+      },
+      "required": true,
+      "type": "str"
+    },
+    {
+      "enum_values": [
+        "create",
+        "update",
+        "delete"
+      ],
+      "maximum": null,
+      "minimum": null,
+      "nested_kind": "scalar",
+      "nullable": false,
+      "path": "event_type",
+      "pattern": null,
+      "raw_constraints": {
+        "enum": {
+          "accepted_values": [
+            "create",
+            "update",
+            "delete"
+          ]
+        },
+        "required": {
+          "presence_rate": 1.0
+        },
+        "uniqueness": {
+          "uniqueness_rate": 1.0
+        }
+      },
+      "required": true,
+      "type": "str"
+    },
+    {
+      "enum_values": [
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "maximum": null,
+      "minimum": null,
+      "nested_kind": "scalar",
+      "nullable": false,
+      "path": "record_id",
+      "pattern": null,
+      "raw_constraints": {
+        "enum": {
+          "accepted_values": [
+            "r1",
+            "r2",
+            "r3"
+          ]
+        },
+        "required": {
+          "presence_rate": 1.0
+        },
+        "uniqueness": {
+          "uniqueness_rate": 1.0
+        }
+      },
+      "required": true,
+      "type": "str"
+    },
+    {
+      "enum_values": [
+        "1",
+        "2",
+        "3"
+      ],
+      "maximum": 3.0,
+      "minimum": 1.0,
+      "nested_kind": "scalar",
+      "nullable": false,
+      "path": "severity",
+      "pattern": null,
+      "raw_constraints": {
+        "enum": {
+          "accepted_values": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        "positivity": {
+          "non_negative": true
+        },
+        "range": {
+          "max": 3.0,
+          "min": 1.0
+        },
+        "required": {
+          "presence_rate": 1.0
+        },
+        "uniqueness": {
+          "uniqueness_rate": 1.0
+        }
+      },
+      "required": true,
+      "type": "int"
+    },
+    {
+      "enum_values": [
+        "app-a",
+        "app-b"
+      ],
+      "maximum": null,
+      "minimum": null,
+      "nested_kind": "scalar",
+      "nullable": false,
+      "path": "source",
+      "pattern": null,
+      "raw_constraints": {
+        "enum": {
+          "accepted_values": [
+            "app-a",
+            "app-b"
+          ]
+        },
+        "required": {
+          "presence_rate": 1.0
+        }
+      },
+      "required": true,
+      "type": "str"
+    }
+  ],
+  "metadata": {
+    "dataset_id": "week5.events",
+    "normalization_version": "feature5.v1",
+    "schema_name": "event_v1"
+  },
+  "rules": [
+    {
+      "rule_id": "week5_events.dataset.required_schema",
+      "rule_payload": {
+        "rule": "must_align_to_canonical_schema"
+      },
+      "rule_scope": "dataset",
+      "rule_type": "dataset_check"
+    },
+    {
+      "rule_id": "week5_events.event_id.enum",
+      "rule_payload": {
+        "accepted_values": [
+          "e1",
+          "e2",
+          "e3"
+        ]
+      },
+      "rule_scope": "field",
+      "rule_type": "enum"
+    },
+    {
+      "rule_id": "week5_events.event_id.required",
+      "rule_payload": {
+        "presence_rate": 1.0
+      },
+      "rule_scope": "field",
+      "rule_type": "required"
+    },
+    {
+      "rule_id": "week5_events.event_id.uniqueness",
+      "rule_payload": {
+        "uniqueness_rate": 1.0
+      },
+      "rule_scope": "field",
+      "rule_type": "uniqueness"
+    },
+    {
+      "rule_id": "week5_events.event_type.enum",
+      "rule_payload": {
+        "accepted_values": [
+          "create",
+          "update",
+          "delete"
+        ]
+      },
+      "rule_scope": "field",
+      "rule_type": "enum"
+    },
+    {
+      "rule_id": "week5_events.event_type.required",
+      "rule_payload": {
+        "presence_rate": 1.0
+      },
+      "rule_scope": "field",
+      "rule_type": "required"
+    },
+    {
+      "rule_id": "week5_events.event_type.uniqueness",
+      "rule_payload": {
+        "uniqueness_rate": 1.0
+      },
+      "rule_scope": "field",
+      "rule_type": "uniqueness"
+    },
+    {
+      "rule_id": "week5_events.record_id.enum",
+      "rule_payload": {
+        "accepted_values": [
+          "r1",
+          "r2",
+          "r3"
+        ]
+      },
+      "rule_scope": "field",
+      "rule_type": "enum"
+    },
+    {
+      "rule_id": "week5_events.record_id.required",
+      "rule_payload": {
+        "presence_rate": 1.0
+      },
+      "rule_scope": "field",
+      "rule_type": "required"
+    },
+    {
+      "rule_id": "week5_events.record_id.uniqueness",
+      "rule_payload": {
+        "uniqueness_rate": 1.0
+      },
+      "rule_scope": "field",
+      "rule_type": "uniqueness"
+    },
+    {
+      "rule_id": "week5_events.severity.enum",
+      "rule_payload": {
+        "accepted_values": [
+          "1",
+          "2",
+          "3"
+        ]
+      },
+      "rule_scope": "field",
+      "rule_type": "enum"
+    },
+    {
+      "rule_id": "week5_events.severity.positivity",
+      "rule_payload": {
+        "non_negative": true
+      },
+      "rule_scope": "field",
+      "rule_type": "positivity"
+    },
+    {
+      "rule_id": "week5_events.severity.range",
+      "rule_payload": {
+        "max": 3.0,
+        "min": 1.0
+      },
+      "rule_scope": "field",
+      "rule_type": "range"
+    },
+    {
+      "rule_id": "week5_events.severity.required",
+      "rule_payload": {
+        "presence_rate": 1.0
+      },
+      "rule_scope": "field",
+      "rule_type": "required"
+    },
+    {
+      "rule_id": "week5_events.severity.uniqueness",
+      "rule_payload": {
+        "uniqueness_rate": 1.0
+      },
+      "rule_scope": "field",
+      "rule_type": "uniqueness"
+    },
+    {
+      "rule_id": "week5_events.source.enum",
+      "rule_payload": {
+        "accepted_values": [
+          "app-a",
+          "app-b"
+        ]
+      },
+      "rule_scope": "field",
+      "rule_type": "enum"
+    },
+    {
+      "rule_id": "week5_events.source.required",
+      "rule_payload": {
+        "presence_rate": 1.0
+      },
+      "rule_scope": "field",
+      "rule_type": "required"
+    }
+  ],
+  "schema_hash": "0da27c4fec02171a",
+  "schema_version": "1.0",
+  "snapshot_id": "0da27c4fec02171a",
+  "snapshot_timestamp": "2026-04-04T12:56:18Z",
+  "source_contract_path": "C:/Abdu/data-guard/generated_contracts/week5_events.yaml"
+}

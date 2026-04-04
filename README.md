@@ -113,6 +113,50 @@ Out-of-scope for Feature 5:
 - git-blame attribution
 - final stakeholder-facing report generation
 
+## AI Contract Enforcement Extensions (Feature 6)
+
+Primary entry point:
+
+- contracts/ai_extensions.py
+
+Primary governed inputs:
+
+- outputs/week2/verdicts.jsonl
+- outputs/week3/extractions.jsonl
+- outputs/traces/runs.jsonl
+- generated_contracts/prompt_inputs/week3_prompt_input.schema.json
+- generated_contracts/\*.yaml (governing contract context)
+- contracts/\*.yaml|json (Feature 1 metadata context)
+- optional: validation*reports/schema_evolution*\*.json
+
+Primary generated outputs:
+
+- validation_reports/ai_metrics.json
+- violation_log/ai_violations.jsonl
+- outputs/quarantine/{run*timestamp}*{run_id}.jsonl
+- schema_snapshots/ai/{surface_id}/baseline_token_hash_v1.json
+- schema*snapshots/ai/{surface_id}/comparison*{run*timestamp}*{run_id}.json
+
+AI enforcement can be triggered via:
+
+- python -m contracts.ai_extensions
+
+Operational guarantees:
+
+- Prompt inputs are classified as valid or quarantined with no silent drop.
+- Week 2 structured outputs receive deterministic conformance outcomes.
+- Trace records receive contract outcomes; malformed run IDs/timestamps are recorded as violations.
+- Embedding drift is deterministic (`token_hash_v1`, fixed dimensions, cosine distance).
+- Missing baseline creates baseline; insufficient sample size yields explicit status.
+- Metrics and artifact pointers are written in machine-readable form for downstream reuse.
+
+Out-of-scope for Feature 6:
+
+- replacing the general validation runner
+- git-blame attribution
+- schema evolution classification logic
+- final stakeholder-facing report generation
+
 ## Contract Generation (Feature 2)
 
 Primary entry point:

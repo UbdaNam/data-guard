@@ -60,3 +60,12 @@ python -m contracts.ai_extensions \
 - Confirm metrics file includes totals, rates, trend status, and artifact pointers.
 - Confirm any produced violations include `category`, `surface_id`, and `record_ref`.
 - Confirm drift artifacts include algorithm/version metadata and sample size.
+
+## 7) Execution-backed evidence notes
+
+- Verified run on 2026-04-04 via `python -m contracts.ai_extensions`.
+- Produced `validation_reports/ai_metrics.json` and appended violations to
+  `violation_log/ai_violations.jsonl`.
+- Produced run-scoped quarantine artifact under `outputs/quarantine/`.
+- Drift status reported `insufficient_data` for current sample volume, which
+  matches graceful degradation expectations.

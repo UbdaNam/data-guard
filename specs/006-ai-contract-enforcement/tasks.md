@@ -11,10 +11,10 @@
 
 **Purpose**: Establish Feature 6 module scaffolding and canonical AI artifact roots.
 
-- [ ] T001 Create Feature 6 package scaffold in src/ai_enforcement/**init**.py and src/ai_enforcement/pipeline.py; Files: src/ai_enforcement/**init**.py, src/ai_enforcement/pipeline.py; AC: package imports without runtime errors and pipeline exposes a callable orchestration function.
-- [ ] T002 Create typed model scaffold for AI entities in src/models/ai_enforcement_models.py and export in src/models/**init**.py; Files: src/models/ai_enforcement_models.py, src/models/**init**.py; AC: models compile with `pydantic` and include run, quarantine, violation, drift, and metrics envelopes.
-- [ ] T003 [P] Create validator scaffold for AI artifact payloads in src/validators/ai_enforcement_validator.py and export in src/validators/**init**.py; Files: src/validators/ai_enforcement_validator.py, src/validators/**init**.py; AC: validator module loads and provides validation entrypoints for metrics, violations, quarantine, and drift artifacts.
-- [ ] T004 [P] Add canonical output root initialization helpers in src/ai_enforcement/renderer.py; Files: src/ai_enforcement/renderer.py; AC: helper ensures `validation_reports/`, `violation_log/`, `outputs/quarantine/`, and `schema_snapshots/ai/` exist using deterministic `pathlib` logic.
+- [x] T001 Create Feature 6 package scaffold in src/ai_enforcement/**init**.py and src/ai_enforcement/pipeline.py; Files: src/ai_enforcement/**init**.py, src/ai_enforcement/pipeline.py; AC: package imports without runtime errors and pipeline exposes a callable orchestration function.
+- [x] T002 Create typed model scaffold for AI entities in src/models/ai_enforcement_models.py and export in src/models/**init**.py; Files: src/models/ai_enforcement_models.py, src/models/**init**.py; AC: models compile with `pydantic` and include run, quarantine, violation, drift, and metrics envelopes.
+- [x] T003 [P] Create validator scaffold for AI artifact payloads in src/validators/ai_enforcement_validator.py and export in src/validators/**init**.py; Files: src/validators/ai_enforcement_validator.py, src/validators/**init**.py; AC: validator module loads and provides validation entrypoints for metrics, violations, quarantine, and drift artifacts.
+- [x] T004 [P] Add canonical output root initialization helpers in src/ai_enforcement/renderer.py; Files: src/ai_enforcement/renderer.py; AC: helper ensures `validation_reports/`, `violation_log/`, `outputs/quarantine/`, and `schema_snapshots/ai/` exist using deterministic `pathlib` logic.
 
 ---
 
@@ -24,10 +24,10 @@
 
 **⚠️ CRITICAL**: No user story work begins before this phase is done.
 
-- [ ] T005 Implement Feature 1/2/3/5 artifact ingestion layer in src/ai_enforcement/contract_loader.py; Files: src/ai_enforcement/contract_loader.py; AC: loader resolves canonical metadata and schema artifacts from `contracts/`, `generated_contracts/`, and optional Feature 5 outputs without redefining upstream contracts.
-- [ ] T006 Implement deterministic run metadata and ID utilities in src/ai_enforcement/renderer.py; Files: src/ai_enforcement/renderer.py; AC: run timestamp format is UTC `YYYYMMDDTHHMMSSZ`, run IDs are stable-format UUID/hash strings, and artifact ordering keys are centralized.
-- [ ] T007 Implement CLI scaffold and argument parsing in contracts/ai_extensions.py; Files: contracts/ai_extensions.py; AC: CLI accepts canonical defaults, supports path overrides, validates required `--surface-id` for drift mode, and invokes pipeline without using general runner/attributor/schema analyzer/report generator.
-- [ ] T008 Implement pipeline wiring for staged execution and boundary guards in src/ai_enforcement/pipeline.py; Files: src/ai_enforcement/pipeline.py; AC: pipeline stages are prompt/output/trace/drift/aggregate, boundary guard rejects non-AI runner replacement behavior, and context completeness flags are emitted.
+- [x] T005 Implement Feature 1/2/3/5 artifact ingestion layer in src/ai_enforcement/contract_loader.py; Files: src/ai_enforcement/contract_loader.py; AC: loader resolves canonical metadata and schema artifacts from `contracts/`, `generated_contracts/`, and optional Feature 5 outputs without redefining upstream contracts.
+- [x] T006 Implement deterministic run metadata and ID utilities in src/ai_enforcement/renderer.py; Files: src/ai_enforcement/renderer.py; AC: run timestamp format is UTC `YYYYMMDDTHHMMSSZ`, run IDs are stable-format UUID/hash strings, and artifact ordering keys are centralized.
+- [x] T007 Implement CLI scaffold and argument parsing in contracts/ai_extensions.py; Files: contracts/ai_extensions.py; AC: CLI accepts canonical defaults, supports path overrides, validates required `--surface-id` for drift mode, and invokes pipeline without using general runner/attributor/schema analyzer/report generator.
+- [x] T008 Implement pipeline wiring for staged execution and boundary guards in src/ai_enforcement/pipeline.py; Files: src/ai_enforcement/pipeline.py; AC: pipeline stages are prompt/output/trace/drift/aggregate, boundary guard rejects non-AI runner replacement behavior, and context completeness flags are emitted.
 
 **Checkpoint**: Foundation complete; user stories can now proceed.
 
@@ -41,12 +41,12 @@
 
 ### Implementation for User Story 1
 
-- [ ] T009 [US1] Define the first governed prompt input schema asset in generated_contracts/prompt_inputs/week3_prompt_input.schema.json; Files: generated_contracts/prompt_inputs/week3_prompt_input.schema.json; AC: schema defines required keys/version constraints for Week 3 prompt surface and is discoverable by loader.
-- [ ] T010 [US1] Implement prompt input schema validator in src/ai_enforcement/prompt_validator.py; Files: src/ai_enforcement/prompt_validator.py; AC: validator returns PASS/FAIL/ERROR per record with explicit failure reasons and schema version context.
-- [ ] T011 [US1] Implement quarantine writer with atomic write in src/ai*enforcement/quarantine_writer.py; Files: src/ai_enforcement/quarantine_writer.py; AC: invalid prompts write to `outputs/quarantine/{run_timestamp}*{run_id}.jsonl` in deterministic order and write failure hard-fails run when invalid records exist.
-- [ ] T012 [P] [US1] Implement structured Week 2 output schema validator in src/ai_enforcement/output_validator.py; Files: src/ai_enforcement/output_validator.py; AC: validator detects missing required fields, type mismatches, nested shape violations, and unknown fields per governed schema.
-- [ ] T013 [US1] Implement violation-rate metric calculator for prompt/output surfaces in src/ai_enforcement/metrics.py; Files: src/ai_enforcement/metrics.py; AC: calculator computes $rate = failures / max(processed, 1)$ by schema/prompt version and returns deterministic numeric outputs.
-- [ ] T014 [US1] Integrate prompt/output validators and quarantine flow into pipeline stage orchestration; Files: src/ai_enforcement/pipeline.py, src/ai_enforcement/prompt_validator.py, src/ai_enforcement/output_validator.py, src/ai_enforcement/quarantine_writer.py; AC: processed prompt count equals valid+quarantined and output conformance results are captured for downstream violation writing.
+- [x] T009 [US1] Define the first governed prompt input schema asset in generated_contracts/prompt_inputs/week3_prompt_input.schema.json; Files: generated_contracts/prompt_inputs/week3_prompt_input.schema.json; AC: schema defines required keys/version constraints for Week 3 prompt surface and is discoverable by loader.
+- [x] T010 [US1] Implement prompt input schema validator in src/ai_enforcement/prompt_validator.py; Files: src/ai_enforcement/prompt_validator.py; AC: validator returns PASS/FAIL/ERROR per record with explicit failure reasons and schema version context.
+- [x] T011 [US1] Implement quarantine writer with atomic write in src/ai*enforcement/quarantine_writer.py; Files: src/ai_enforcement/quarantine_writer.py; AC: invalid prompts write to `outputs/quarantine/{run_timestamp}*{run_id}.jsonl` in deterministic order and write failure hard-fails run when invalid records exist.
+- [x] T012 [P] [US1] Implement structured Week 2 output schema validator in src/ai_enforcement/output_validator.py; Files: src/ai_enforcement/output_validator.py; AC: validator detects missing required fields, type mismatches, nested shape violations, and unknown fields per governed schema.
+- [x] T013 [US1] Implement violation-rate metric calculator for prompt/output surfaces in src/ai_enforcement/metrics.py; Files: src/ai_enforcement/metrics.py; AC: calculator computes $rate = failures / max(processed, 1)$ by schema/prompt version and returns deterministic numeric outputs.
+- [x] T014 [US1] Integrate prompt/output validators and quarantine flow into pipeline stage orchestration; Files: src/ai_enforcement/pipeline.py, src/ai_enforcement/prompt_validator.py, src/ai_enforcement/output_validator.py, src/ai_enforcement/quarantine_writer.py; AC: processed prompt count equals valid+quarantined and output conformance results are captured for downstream violation writing.
 
 **Checkpoint**: User Story 1 independently functional.
 
@@ -60,11 +60,11 @@
 
 ### Implementation for User Story 2
 
-- [ ] T015 [US2] Implement LangSmith trace contract validator in src/ai_enforcement/trace_validator.py; Files: src/ai_enforcement/trace_validator.py; AC: validator flags missing run IDs/malformed timestamps/contract field violations and returns machine-readable PASS/FAIL/ERROR records.
-- [ ] T016 [P] [US2] Implement embedding sample selector in src/ai_enforcement/drift.py; Files: src/ai_enforcement/drift.py; AC: selector deterministically extracts governed text samples for `surface_id` with explicit insufficient-data signaling.
-- [ ] T017 [US2] Implement baseline writer/loader under schema_snapshots strategy in src/ai_enforcement/drift.py; Files: src/ai_enforcement/drift.py; AC: baseline persists to `schema_snapshots/ai/{surface_id}/baseline_token_hash_v1.json`, includes algorithm/version metadata, and loader handles missing/unreadable baseline statuses.
-- [ ] T018 [US2] Implement deterministic drift calculator in src/ai_enforcement/drift.py; Files: src/ai_enforcement/drift.py; AC: calculator computes signature vector and cosine distance with fixed preprocessing/dimensions and emits `baseline_created|compared|insufficient_data|baseline_unreadable` statuses.
-- [ ] T019 [US2] Integrate trace and drift stages into pipeline with graceful degradation flags; Files: src/ai_enforcement/pipeline.py, src/ai_enforcement/trace_validator.py, src/ai_enforcement/drift.py; AC: absence of Feature 5 context does not fail run, trace/drift outcomes are included, and partial-context flags are explicit.
+- [x] T015 [US2] Implement LangSmith trace contract validator in src/ai_enforcement/trace_validator.py; Files: src/ai_enforcement/trace_validator.py; AC: validator flags missing run IDs/malformed timestamps/contract field violations and returns machine-readable PASS/FAIL/ERROR records.
+- [x] T016 [P] [US2] Implement embedding sample selector in src/ai_enforcement/drift.py; Files: src/ai_enforcement/drift.py; AC: selector deterministically extracts governed text samples for `surface_id` with explicit insufficient-data signaling.
+- [x] T017 [US2] Implement baseline writer/loader under schema_snapshots strategy in src/ai_enforcement/drift.py; Files: src/ai_enforcement/drift.py; AC: baseline persists to `schema_snapshots/ai/{surface_id}/baseline_token_hash_v1.json`, includes algorithm/version metadata, and loader handles missing/unreadable baseline statuses.
+- [x] T018 [US2] Implement deterministic drift calculator in src/ai_enforcement/drift.py; Files: src/ai_enforcement/drift.py; AC: calculator computes signature vector and cosine distance with fixed preprocessing/dimensions and emits `baseline_created|compared|insufficient_data|baseline_unreadable` statuses.
+- [x] T019 [US2] Integrate trace and drift stages into pipeline with graceful degradation flags; Files: src/ai_enforcement/pipeline.py, src/ai_enforcement/trace_validator.py, src/ai_enforcement/drift.py; AC: absence of Feature 5 context does not fail run, trace/drift outcomes are included, and partial-context flags are explicit.
 
 **Checkpoint**: User Story 2 independently functional.
 
@@ -78,11 +78,11 @@
 
 ### Implementation for User Story 3
 
-- [ ] T020 [US3] Implement AI-specific violation writer in src/ai_enforcement/violation_writer.py; Files: src/ai_enforcement/violation_writer.py; AC: violations append to `violation_log/ai_violations.jsonl` with deterministic in-run order and required fields (`category`, `surface_id`, `record_ref`, `severity`, `evidence`).
-- [ ] T021 [US3] Implement AI metric aggregation model assembly in src/ai_enforcement/metrics.py; Files: src/ai_enforcement/metrics.py, src/models/ai_enforcement_models.py; AC: aggregation emits totals/rates/trend/context completeness/artifact pointers matching data-model contract.
-- [ ] T022 [US3] Implement trend calculation and bounded history merge in src/ai_enforcement/metrics.py; Files: src/ai_enforcement/metrics.py; AC: uses 10-run window, slope-based trend status (`insufficient_history|stable|improving|degrading`), and deterministic history merge behavior when prior metrics are missing.
-- [ ] T023 [US3] Implement AI metrics output writer in src/ai_enforcement/renderer.py; Files: src/ai_enforcement/renderer.py; AC: writes `validation_reports/ai_metrics.json` via atomic replace with sorted keys and validates payload before write.
-- [ ] T024 [US3] Wire violation writer and metrics writer into pipeline completion stage; Files: src/ai_enforcement/pipeline.py, src/ai_enforcement/violation_writer.py, src/ai_enforcement/renderer.py; AC: successful runs always emit metrics file, violations when applicable, and artifact paths referenced in metrics.
+- [x] T020 [US3] Implement AI-specific violation writer in src/ai_enforcement/violation_writer.py; Files: src/ai_enforcement/violation_writer.py; AC: violations append to `violation_log/ai_violations.jsonl` with deterministic in-run order and required fields (`category`, `surface_id`, `record_ref`, `severity`, `evidence`).
+- [x] T021 [US3] Implement AI metric aggregation model assembly in src/ai_enforcement/metrics.py; Files: src/ai_enforcement/metrics.py, src/models/ai_enforcement_models.py; AC: aggregation emits totals/rates/trend/context completeness/artifact pointers matching data-model contract.
+- [x] T022 [US3] Implement trend calculation and bounded history merge in src/ai_enforcement/metrics.py; Files: src/ai_enforcement/metrics.py; AC: uses 10-run window, slope-based trend status (`insufficient_history|stable|improving|degrading`), and deterministic history merge behavior when prior metrics are missing.
+- [x] T023 [US3] Implement AI metrics output writer in src/ai_enforcement/renderer.py; Files: src/ai_enforcement/renderer.py; AC: writes `validation_reports/ai_metrics.json` via atomic replace with sorted keys and validates payload before write.
+- [x] T024 [US3] Wire violation writer and metrics writer into pipeline completion stage; Files: src/ai_enforcement/pipeline.py, src/ai_enforcement/violation_writer.py, src/ai_enforcement/renderer.py; AC: successful runs always emit metrics file, violations when applicable, and artifact paths referenced in metrics.
 
 **Checkpoint**: User Story 3 independently functional.
 
@@ -92,9 +92,9 @@
 
 **Purpose**: Final deterministic behavior checks and operator-facing usage guidance.
 
-- [ ] T025 [P] Add deterministic ordering/reviewability guards and acceptance checks across writers; Files: src/ai_enforcement/renderer.py, src/ai_enforcement/quarantine_writer.py, src/ai_enforcement/violation_writer.py, src/ai_enforcement/drift.py; AC: unchanged inputs produce stable ordering and stable serialization for all generated artifacts.
-- [ ] T026 Update README usage instructions for Feature 6 CLI and artifact semantics; Files: README.md; AC: README documents canonical inputs/outputs, boundary exclusions (no stakeholder report generation/git attribution/general schema evolution logic), and graceful degradation behavior.
-- [ ] T027 Run quickstart validation and document execution-backed evidence notes; Files: specs/006-ai-contract-enforcement/quickstart.md; AC: quickstart reflects validated command flow and confirms expected artifacts in canonical paths.
+- [x] T025 [P] Add deterministic ordering/reviewability guards and acceptance checks across writers; Files: src/ai_enforcement/renderer.py, src/ai_enforcement/quarantine_writer.py, src/ai_enforcement/violation_writer.py, src/ai_enforcement/drift.py; AC: unchanged inputs produce stable ordering and stable serialization for all generated artifacts.
+- [x] T026 Update README usage instructions for Feature 6 CLI and artifact semantics; Files: README.md; AC: README documents canonical inputs/outputs, boundary exclusions (no stakeholder report generation/git attribution/general schema evolution logic), and graceful degradation behavior.
+- [x] T027 Run quickstart validation and document execution-backed evidence notes; Files: specs/006-ai-contract-enforcement/quickstart.md; AC: quickstart reflects validated command flow and confirms expected artifacts in canonical paths.
 
 ---
 

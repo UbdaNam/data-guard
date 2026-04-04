@@ -83,16 +83,16 @@ Primary entry point:
 
 Primary governed inputs:
 
-- generated_contracts/*.yaml
-- schema_snapshots/{contract_id}/snapshot_{timestamp}_{schema_hash}.json
+- generated_contracts/\*.yaml
+- schema*snapshots/{contract_id}/snapshot*{timestamp}\_{schema_hash}.json
 - contracts/interface_registry.yaml
 - contracts/schema_ownership_map.yaml
-- optional: validation_reports/*.json and violation_log/violations.jsonl
+- optional: validation_reports/\*.json and violation_log/violations.jsonl
 
 Primary generated outputs:
 
-- validation_reports/schema_evolution_{contract_id}.json
-- migration_impact_{contract_id}_{timestamp}.json
+- validation*reports/schema_evolution*{contract_id}.json
+- migration*impact*{contract*id}*{timestamp}.json
 - validation_reports/schema_evolution_run_summary.json
 
 Schema evolution can also be triggered via:

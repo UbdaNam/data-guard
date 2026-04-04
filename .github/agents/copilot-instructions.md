@@ -11,6 +11,8 @@ Auto-generated from all feature plans. Last updated: 2026-04-04
 - File-based artifacts (`validation_reports/*.json`, `outputs/week4/lineage_snapshots.jsonl`, `contracts/*.yaml|json`, `generated_contracts/*.yaml`, `violation_log/violations.jsonl`) (004-violation-attribution)
 - Python 3.11+ + `pydantic` (typed models), `PyYAML` (contract/metadata loading), standard library (`json`, `pathlib`, `hashlib`, `datetime`, `dataclasses`, `re`) (005-schema-evolution-intelligence)
 - File-based artifacts (`generated_contracts/*.yaml`, `schema_snapshots/{contract_id}/`, `contracts/*.yaml|json`, `validation_reports/*.json`, `violation_log/violations.jsonl`) (005-schema-evolution-intelligence)
+- Python 3.11+ + `pydantic`, `PyYAML`, Python standard library (`json`, `pathlib`, `hashlib`, `datetime`, `statistics`, `math`, `typing`) (006-ai-contract-enforcement)
+- File-based artifact storage in canonical repository paths (`outputs/`, `validation_reports/`, `violation_log/`, `schema_snapshots/`, `generated_contracts/`, `contracts/`) (006-ai-contract-enforcement)
 
 - Python 3.11+ + `pydantic` (typed models), `PyYAML` (YAML metadata), (001-platform-data-surface)
 
@@ -30,9 +32,9 @@ cd src; pytest; ruff check .
 Python 3.11+: Follow standard conventions
 
 ## Recent Changes
+- 006-ai-contract-enforcement: Added Python 3.11+ + `pydantic`, `PyYAML`, Python standard library (`json`, `pathlib`, `hashlib`, `datetime`, `statistics`, `math`, `typing`)
 - 005-schema-evolution-intelligence: Added Python 3.11+ + `pydantic` (typed models), `PyYAML` (contract/metadata loading), standard library (`json`, `pathlib`, `hashlib`, `datetime`, `dataclasses`, `re`)
 - 004-violation-attribution: Added Python 3.11+ + `pydantic` (typed models), `PyYAML` (Feature 1/2 artifacts), standard library (`json`, `pathlib`, `subprocess`, `datetime`, `hashlib`, `collections`)
-- 003-validation-drift-engine: Added Python 3.11+ + `PyYAML` (contract parsing), `pydantic` (typed models), standard library (`json`, `pathlib`, `re`, `statistics`, `datetime`, `hashlib`)
 
 
 <!-- MANUAL ADDITIONS START -->

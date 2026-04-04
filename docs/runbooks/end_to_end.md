@@ -39,9 +39,18 @@ python -m contracts.generator
 python -m contracts.runner
 ```
 
+Optional mode selection:
+
+```bash
+python -m contracts.runner --mode AUDIT
+python -m contracts.runner --mode WARN
+python -m contracts.runner --mode ENFORCE
+```
+
 **Inputs**
 
 - Generated contracts from step 1
+- `docs/governance/subscriptions_registry.yaml`
 
 **Outputs**
 
@@ -51,6 +60,7 @@ python -m contracts.runner
 **Success signal**
 
 - The command prints the validation summary JSON and exits successfully.
+- Drift warnings appear above 2 standard deviations, failures appear above 3 standard deviations, and `ENFORCE` escalates warnings to failures.
 
 ### 3) Violation attribution
 
@@ -62,6 +72,7 @@ python -m contracts.attributor
 
 - Validation reports
 - `outputs/week4/lineage_snapshots.jsonl`
+- `docs/governance/subscriptions_registry.yaml`
 - `contracts/interface_registry.yaml`
 - `contracts/schema_ownership_map.yaml`
 - Generated contracts

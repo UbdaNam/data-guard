@@ -9,6 +9,16 @@ from typing import Any
 from src.models.contract_models import ContextCoverageStatus, DownstreamContextAnnotation
 
 
+def _timestamp_key(row: dict[str, Any]) -> str:
+    return str(
+        row.get("snapshot_timestamp")
+        or row.get("captured_at")
+        or row.get("run_timestamp")
+        or row.get("generated_at")
+        or ""
+    )
+
+
 def _read_optional_jsonl(path: Path) -> list[dict[str, Any]]:
     if not path.exists():
         return []
@@ -36,13 +46,20 @@ def inject_downstream_context(
     related_owners = [o for o in ownership_map if o.get("schema_name") in {s for i in related_interfaces for s in (i.get("schema_refs") or [])}]
     lineage_rows = _read_optional_jsonl(repo_root / "outputs/week4/lineage_snapshots.jsonl")
 
+    matching_rows = [row for row in lineage_rows if row.get("dataset_id") == dataset_id]
+    latest_timestamp = None
+    if matching_rows:
+        latest_row = max(matching_rows, key=_timestamp_key)
+        latest_timestamp = _timestamp_key(latest_row) or None
+        if latest_timestamp:
+            matching_rows = [row for row in matching_rows if _timestamp_key(row) == latest_timestamp]
+
     downstream_systems = sorted({str(i.get("target_system")) for i in related_interfaces if i.get("target_system")})
     consumed_fields = sorted(
         {
             str(field)
-            for row in lineage_rows
-            if row.get("dataset_id") == dataset_id
-            for field in (row.get("consumed_fields") or [])
+            for row in matching_rows
+            for field in (row.get("consumed_fields") or row.get("consumed_columns") or [])
         }
     )
 
@@ -74,4 +91,5 @@ def inject_downstream_context(
             "contracts/schema_ownership_map.yaml",
             "outputs/week4/lineage_snapshots.jsonl",
         ],
+        latest_snapshot_timestamp=latest_timestamp,
     )

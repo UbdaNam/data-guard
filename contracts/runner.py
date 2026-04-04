@@ -21,6 +21,18 @@ from src.validators.validation_report_validator import validate_report_model
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
+def _apply_mode_to_results(results: list[ValidationResult], mode: str) -> list[ValidationResult]:
+    normalized: list[ValidationResult] = []
+    for result in results:
+        updated = result.model_copy(deep=True)
+        if mode == "ENFORCE" and updated.status == ValidationStatus.WARN:
+            updated.status = ValidationStatus.FAIL
+            if not updated.message:
+                updated.message = "Warning escalated to failure in ENFORCE mode"
+        normalized.append(updated)
+    return normalized
+
+
 def _snapshot_id(snapshot_path: str) -> str:
     path = Path(snapshot_path)
     if not path.exists():
@@ -40,7 +52,7 @@ def _contract_load_error_result(contract_id: str, error: str) -> ValidationResul
     )
 
 
-def run_validation(contract_ids: list[str] | None = None, baseline_refresh: bool = False, sample_limit: int = 5) -> dict[str, Any]:
+def run_validation(contract_ids: list[str] | None = None, baseline_refresh: bool = False, sample_limit: int = 5, mode: str = "WARN") -> dict[str, Any]:
     context = build_contract_load_context(REPO_ROOT)
     contract_paths = sorted(context.contracts_dir.glob("*.yaml"))
     requested = set(contract_ids or [])
@@ -75,7 +87,7 @@ def run_validation(contract_ids: list[str] | None = None, baseline_refresh: bool
                 contract_id=contract_id,
                 snapshot_id="unknown",
                 run_timestamp=new_timestamp(),
-                results=[_contract_load_error_result(contract_id, error_message)],
+                results=_apply_mode_to_results([_contract_load_error_result(contract_id, error_message)], mode),
             )
             report_path = write_report(report, REPO_ROOT / "validation_reports")
             summary["generated_reports"] += 1
@@ -125,6 +137,8 @@ def run_validation(contract_ids: list[str] | None = None, baseline_refresh: bool
                 baseline_store = BaselineStore(REPO_ROOT)
                 baseline_store.update_from_profiles(loaded_contract.contract_id, numeric_profiles, refresh_allowed=baseline_refresh)
 
+        results = _apply_mode_to_results(results, mode)
+
         run_timestamp = new_timestamp()
         report = summarize_results(
             report_id=new_report_id(),
@@ -153,6 +167,7 @@ def run_validation(contract_ids: list[str] | None = None, baseline_refresh: bool
         status="completed_with_errors" if summary["failed_contracts"] else "completed",
     )
     summary["validation_run"] = validation_run.model_dump(mode="json")
+    summary["mode"] = mode
     return summary
 
 
@@ -161,11 +176,12 @@ def main() -> int:
     parser.add_argument("--contracts", nargs="*", help="Specific contract ids or file stems to execute")
     parser.add_argument("--baseline-refresh", action="store_true", help="Allow baseline overwrite during this run")
     parser.add_argument("--sample-limit", type=int, default=5, help="Maximum failing samples to capture per check")
+    parser.add_argument("--mode", choices=["AUDIT", "WARN", "ENFORCE"], default="WARN", help="Validation escalation mode")
     args = parser.parse_args()
 
-    result = run_validation(contract_ids=args.contracts, baseline_refresh=args.baseline_refresh, sample_limit=args.sample_limit)
+    result = run_validation(contract_ids=args.contracts, baseline_refresh=args.baseline_refresh, sample_limit=args.sample_limit, mode=args.mode)
     print(json.dumps(result, indent=2, sort_keys=True))
-    return 0
+    return 0 if args.mode in {"AUDIT", "WARN"} else (0 if not result.get("failed_contracts") else 1)
 
 
 if __name__ == "__main__":

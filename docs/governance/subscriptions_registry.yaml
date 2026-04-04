@@ -1,0 +1,50 @@
+version: 1
+subscriptions:
+  - interface_id: feature2_contract_generation
+    producer: upstream_canonical_dataset
+    consumer: contracts/generator.py
+    schema_or_record_type: governed_dataset_snapshot
+    criticality: critical
+    dependency_type: direct
+    directness: direct
+    notes: Canonical dataset inputs flow into contract generation.
+  - interface_id: feature3_validation_runner
+    producer: generated_contracts
+    consumer: contracts/runner.py
+    schema_or_record_type: contract_yaml
+    criticality: high
+    dependency_type: direct
+    directness: direct
+    notes: Generated contracts are executed by the validation runner.
+  - interface_id: feature4_violation_attribution
+    producer: validation_reports
+    consumer: contracts/attributor.py
+    schema_or_record_type: violation_records
+    criticality: high
+    dependency_type: direct
+    directness: direct
+    notes: Violation reports feed the attribution and blast-radius engine.
+  - interface_id: feature5_schema_evolution
+    producer: validation_reports
+    consumer: contracts/schema_analyzer.py
+    schema_or_record_type: schema_evolution_reports
+    criticality: high
+    dependency_type: direct
+    directness: direct
+    notes: Validation outputs drive schema compatibility analysis.
+  - interface_id: feature6_ai_enforcement
+    producer: validation_reports
+    consumer: contracts/ai_extensions.py
+    schema_or_record_type: ai_violation_records
+    criticality: critical
+    dependency_type: direct
+    directness: direct
+    notes: AI prompt, output, and trace enforcement remains governed by validation outputs.
+  - interface_id: feature7_operational_reporting
+    producer: validation_reports
+    consumer: contracts/report_generator.py
+    schema_or_record_type: reporting_artifacts
+    criticality: medium
+    dependency_type: direct
+    directness: direct
+    notes: Reporting consumes validated artifacts and publishes the operational summary.

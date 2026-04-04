@@ -41,12 +41,14 @@ class ProfiledField(BaseModel):
     observed_types: list[str] = Field(default_factory=list)
     presence_rate: float = 0.0
     null_rate: float = 0.0
-    numeric_stats: dict[str, float] | None = None
+    numeric_stats: dict[str, Any] | None = None
     candidate_enum_values: list[str] | None = None
     uniqueness_rate: float | None = None
     pattern_candidates: list[str] | None = None
     semantic_confidence: SemanticConfidence = SemanticConfidence.medium
     uncertainty_note: str | None = None
+    annotation_note: str | None = None
+    annotation_source: str | None = None
 
 
 class InvariantClause(BaseModel):
@@ -66,6 +68,7 @@ class DownstreamContextAnnotation(BaseModel):
     consumer_change_sensitivity: list[dict[str, Any]] = Field(default_factory=list)
     coverage_status: ContextCoverageStatus = ContextCoverageStatus.unknown
     context_sources: list[str] = Field(default_factory=list)
+    latest_snapshot_timestamp: str | None = None
 
 
 class CanonicalMismatchRecord(BaseModel):

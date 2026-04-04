@@ -8,6 +8,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
+from contracts.artifact_paths import NUMERIC_BASELINES_PATH
 from src.models.validation_models import BaselineStatistic, NumericProfile
 
 BASELINE_FILE_NAME = "baselines.json"
@@ -19,12 +20,30 @@ class BaselineStore:
 
     @property
     def path(self) -> Path:
-        return self.repo_root / "schema_snapshots" / BASELINE_FILE_NAME
+        return NUMERIC_BASELINES_PATH
 
     def _read_payload(self) -> dict[str, Any]:
         if not self.path.exists():
             return {"version": 1, "contracts": {}}
-        return json.loads(self.path.read_text(encoding="utf-8"))
+        payload = json.loads(self.path.read_text(encoding="utf-8"))
+        if not isinstance(payload, dict):
+            return {"version": 1, "contracts": {}}
+        return payload
+
+    @staticmethod
+    def _coerce_baseline(raw: dict[str, Any], contract_id: str, column_name: str) -> BaselineStatistic:
+        sample_size = raw.get("sample_count", raw.get("sample_size", 0))
+        return BaselineStatistic(
+            contract_id=str(raw.get("contract_id") or contract_id),
+            column_name=str(raw.get("column_name") or column_name),
+            mean=float(raw.get("mean", 0.0)),
+            stddev=float(raw.get("stddev", 0.0)),
+            min=float(raw.get("min", 0.0)),
+            max=float(raw.get("max", 0.0)),
+            sample_size=int(sample_size or 0),
+            created_at=str(raw.get("created_at") or raw.get("generated_at") or datetime.now(UTC).isoformat()),
+            updated_at=str(raw.get("updated_at") or raw.get("generated_at") or datetime.now(UTC).isoformat()),
+        )
 
     def load(self) -> dict[str, dict[str, BaselineStatistic]]:
         payload = self._read_payload()
@@ -32,18 +51,41 @@ class BaselineStore:
         baselines: dict[str, dict[str, BaselineStatistic]] = {}
         for contract_id, contract_data in contracts.items():
             field_map: dict[str, BaselineStatistic] = {}
-            for column_name, raw in (contract_data or {}).items():
-                if isinstance(raw, dict):
-                    field_map[column_name] = BaselineStatistic.model_validate(raw)
-            baselines[contract_id] = field_map
+            if isinstance(contract_data, list):
+                for raw in contract_data:
+                    if isinstance(raw, dict):
+                        column_name = str(raw.get("column_name") or raw.get("field_name") or "unknown")
+                        field_map[column_name] = self._coerce_baseline(raw, str(contract_id), column_name)
+            else:
+                for column_name, raw in (contract_data or {}).items():
+                    if isinstance(raw, dict):
+                        field_map[column_name] = self._coerce_baseline(raw, str(contract_id), str(column_name))
+            baselines[str(contract_id)] = field_map
         return baselines
 
     def save(self, baselines: dict[str, dict[str, BaselineStatistic]]) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        payload: dict[str, Any] = {"version": 1, "contracts": {}}
+        payload: dict[str, Any] = {"version": 2, "generated_at": datetime.now(UTC).isoformat(), "contracts": {}}
         for contract_id, contract_fields in sorted(baselines.items()):
             payload["contracts"][contract_id] = {
-                column_name: baseline.model_dump(mode="json")
+                column_name: {
+                    "contract_id": baseline.contract_id,
+                    "column_name": baseline.column_name,
+                    "sample_count": baseline.sample_size,
+                    "mean": baseline.mean,
+                    "stddev": baseline.stddev,
+                    "min": baseline.min,
+                    "max": baseline.max,
+                    "distribution_summary": {
+                        "sample_count": baseline.sample_size,
+                        "mean": baseline.mean,
+                        "stddev": baseline.stddev,
+                        "min": baseline.min,
+                        "max": baseline.max,
+                    },
+                    "created_at": baseline.created_at,
+                    "updated_at": baseline.updated_at,
+                }
                 for column_name, baseline in sorted(contract_fields.items())
             }
         temp_path = self.path.with_suffix(".json.tmp")

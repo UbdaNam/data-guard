@@ -76,7 +76,7 @@ def _evaluate_field_check(
         values_by_record.append((index, values))
 
     all_values = [value for _, values in values_by_record for value in values]
-    if check.check_type in {"required", "nullability", "type", "pattern", "range", "enum", "positivity"} and not all_values:
+    if check.check_type in {"required", "nullability", "type", "pattern", "range", "confidence_bounds", "enum", "positivity"} and not all_values:
         return ValidationResult(
             check_id=check.check_id,
             column_name=check.column_name,
@@ -186,6 +186,31 @@ def _evaluate_field_check(
                         failing_samples.append(_build_sample(record_index, value, check.expected, check.column_name, "above_maximum"))
         status = ValidationStatus.PASS if failed_records == 0 else ValidationStatus.FAIL
         return ValidationResult(check_id=check.check_id, column_name=check.column_name, check_type=check.check_type, status=status, actual_value={"min": minimum, "max": maximum}, expected=check.expected, severity=_severity_from_check(check), records_failing=failed_records, sample_failing=failing_samples, message=_format_message(check, "passed" if status == ValidationStatus.PASS else "failed", f"{failed_records} range violations"))
+
+    if check.check_type == "confidence_bounds":
+        minimum = float(check.expected.get("min", 0.0))
+        maximum = float(check.expected.get("max", 1.0))
+        for record_index, values in values_by_record:
+            for value in values:
+                if value is None:
+                    continue
+                if _is_structural_shape(value):
+                    failed_records += 1
+                    if len(failing_samples) < sample_limit:
+                        failing_samples.append(_build_sample(record_index, value, check.expected, check.column_name, "unexpected_structure"))
+                    continue
+                if not isinstance(value, (int, float)) or isinstance(value, bool):
+                    failed_records += 1
+                    if len(failing_samples) < sample_limit:
+                        failing_samples.append(_build_sample(record_index, value, check.expected, check.column_name, "invalid_type"))
+                    continue
+                numeric = float(value)
+                if numeric < minimum or numeric > maximum:
+                    failed_records += 1
+                    if len(failing_samples) < sample_limit:
+                        failing_samples.append(_build_sample(record_index, value, check.expected, check.column_name, "confidence_out_of_bounds"))
+        status = ValidationStatus.PASS if failed_records == 0 else ValidationStatus.FAIL
+        return ValidationResult(check_id=check.check_id, column_name=check.column_name, check_type=check.check_type, status=status, actual_value={"min": minimum, "max": maximum}, expected=check.expected, severity=_severity_from_check(check), records_failing=failed_records, sample_failing=failing_samples, message=_format_message(check, "passed" if status == ValidationStatus.PASS else "failed", f"{failed_records} confidence bound violations"))
 
     if check.check_type == "enum":
         accepted = {str(value) for value in check.expected.get("accepted_values", [])}

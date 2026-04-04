@@ -23,6 +23,12 @@ This guide explains the minimum recovery steps for common workflow failures.
 - **Impact**: Validation, attribution, schema analysis, and reporting cannot proceed reliably.
 - **Recovery**: Rerun `python -m contracts.generator`, then rerun validation.
 
+### Missing subscriptions registry
+
+- **Likely cause**: The canonical registry at `docs/governance/subscriptions_registry.yaml` is absent or malformed.
+- **Impact**: Attribution and schema-evolution downstream analysis may be incomplete.
+- **Recovery**: Restore the registry file before rerunning attribution or schema-evolution analysis.
+
 ### Malformed validation reports
 
 - **Likely cause**: Validation output is incomplete, corrupted, or from the wrong run.
@@ -52,6 +58,12 @@ This guide explains the minimum recovery steps for common workflow failures.
 - **Likely cause**: A downstream command was run before its prerequisite outputs existed.
 - **Impact**: Outputs may be missing, stale, or incomplete.
 - **Recovery**: Regenerate the earliest missing prerequisite first, then rerun each dependent command in order.
+
+### Validation mode confusion
+
+- **Likely cause**: The runner was invoked with the wrong `--mode` for the intended workflow.
+- **Impact**: Threshold breaches may remain warnings in `AUDIT` or `WARN`, or be escalated in `ENFORCE`.
+- **Recovery**: Rerun `python -m contracts.runner --mode WARN` for standard review, or `--mode ENFORCE` when warning escalation is required.
 
 ## Rerun order examples
 

@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from src.attribution.blast_radius import compute_blast_radius
-from src.attribution.confidence_scorer import confidence_band, score_candidate
+from src.attribution.confidence_scorer import confidence_band, confidence_formula, days_since_commit, score_candidate
 from src.attribution.git_enricher import GitCandidateWindow, collect_blame, collect_commit_evidence, derive_source_range
 from src.attribution.lineage_graph import build_upstream_paths
 from src.attribution.lineage_selector import select_latest_snapshot
@@ -93,10 +93,15 @@ def run_attribution(
                 )
                 synthetic.normalized_score = score_candidate(synthetic, lineage_path, None, max_hops=max_hops, directness=anchor.directness, blame_available=False)
                 synthetic.confidence_band = confidence_band(synthetic.normalized_score)
+                synthetic.factor_scores["days_since_commit"] = 0.0
+                synthetic.factor_scores["lineage_hops"] = float(lineage_path.hop_count if lineage_path else 0)
+                synthetic.factor_scores["confidence_formula"] = confidence_formula(days_since_commit=0, lineage_hops=lineage_path.hop_count if lineage_path else 0)
                 candidates.append(synthetic)
             else:
                 for index, evidence in enumerate(commit_evidence[:max_candidates]):
                     node = lineage_path.traversed_nodes[min(index, len(lineage_path.traversed_nodes) - 1)] if lineage_path.traversed_nodes else LineageNode(node_id=anchor.dataset_id, label=anchor.dataset_id)
+                    age_days = days_since_commit(evidence.authored_at)
+                    confidence_value = confidence_formula(days_since_commit=age_days, lineage_hops=lineage_path.hop_count if lineage_path else 0)
                     candidate = BlameCandidate(
                         candidate_id=f"{anchor.dataset_id}:{anchor.check_id}:{index}",
                         source_node=node,
@@ -107,6 +112,9 @@ def run_attribution(
                             "directness": 1.0 if anchor.directness == "field" else 0.5,
                             "line_blame": 1.0 if evidence.blame_used else 0.4,
                             "lineage_completeness": 1.0 if lineage_path.completeness == LineageCompleteness.complete else 0.5,
+                            "days_since_commit": float(age_days),
+                            "lineage_hops": float(lineage_path.hop_count if lineage_path else 0),
+                            "confidence_formula": confidence_value,
                         },
                         uncertainty_reasons=sorted({*parse_issues, *snapshot_warnings, *git_warnings, *blame_warnings, *issues}),
                     )

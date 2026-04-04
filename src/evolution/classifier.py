@@ -47,6 +47,12 @@ def classify_change(change: SchemaChange) -> CompatibilityAssessment:
         if bool(change.details.get("relaxed")) and not bool(change.details.get("tightened")):
             backward, forward = True, False
             rationale = "Constraint relaxation is usually backward-compatible."
+    if change.change_class == ChangeClass.change_semantic_scale:
+        source_range = change.details.get("from_range") or []
+        target_range = change.details.get("to_range") or []
+        if source_range == [0.0, 1.0] and target_range == [0.0, 100.0]:
+            backward, forward = False, False
+            rationale = "CRITICAL semantic scale narrowing from probability-scale 0.0–1.0 to percentage-scale 0–100."
 
     return CompatibilityAssessment(
         is_backward_compatible=backward,

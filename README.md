@@ -78,6 +78,10 @@ Optional OpenRouter configuration:
 
 These settings are documented for optional enrichment only. If they are absent, the platform continues with the deterministic baseline.
 
+Canonical governance registry:
+
+- `docs/governance/subscriptions_registry.yaml`
+
 ## Validation Execution (Feature 3)
 
 Primary entry point:
@@ -101,10 +105,18 @@ Validation can also be triggered via:
 
 - src/cli/foundation.py validate-contracts
 
+Validation modes:
+
+- `AUDIT` records threshold outcomes without escalation.
+- `WARN` records threshold breaches as warnings while still completing the report.
+- `ENFORCE` escalates warning-level threshold breaches to failures while still completing the report.
+
 Operational guarantees:
 
 - Structural checks cover `type`, `required`, `nullability`, and `pattern`
 - Semantic checks cover `range`, `enum`, and `relationship`
+- Drift warnings trigger above 2 standard deviations and failures above 3 standard deviations.
+- Confidence-range checks are evaluated independently from drift checks.
 - Dataset-level checks cover `row_count`, `uniqueness`, and `referential_integrity`
 - Missing columns and unexpected structures return `ERROR`
 - Invalid type violations return `FAIL`
@@ -136,6 +148,7 @@ Operational guarantees:
 
 - Only `FAIL` and selected attributable `ERROR` classes are considered.
 - Blame chains are confidence-ranked and bounded to 1–5 candidates.
+- Attribution consults the subscriptions registry before downstream traversal.
 - Missing lineage or git evidence degrades gracefully instead of failing the run.
 - Duplicate violation IDs are suppressed on reruns by default.
 - Unsupported validation, schema-evolution, AI-check, or report modes are rejected.
@@ -213,6 +226,7 @@ Operational guarantees:
 - Trace records receive contract outcomes; malformed run IDs/timestamps are recorded as violations.
 - Embedding drift is deterministic (`token_hash_v1`, fixed dimensions, cosine distance).
 - Missing baseline creates baseline; insufficient sample size yields explicit status.
+- Structured output violation-rate thresholds emit WARN entries to the AI violation log.
 - Metrics and artifact pointers are written in machine-readable form for downstream reuse.
 
 Out-of-scope for Feature 6:
@@ -263,6 +277,8 @@ Operational guarantees:
 - Required sections remain present with explicit `insufficient_evidence` status
   when upstream artifacts are partially missing.
 - Evidence references are preserved for claims and recommended actions.
+- Data health score uses `(checks_passed / total_checks × 100) - (20 × critical_violation_count)`.
+- Recommended actions include file path, field, and contract clause references when available.
 
 Out-of-scope for Feature 7:
 

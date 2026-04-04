@@ -28,6 +28,9 @@ class ViolationAggregate:
     owner: str
     recurrence_count: int
     latest_occurrence: str | None
+    source_artifact_path: str
+    field_path: str | None
+    contract_clause_id: str | None
     evidence: list[EvidenceReference]
 
 
@@ -50,13 +53,16 @@ def rank_top_violations(
             or "unknown"
         )
         selector = str(row.get("violation_id") or row.get("check_id") or key)
+        schema_anchor = row.get("schema_anchor") if isinstance(row.get("schema_anchor"), dict) else {}
+        field_path = str(row.get("column_name") or schema_anchor.get("field_path") or row.get("field_path") or "") or None
+        contract_clause_id = str(row.get("check_id") or row.get("source_clause_id") or selector)
+        source_artifact_path = str(row.get("_artifact_path", "violation_log/violations.jsonl"))
         evidence = EvidenceReference(
-            artifact_path=str(row.get("_artifact_path", "violation_log/violations.jsonl")),
+            artifact_path=source_artifact_path,
             record_selector=selector,
             claim_type="incident",
         )
 
-        schema_anchor = row.get("schema_anchor") if isinstance(row.get("schema_anchor"), dict) else {}
         ownership_id = str(schema_anchor.get("ownership_id") or "")
         owner = owner_by_id.get(ownership_id, "unassigned")
 
@@ -77,6 +83,9 @@ def rank_top_violations(
                 owner=owner,
                 recurrence_count=1,
                 latest_occurrence=latest,
+                source_artifact_path=source_artifact_path,
+                field_path=field_path,
+                contract_clause_id=contract_clause_id,
                 evidence=[evidence],
             )
             continue
@@ -116,6 +125,9 @@ def rank_top_violations(
                     item.latest_occurrence or "",
                     item.violation_id,
                 ],
+                source_artifact_path=item.source_artifact_path,
+                field_path=item.field_path,
+                contract_clause_id=item.contract_clause_id,
                 evidence=item.evidence,
             )
         )
@@ -140,6 +152,7 @@ def build_schema_changes_summary(
         diffs = report.get("structured_diff") if isinstance(report.get("structured_diff"), list) else []
         if not diffs:
             change_id = f"{contract_id}:{report.get('analysis_id', 'summary')}"
+            field_path = str(report.get("field_path") or report.get("affected_field") or "") or None
             ranked.append(
                 RankedSchemaChange(
                     change_id=change_id,
@@ -147,6 +160,9 @@ def build_schema_changes_summary(
                     impact_scope=impact_scope,
                     detected_at=str(report.get("detected_at") or ""),
                     affected_interface=contract_id,
+                    source_artifact_path=report_path,
+                    field_path=field_path,
+                    contract_clause_id=field_path or change_id,
                     priority_tuple=[1 if breaking else 0, IMPACT_RANK.get(impact_scope, 0), str(report.get("detected_at") or ""), change_id],
                     evidence=[
                         EvidenceReference(
@@ -169,6 +185,9 @@ def build_schema_changes_summary(
                     impact_scope=impact_scope,
                     detected_at=str(report.get("detected_at") or ""),
                     affected_interface=contract_id,
+                    source_artifact_path=report_path,
+                    field_path=field_path,
+                    contract_clause_id=str(diff.get("clause_id") or field_path),
                     priority_tuple=[1 if breaking else 0, IMPACT_RANK.get(impact_scope, 0), str(report.get("detected_at") or ""), change_id],
                     evidence=[
                         EvidenceReference(

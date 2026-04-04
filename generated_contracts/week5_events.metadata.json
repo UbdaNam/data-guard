@@ -4,7 +4,7 @@
   "metadata": {
     "contract_schema_version": "1.0",
     "deterministic_signature": "f47841ec7f18f965296f49b4813fa75b2f2f97dff78c3ad9fe918db1c86c82a9",
-    "generated_at": "2026-04-01T21:54:04.826467+00:00",
+    "generated_at": "2026-04-04T22:11:51.372276+00:00",
     "generator_version": "0.2.0",
     "input_artifact_hashes": {},
     "input_record_counts": {
@@ -12,7 +12,7 @@
     },
     "malformed_line_count": 0,
     "mismatch_count": 1,
-    "run_id": "5284f304-201f-4c59-99fb-2bfcb20a6ae1"
+    "run_id": "9fb746b7-99bf-4cd3-bbfe-a8893fe74720"
   },
   "quality_issues": []
 }

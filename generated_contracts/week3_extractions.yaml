@@ -194,14 +194,14 @@ downstream_context:
 metadata:
   contract_schema_version: '1.0'
   deterministic_signature: 27a4be8673310622c51640bb12374b332dc0165dc06024d8161340bb1b0a713e
-  generated_at: '2026-04-01T21:54:04.804419+00:00'
+  generated_at: '2026-04-04T22:11:51.337654+00:00'
   generator_version: 0.2.0
   input_artifact_hashes: {}
   input_record_counts:
     week3.extractions: 3
   malformed_line_count: 0
   mismatch_count: 1
-  run_id: 2115e0b9-034d-42d1-8946-b4142886c7ed
+  run_id: b4ab08e6-20f7-42e8-a23f-5363a2b81885
 mismatch_records:
 - canonical_value: canonical_governed_schema
   dataset_id: week3.extractions

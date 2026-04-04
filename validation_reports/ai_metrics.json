@@ -1,0 +1,61 @@
+{
+  "artifacts": {
+    "drift_artifact_paths": [],
+    "quarantine_path": "C:/Abdu/data-guard/outputs/quarantine/20260404T202753Z_9c175a1fa5e84b8899a645e9fe390050.jsonl",
+    "violation_log_path": "C:/Abdu/data-guard/violation_log/ai_violations.jsonl",
+    "violation_records_appended": 3
+  },
+  "context_completeness": {
+    "feature1_loaded": true,
+    "feature2_loaded": true,
+    "feature3_conventions_loaded": true,
+    "feature5_context_loaded": true
+  },
+  "history": [
+    {
+      "rates": {
+        "drift_detection_rate": 0.0,
+        "output_violation_rate": 0.0,
+        "prompt_quarantine_rate": 1.0,
+        "trace_violation_rate": 0.0
+      },
+      "run_id": "30fc40527c1a4b4b86813fb95539fe47",
+      "run_timestamp": "20260404T202508Z"
+    },
+    {
+      "rates": {
+        "drift_detection_rate": 0.0,
+        "output_violation_rate": 0.0,
+        "prompt_quarantine_rate": 1.0,
+        "trace_violation_rate": 0.0
+      },
+      "run_id": "9c175a1fa5e84b8899a645e9fe390050",
+      "run_timestamp": "20260404T202753Z"
+    }
+  ],
+  "rates": {
+    "drift_detection_rate": 0.0,
+    "output_violation_rate": 0.0,
+    "prompt_quarantine_rate": 1.0,
+    "trace_violation_rate": 0.0
+  },
+  "run_id": "9c175a1fa5e84b8899a645e9fe390050",
+  "run_timestamp": "20260404T202753Z",
+  "totals": {
+    "drift_checks_compared": 0,
+    "drift_checks_insufficient": 1,
+    "drift_checks_requested": 1,
+    "outputs_failed": 0,
+    "outputs_processed": 0,
+    "prompt_processed": 3,
+    "prompt_quarantined": 3,
+    "traces_failed": 0,
+    "traces_processed": 0
+  },
+  "trend": {
+    "history_points_used": 2,
+    "output_violation_rate_slope": null,
+    "trend_status": "insufficient_history",
+    "window_size": 10
+  }
+}

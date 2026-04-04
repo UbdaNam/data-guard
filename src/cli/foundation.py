@@ -39,7 +39,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Foundation validation CLI")
     parser.add_argument(
         "command",
-        choices=["manifest", "validate-paths", "validate-readiness", "generate-contracts", "validate-contracts"],
+        choices=["manifest", "validate-paths", "validate-readiness", "generate-contracts", "validate-contracts", "attribute-violations"],
     )
     args = parser.parse_args()
 
@@ -71,6 +71,11 @@ def main() -> int:
 
         print(json.dumps(run_validation(), indent=2, sort_keys=True))
         return 0
+
+    if args.command == "attribute-violations":
+        from contracts.attributor import main as run_attributor
+
+        return run_attributor([])
 
     return 1
 

@@ -13,6 +13,71 @@ systems.
 
 Project governance is defined in .specify/memory/constitution.md.
 
+## Developer Workflow and End-to-End Runbook (Feature 8)
+
+This section is the reviewer-facing quick-start and canonical index for running the platform end-to-end.
+
+Quick start:
+
+1. Install Python 3.11 or newer.
+2. Sync dependencies with `uv sync --extra dev`.
+3. Review `.env.example` and keep any OpenRouter settings optional.
+4. Run the canonical command sequence in order:
+
+- `python -m contracts.generator`
+- `python -m contracts.runner`
+- `python -m contracts.attributor`
+- `python -m contracts.schema_analyzer`
+- `python -m contracts.ai_extensions`
+- `python -m contracts.report_generator`
+
+5. Confirm the expected outputs in the canonical artifact directories listed below.
+
+Required baseline behavior:
+
+- The core workflow must succeed without OpenRouter configuration.
+- Optional enrichment is a report-generation enhancement only and is never required.
+- All documented commands must map to real entry points and real artifacts from Features 1–7.
+
+Expected outputs by step:
+
+- Contract generation: `generated_contracts/week3_extractions.yaml`, `generated_contracts/week5_events.yaml`, and DBT companion files.
+- Validation execution: `validation_reports/*.json` and `schema_snapshots/baselines.json`.
+- Violation attribution: `violation_log/violations.jsonl`.
+- Schema evolution analysis: `validation_reports/schema_evolution_*.json`, `migration_impact_*.json`, and `validation_reports/schema_evolution_run_summary.json`.
+- AI contract enforcement: `validation_reports/ai_metrics.json`, `violation_log/ai_violations.jsonl`, and AI snapshot files under `schema_snapshots/ai/`.
+- Report generation: `enforcer_report/report_data.json` and `enforcer_report/report_{date}.md`.
+
+Reviewer verification checklist:
+
+- Contract generation outputs exist in `generated_contracts/`
+- Validation outputs exist in `validation_reports/`
+- Violation records exist in `violation_log/violations.jsonl`
+- Schema evolution outputs exist in `validation_reports/`
+- AI metrics exist in `validation_reports/ai_metrics.json`
+- Report artifacts exist in `enforcer_report/`
+
+Maintainer navigation guide:
+
+- Canonical contracts and schema assets: `generated_contracts/`, `contracts/`, `schema_snapshots/`
+- Validation and analysis evidence: `validation_reports/`
+- Violation records: `violation_log/`
+- Inputs and raw traces: `outputs/`
+- Stakeholder-facing report artifacts: `enforcer_report/`
+
+Deep-dive guidance:
+
+- End-to-end flow and dependency mapping: [docs/runbooks/end_to_end.md](docs/runbooks/end_to_end.md)
+- Troubleshooting and rerun guidance: [docs/runbooks/troubleshooting.md](docs/runbooks/troubleshooting.md)
+
+Optional OpenRouter configuration:
+
+- `OPENROUTER_API_KEY`
+- `OPENROUTER_BASE_URL`
+- `OPENROUTER_MODEL`
+
+These settings are documented for optional enrichment only. If they are absent, the platform continues with the deterministic baseline.
+
 ## Validation Execution (Feature 3)
 
 Primary entry point:
@@ -44,6 +109,167 @@ Operational guarantees:
 - Missing columns and unexpected structures return `ERROR`
 - Invalid type violations return `FAIL`
 - Unchanged inputs produce identical report content except `report_id` and `run_timestamp`
+
+## Violation Attribution (Feature 4)
+
+Primary entry point:
+
+- contracts/attributor.py
+
+Primary governed inputs:
+
+- validation_reports/\*.json
+- outputs/week4/lineage_snapshots.jsonl
+- contracts/interface_registry.yaml
+- contracts/schema_ownership_map.yaml
+- generated_contracts/\*.yaml
+
+Primary generated outputs:
+
+- violation_log/violations.jsonl
+
+Attribution can also be triggered via:
+
+- src/cli/foundation.py attribute-violations
+
+Operational guarantees:
+
+- Only `FAIL` and selected attributable `ERROR` classes are considered.
+- Blame chains are confidence-ranked and bounded to 1–5 candidates.
+- Missing lineage or git evidence degrades gracefully instead of failing the run.
+- Duplicate violation IDs are suppressed on reruns by default.
+- Unsupported validation, schema-evolution, AI-check, or report modes are rejected.
+
+## Schema Evolution Intelligence (Feature 5)
+
+Primary entry point:
+
+- contracts/schema_analyzer.py
+
+Primary governed inputs:
+
+- generated_contracts/\*.yaml
+- schema*snapshots/{contract_id}/snapshot*{timestamp}\_{schema_hash}.json
+- contracts/interface_registry.yaml
+- contracts/schema_ownership_map.yaml
+- optional: validation_reports/\*.json and violation_log/violations.jsonl
+
+Primary generated outputs:
+
+- validation*reports/schema_evolution*{contract_id}.json
+- migration*impact*{contract*id}*{timestamp}.json
+- validation_reports/schema_evolution_run_summary.json
+
+Schema evolution can also be triggered via:
+
+- contracts/schema_analyzer.py --snapshot
+
+Operational guarantees:
+
+- Snapshot writes are deduplicated for no-material-change hashes.
+- Diff output is deterministic (class order then canonical field path order).
+- Compatibility classification is dual-axis (backward/forward) with derived verdict.
+- Migration guidance includes affected consumers, failure modes, checklist actions, and rollback for breaking changes.
+- Missing optional Feature 3/4 context degrades with warnings and completeness flags.
+
+Out-of-scope for Feature 5:
+
+- validation execution
+- git-blame attribution
+- final stakeholder-facing report generation
+
+## AI Contract Enforcement Extensions (Feature 6)
+
+Primary entry point:
+
+- contracts/ai_extensions.py
+
+Primary governed inputs:
+
+- outputs/week2/verdicts.jsonl
+- outputs/week3/extractions.jsonl
+- outputs/traces/runs.jsonl
+- generated_contracts/prompt_inputs/week3_prompt_input.schema.json
+- generated_contracts/\*.yaml (governing contract context)
+- contracts/\*.yaml|json (Feature 1 metadata context)
+- optional: validation*reports/schema_evolution*\*.json
+
+Primary generated outputs:
+
+- validation_reports/ai_metrics.json
+- violation_log/ai_violations.jsonl
+- outputs/quarantine/{run*timestamp}*{run_id}.jsonl
+- schema_snapshots/ai/{surface_id}/baseline_token_hash_v1.json
+- schema*snapshots/ai/{surface_id}/comparison*{run*timestamp}*{run_id}.json
+
+AI enforcement can be triggered via:
+
+- python -m contracts.ai_extensions
+
+Operational guarantees:
+
+- Prompt inputs are classified as valid or quarantined with no silent drop.
+- Week 2 structured outputs receive deterministic conformance outcomes.
+- Trace records receive contract outcomes; malformed run IDs/timestamps are recorded as violations.
+- Embedding drift is deterministic (`token_hash_v1`, fixed dimensions, cosine distance).
+- Missing baseline creates baseline; insufficient sample size yields explicit status.
+- Metrics and artifact pointers are written in machine-readable form for downstream reuse.
+
+Out-of-scope for Feature 6:
+
+- replacing the general validation runner
+- git-blame attribution
+- schema evolution classification logic
+- final stakeholder-facing report generation
+
+## Operational Report Generation (Feature 7)
+
+Primary entry point:
+
+- contracts/report_generator.py
+
+Primary governed inputs:
+
+- validation_reports/\*.json
+- violation_log/violations.jsonl
+- validation*reports/schema_evolution*\*.json
+- validation_reports/ai_metrics.json
+- contracts/schema_ownership_map.yaml
+- contracts/interface_registry.yaml
+
+Primary generated outputs:
+
+- enforcer_report/report_data.json
+- enforcer*report/report*{date}.md
+
+Report generation can be triggered via:
+
+- python -m contracts.report_generator
+
+Optional OpenRouter enrichment:
+
+- Enable with `--enable-llm-enrichment`
+- Environment-only configuration:
+  - OPENROUTER_API_KEY
+  - OPENROUTER_BASE_URL
+  - OPENROUTER_MODEL
+- Missing or failed enrichment automatically falls back to deterministic non-LLM
+  narrative and does not block report generation.
+
+Operational guarantees:
+
+- Deterministic ordering of ranked findings and actions.
+- Fixed report_data.json key order and fixed markdown section order.
+- Required sections remain present with explicit `insufficient_evidence` status
+  when upstream artifacts are partially missing.
+- Evidence references are preserved for claims and recommended actions.
+
+Out-of-scope for Feature 7:
+
+- validation execution
+- git-blame attribution
+- schema evolution classification logic
+- AI metric generation logic
 
 ## Contract Generation (Feature 2)
 

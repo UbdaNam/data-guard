@@ -8,8 +8,12 @@ __pycache__/
 .venv/
 venv/
 env/
+dist/
+build/
+*.egg-info/
 .env
 .env.*
+!.env.example
 *.log
 *.tmp
 *.swp

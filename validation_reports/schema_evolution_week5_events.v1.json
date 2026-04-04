@@ -1,0 +1,22 @@
+{
+  "analysis_id": "a5888a9182ba8b2c",
+  "change_summary": {},
+  "compatibility_verdict": {
+    "is_backward_compatible": true,
+    "is_forward_compatible": true,
+    "rationale": "Baseline established: no comparison snapshot available.",
+    "verdict": "fully-compatible"
+  },
+  "context_completeness": "minimal",
+  "contract_id": "week5_events.v1",
+  "determinism_keys": {
+    "analysis_id_strategy": "contract+pair+diff_hash",
+    "sort_order": "class_then_path"
+  },
+  "from_snapshot_id": null,
+  "structured_diff": [],
+  "to_snapshot_id": "0da27c4fec02171a",
+  "warnings": [
+    "no_prior_snapshot"
+  ]
+}

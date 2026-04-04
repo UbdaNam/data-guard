@@ -1,0 +1,19 @@
+{
+  "schema_id": "week3_prompt_input",
+  "schema_version": "v1",
+  "required": ["record_id", "prompt_text"],
+  "properties": {
+    "record_id": {
+      "type": "string"
+    },
+    "prompt_text": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "labels": {
+      "type": "array"
+    }
+  }
+}

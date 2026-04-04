@@ -157,6 +157,55 @@ Out-of-scope for Feature 6:
 - schema evolution classification logic
 - final stakeholder-facing report generation
 
+## Operational Report Generation (Feature 7)
+
+Primary entry point:
+
+- contracts/report_generator.py
+
+Primary governed inputs:
+
+- validation_reports/\*.json
+- violation_log/violations.jsonl
+- validation*reports/schema_evolution*\*.json
+- validation_reports/ai_metrics.json
+- contracts/schema_ownership_map.yaml
+- contracts/interface_registry.yaml
+
+Primary generated outputs:
+
+- enforcer_report/report_data.json
+- enforcer*report/report*{date}.md
+
+Report generation can be triggered via:
+
+- python -m contracts.report_generator
+
+Optional OpenRouter enrichment:
+
+- Enable with `--enable-llm-enrichment`
+- Environment-only configuration:
+  - OPENROUTER_API_KEY
+  - OPENROUTER_BASE_URL
+  - OPENROUTER_MODEL
+- Missing or failed enrichment automatically falls back to deterministic non-LLM
+  narrative and does not block report generation.
+
+Operational guarantees:
+
+- Deterministic ordering of ranked findings and actions.
+- Fixed report_data.json key order and fixed markdown section order.
+- Required sections remain present with explicit `insufficient_evidence` status
+  when upstream artifacts are partially missing.
+- Evidence references are preserved for claims and recommended actions.
+
+Out-of-scope for Feature 7:
+
+- validation execution
+- git-blame attribution
+- schema evolution classification logic
+- AI metric generation logic
+
 ## Contract Generation (Feature 2)
 
 Primary entry point:

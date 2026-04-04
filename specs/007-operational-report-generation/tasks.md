@@ -17,9 +17,9 @@
 
 **Purpose**: Establish Feature 7 scaffolding and canonical artifact contracts.
 
-- [ ] T001 Create Feature 7 reporting package scaffold in src/reporting/**init**.py and src/reporting/pipeline.py; Acceptance: package imports cleanly and pipeline module exposes a callable orchestration entrypoint signature.
-- [ ] T002 Create operational report artifact contract doc in specs/007-operational-report-generation/contracts/operational-report-artifacts.md; Acceptance: contract documents required output files, required key order, and required markdown section order aligned to FR-037/FR-038.
-- [ ] T003 [P] Add Feature 7 package export note in src/**init**.py; Acceptance: repository import path remains stable and no existing feature exports are removed.
+- [x] T001 Create Feature 7 reporting package scaffold in src/reporting/**init**.py and src/reporting/pipeline.py; Acceptance: package imports cleanly and pipeline module exposes a callable orchestration entrypoint signature.
+- [x] T002 Create operational report artifact contract doc in specs/007-operational-report-generation/contracts/operational-report-artifacts.md; Acceptance: contract documents required output files, required key order, and required markdown section order aligned to FR-037/FR-038.
+- [x] T003 [P] Add Feature 7 package export note in src/**init**.py; Acceptance: repository import path remains stable and no existing feature exports are removed.
 
 ---
 
@@ -29,12 +29,12 @@
 
 **⚠️ CRITICAL**: Complete this phase before starting user-story tasks.
 
-- [ ] T004 Implement typed report domain models in src/reporting/models.py; Acceptance: models cover ReportingWindow, EvidenceReference, SectionCompleteness, DataHealthScore, ViolationsSummary, SchemaChangesSummary, AiRiskSummary, RecommendedAction, and OperationalReportData.
-- [ ] T005 [P] Implement canonical environment configuration parser in src/reporting/env_config.py; Acceptance: parser reads only OPENROUTER_API_KEY, OPENROUTER_BASE_URL, OPENROUTER_MODEL and returns deterministic "missing_config" status without raising when optional values are absent.
-- [ ] T006 [P] Implement section completeness helpers in src/reporting/completeness.py; Acceptance: helpers produce complete/partial/insufficient_evidence states with explicit missing_sources paths and reason text.
-- [ ] T007 Implement report JSON serializer with deterministic key order in src/reporting/json_renderer.py; Acceptance: output order exactly matches FR-037 and nested collections honor deterministic ordering utilities.
-- [ ] T008 Implement report markdown section template in src/reporting/markdown_renderer.py; Acceptance: markdown renders fixed section order from FR-038 even when one or more sections are insufficient_evidence.
-- [ ] T009 Create CLI scaffold in contracts/report_generator.py; Acceptance: CLI parses report window and enrichment flags, delegates to src/reporting/pipeline.py, and does not implement validation/attribution/schema-evolution/AI-metric generation logic.
+- [x] T004 Implement typed report domain models in src/reporting/models.py; Acceptance: models cover ReportingWindow, EvidenceReference, SectionCompleteness, DataHealthScore, ViolationsSummary, SchemaChangesSummary, AiRiskSummary, RecommendedAction, and OperationalReportData.
+- [x] T005 [P] Implement canonical environment configuration parser in src/reporting/env_config.py; Acceptance: parser reads only OPENROUTER_API_KEY, OPENROUTER_BASE_URL, OPENROUTER_MODEL and returns deterministic "missing_config" status without raising when optional values are absent.
+- [x] T006 [P] Implement section completeness helpers in src/reporting/completeness.py; Acceptance: helpers produce complete/partial/insufficient_evidence states with explicit missing_sources paths and reason text.
+- [x] T007 Implement report JSON serializer with deterministic key order in src/reporting/json_renderer.py; Acceptance: output order exactly matches FR-037 and nested collections honor deterministic ordering utilities.
+- [x] T008 Implement report markdown section template in src/reporting/markdown_renderer.py; Acceptance: markdown renders fixed section order from FR-038 even when one or more sections are insufficient_evidence.
+- [x] T009 Create CLI scaffold in contracts/report_generator.py; Acceptance: CLI parses report window and enrichment flags, delegates to src/reporting/pipeline.py, and does not implement validation/attribution/schema-evolution/AI-metric generation logic.
 
 **Checkpoint**: Foundation ready; user-story implementation can begin.
 
@@ -48,15 +48,15 @@
 
 ### Implementation for User Story 1
 
-- [ ] T010 [US1] Implement upstream artifact loading and normalization in src/reporting/artifact_loader.py; Acceptance: loader ingests validation_reports/\*.json, violation_log/violations.jsonl, schema evolution outputs, validation_reports/ai_metrics.json, and Feature 1 metadata with per-source completeness metadata.
-- [ ] T011 [P] [US1] Implement deterministic reporting window resolver in src/reporting/window_resolver.py; Acceptance: explicit start/end bounds are honored and fallback latest_available mode resolves a stable window using normalized timestamps plus tie-breakers.
-- [ ] T012 [P] [US1] Implement exact FR-032/FR-033 Data Health Score calculator in src/reporting/health_score.py; Acceptance: formula terms, clamping, one-decimal rounding, and null/insufficient_evidence behavior match spec.
-- [ ] T013 [P] [US1] Implement top violation ranking utilities in src/reporting/ranking.py; Acceptance: ranking order is severity > recurrence > latest occurrence > stable violation_id and is reproducible across repeated runs.
-- [ ] T014 [US1] Implement schema change summary builder in src/reporting/ranking.py; Acceptance: builder filters by resolved reporting window and prioritizes breaking/high-impact changes deterministically.
-- [ ] T015 [P] [US1] Implement AI risk summary builder in src/reporting/report_builder.py; Acceptance: summary reads Feature 6 metrics, includes trend/completeness markers, and marks insufficient_evidence when history is missing.
-- [ ] T016 [US1] Implement evidence-grounded recommended action generator in src/reporting/action_generator.py; Acceptance: actions consolidate by issue_type+affected_surface+field_or_interface and include remediation target, affected location, owner context, verification step, and evidence references.
-- [ ] T017 [US1] Implement report data assembly in src/reporting/report_builder.py; Acceptance: assembled OperationalReportData includes all required sections and machine-readable evidence references for every claim/action.
-- [ ] T018 [US1] Implement machine-readable report writer in src/reporting/pipeline.py and src/reporting/json_renderer.py; Acceptance: writes enforcer_report/report_data.json atomically with required deterministic structure and section_completeness.
+- [x] T010 [US1] Implement upstream artifact loading and normalization in src/reporting/artifact_loader.py; Acceptance: loader ingests validation_reports/\*.json, violation_log/violations.jsonl, schema evolution outputs, validation_reports/ai_metrics.json, and Feature 1 metadata with per-source completeness metadata.
+- [x] T011 [P] [US1] Implement deterministic reporting window resolver in src/reporting/window_resolver.py; Acceptance: explicit start/end bounds are honored and fallback latest_available mode resolves a stable window using normalized timestamps plus tie-breakers.
+- [x] T012 [P] [US1] Implement exact FR-032/FR-033 Data Health Score calculator in src/reporting/health_score.py; Acceptance: formula terms, clamping, one-decimal rounding, and null/insufficient_evidence behavior match spec.
+- [x] T013 [P] [US1] Implement top violation ranking utilities in src/reporting/ranking.py; Acceptance: ranking order is severity > recurrence > latest occurrence > stable violation_id and is reproducible across repeated runs.
+- [x] T014 [US1] Implement schema change summary builder in src/reporting/ranking.py; Acceptance: builder filters by resolved reporting window and prioritizes breaking/high-impact changes deterministically.
+- [x] T015 [P] [US1] Implement AI risk summary builder in src/reporting/report_builder.py; Acceptance: summary reads Feature 6 metrics, includes trend/completeness markers, and marks insufficient_evidence when history is missing.
+- [x] T016 [US1] Implement evidence-grounded recommended action generator in src/reporting/action_generator.py; Acceptance: actions consolidate by issue_type+affected_surface+field_or_interface and include remediation target, affected location, owner context, verification step, and evidence references.
+- [x] T017 [US1] Implement report data assembly in src/reporting/report_builder.py; Acceptance: assembled OperationalReportData includes all required sections and machine-readable evidence references for every claim/action.
+- [x] T018 [US1] Implement machine-readable report writer in src/reporting/pipeline.py and src/reporting/json_renderer.py; Acceptance: writes enforcer_report/report_data.json atomically with required deterministic structure and section_completeness.
 
 **Checkpoint**: US1 produces complete machine-readable report output independently.
 
@@ -70,10 +70,10 @@
 
 ### Implementation for User Story 2
 
-- [ ] T019 [US2] Implement markdown narrative rendering from structured report data in src/reporting/markdown*renderer.py; Acceptance: output file enforcer_report/report*{date}.md includes fixed section order and deterministic issue/action list ordering.
-- [ ] T020 [P] [US2] Add evidence-traceability notes rendering in src/reporting/markdown_renderer.py; Acceptance: markdown includes an evidence traceability section with references to artifact_path and record_selector entries.
-- [ ] T021 [US2] Integrate markdown generation into pipeline in src/reporting/pipeline.py; Acceptance: each successful run writes both enforcer*report/report_data.json and enforcer_report/report*{date}.md.
-- [ ] T022 [US2] Add canonical path and responsibility-boundary guards in src/reporting/pipeline.py and contracts/report_generator.py; Acceptance: runtime clearly enforces read-only upstream artifact usage and does not execute upstream validation, attribution, schema evolution, or AI metric generation logic.
+- [x] T019 [US2] Implement markdown narrative rendering from structured report data in src/reporting/markdown*renderer.py; Acceptance: output file enforcer_report/report*{date}.md includes fixed section order and deterministic issue/action list ordering.
+- [x] T020 [P] [US2] Add evidence-traceability notes rendering in src/reporting/markdown_renderer.py; Acceptance: markdown includes an evidence traceability section with references to artifact_path and record_selector entries.
+- [x] T021 [US2] Integrate markdown generation into pipeline in src/reporting/pipeline.py; Acceptance: each successful run writes both enforcer*report/report_data.json and enforcer_report/report*{date}.md.
+- [x] T022 [US2] Add canonical path and responsibility-boundary guards in src/reporting/pipeline.py and contracts/report_generator.py; Acceptance: runtime clearly enforces read-only upstream artifact usage and does not execute upstream validation, attribution, schema evolution, or AI metric generation logic.
 
 **Checkpoint**: US2 produces stakeholder-facing markdown that remains evidence-grounded and boundary-safe.
 
@@ -87,11 +87,11 @@
 
 ### Implementation for User Story 3
 
-- [ ] T023 [US3] Implement OpenRouter-only optional enrichment client in src/reporting/llm_enrichment.py; Acceptance: client uses only OPENROUTER_API_KEY/OPENROUTER_BASE_URL/OPENROUTER_MODEL and refuses non-OpenRouter providers.
-- [ ] T024 [P] [US3] Implement deterministic non-LLM fallback narrative builder in src/reporting/llm_enrichment.py and src/reporting/markdown_renderer.py; Acceptance: fallback is used when enrichment disabled/missing_config/failed and output remains complete.
-- [ ] T025 [US3] Implement enrichment safety post-validation in src/reporting/llm_enrichment.py; Acceptance: enriched text cannot introduce unsupported incidents/actions and falls back automatically on evidence-grounding violations.
-- [ ] T026 [US3] Integrate enrichment flow into pipeline and CLI flags in src/reporting/pipeline.py and contracts/report_generator.py; Acceptance: enrichment is optional-only and never required for successful report generation.
-- [ ] T027 [US3] Implement graceful degradation for missing upstream artifact families in src/reporting/artifact_loader.py and src/reporting/completeness.py; Acceptance: report generation continues with required sections present and explicit insufficient_evidence + missing_sources references.
+- [x] T023 [US3] Implement OpenRouter-only optional enrichment client in src/reporting/llm_enrichment.py; Acceptance: client uses only OPENROUTER_API_KEY/OPENROUTER_BASE_URL/OPENROUTER_MODEL and refuses non-OpenRouter providers.
+- [x] T024 [P] [US3] Implement deterministic non-LLM fallback narrative builder in src/reporting/llm_enrichment.py and src/reporting/markdown_renderer.py; Acceptance: fallback is used when enrichment disabled/missing_config/failed and output remains complete.
+- [x] T025 [US3] Implement enrichment safety post-validation in src/reporting/llm_enrichment.py; Acceptance: enriched text cannot introduce unsupported incidents/actions and falls back automatically on evidence-grounding violations.
+- [x] T026 [US3] Integrate enrichment flow into pipeline and CLI flags in src/reporting/pipeline.py and contracts/report_generator.py; Acceptance: enrichment is optional-only and never required for successful report generation.
+- [x] T027 [US3] Implement graceful degradation for missing upstream artifact families in src/reporting/artifact_loader.py and src/reporting/completeness.py; Acceptance: report generation continues with required sections present and explicit insufficient_evidence + missing_sources references.
 
 **Checkpoint**: US3 guarantees resilient deterministic behavior with optional enrichment only.
 
@@ -101,9 +101,9 @@
 
 **Purpose**: Documentation and operational readiness updates across stories.
 
-- [ ] T028 [P] Create or update .env.example in .env.example; Acceptance: file documents OPENROUTER_API_KEY, OPENROUTER_BASE_URL, OPENROUTER_MODEL and marks enrichment as optional.
-- [ ] T029 [P] Update report generation usage docs in README.md; Acceptance: README includes CLI usage, expected input artifacts, output paths, optional enrichment behavior, and deterministic fallback note.
-- [ ] T030 Run quickstart validation updates in specs/007-operational-report-generation/quickstart.md; Acceptance: quickstart commands and expected outputs match implemented CLI behavior and canonical artifact paths.
+- [x] T028 [P] Create or update .env.example in .env.example; Acceptance: file documents OPENROUTER_API_KEY, OPENROUTER_BASE_URL, OPENROUTER_MODEL and marks enrichment as optional.
+- [x] T029 [P] Update report generation usage docs in README.md; Acceptance: README includes CLI usage, expected input artifacts, output paths, optional enrichment behavior, and deterministic fallback note.
+- [x] T030 Run quickstart validation updates in specs/007-operational-report-generation/quickstart.md; Acceptance: quickstart commands and expected outputs match implemented CLI behavior and canonical artifact paths.
 
 ---
 

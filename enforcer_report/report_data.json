@@ -1,0 +1,695 @@
+{
+  "report_id": "774411d7-0c2a-44bb-a839-386cdc5e4cf5",
+  "report_date": "2026-04-04",
+  "reporting_window": {
+    "start": "2026-04-01T00:00:00+00:00",
+    "end": "2026-04-05T00:00:00+00:00",
+    "selection_mode": "explicit",
+    "resolved_from_sources": [
+      "cli_arguments"
+    ],
+    "resolution_notes": []
+  },
+  "data_health_score": {
+    "value": 74.2,
+    "score_status": "computed",
+    "check_penalty": 25.781,
+    "critical_penalty": 0.0,
+    "raw_score": 74.219,
+    "formula_version": "fr032_v1",
+    "reason": null
+  },
+  "section_completeness": {
+    "data_health_score": {
+      "status": "complete",
+      "missing_sources": [],
+      "reason": null
+    },
+    "violations": {
+      "status": "complete",
+      "missing_sources": [],
+      "reason": null
+    },
+    "schema_changes": {
+      "status": "complete",
+      "missing_sources": [],
+      "reason": null
+    },
+    "ai_risk": {
+      "status": "complete",
+      "missing_sources": [],
+      "reason": null
+    },
+    "recommended_actions": {
+      "status": "complete",
+      "missing_sources": [],
+      "reason": null
+    }
+  },
+  "violations_summary": {
+    "total": 14,
+    "by_severity": {
+      "unknown": 14
+    },
+    "by_category": {
+      "enum": 14
+    },
+    "by_surface": {
+      "week3.extractions": 9,
+      "week5.events": 5
+    },
+    "evidence": [
+      {
+        "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+        "record_selector": "9a0dc2b1b5804a2353e3fa9dd0f7c656aa0960a0cfb38f0eed1629e5277e7fc0",
+        "claim_type": "incident"
+      },
+      {
+        "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+        "record_selector": "e733e394051d648f277f203e555baa7edc25e24bd93c3506fe7282515f7083e6",
+        "claim_type": "incident"
+      },
+      {
+        "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+        "record_selector": "41a2dce23f17be2ebf1c588d48a9897dfff0831f85f31be50f93ba59e9b2a284",
+        "claim_type": "incident"
+      },
+      {
+        "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+        "record_selector": "04537391717eae505494fa4e10c4d52414632293c4b61c18e33202f162b29f78",
+        "claim_type": "incident"
+      },
+      {
+        "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+        "record_selector": "d9835e2571a285f74cd219c3b5306a365d2867936a04c2d16557474562992c8c",
+        "claim_type": "incident"
+      },
+      {
+        "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+        "record_selector": "58812c51a9f7b2c7fe1476f3a3d13b8bf18c5d701a318b3f660468e256a9c547",
+        "claim_type": "incident"
+      },
+      {
+        "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+        "record_selector": "29ea731913fbc6b08e30957f0e68ef587d604fd19adce94826463c396296c561",
+        "claim_type": "incident"
+      },
+      {
+        "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+        "record_selector": "2b81a23b8f6c9b0d0c13447c1a88111e6629673d456e0edfdf7761f257c12fd0",
+        "claim_type": "incident"
+      },
+      {
+        "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+        "record_selector": "050445855c2dedb3fba79a0c613d79e4e1bba6220f49912c5d37a73db4e2ffdf",
+        "claim_type": "incident"
+      },
+      {
+        "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+        "record_selector": "8f76c1037cb6a3b5b28f5ffb6b9c2451ed34f4f0f38932d8899259cf0eee423a",
+        "claim_type": "incident"
+      },
+      {
+        "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+        "record_selector": "7c5ec96cc6983d63fa41515ec1e0b918523cfd96e64959cda57f4a7f1b91c5c0",
+        "claim_type": "incident"
+      },
+      {
+        "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+        "record_selector": "d98f6dfc16c3fca8dcdc9ba5058ecd49a664a32a2f3be3f5d5876123cbfcae5d",
+        "claim_type": "incident"
+      },
+      {
+        "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+        "record_selector": "920df5e59405f237eb63406fcc74015d4a2b9a036ef6071c6aab7882248a311f",
+        "claim_type": "incident"
+      },
+      {
+        "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+        "record_selector": "32356b6acd4deab25da0044db8fac25afb356bf6d42449646a499e3fe46d338b",
+        "claim_type": "incident"
+      }
+    ]
+  },
+  "top_violations": [
+    {
+      "rank": 1,
+      "violation_id": "week3_extractions.entity.enum",
+      "severity": "low",
+      "recurrence_count": 4,
+      "latest_occurrence": "2026-04-01T22:33:26.689378+00:00",
+      "affected_surface": "week3.extractions",
+      "owner": "upstream-week3-team",
+      "priority_tuple": [
+        1,
+        4,
+        "2026-04-01T22:33:26.689378+00:00",
+        "week3_extractions.entity.enum"
+      ],
+      "evidence": [
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "e733e394051d648f277f203e555baa7edc25e24bd93c3506fe7282515f7083e6",
+          "claim_type": "incident"
+        },
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "d98f6dfc16c3fca8dcdc9ba5058ecd49a664a32a2f3be3f5d5876123cbfcae5d",
+          "claim_type": "incident"
+        },
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "920df5e59405f237eb63406fcc74015d4a2b9a036ef6071c6aab7882248a311f",
+          "claim_type": "incident"
+        },
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "32356b6acd4deab25da0044db8fac25afb356bf6d42449646a499e3fe46d338b",
+          "claim_type": "incident"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "violation_id": "week5_events.event_id.enum",
+      "severity": "low",
+      "recurrence_count": 1,
+      "latest_occurrence": "2026-04-01T22:25:15.620898+00:00",
+      "affected_surface": "week5.events",
+      "owner": "upstream-week5-team",
+      "priority_tuple": [
+        1,
+        1,
+        "2026-04-01T22:25:15.620898+00:00",
+        "week5_events.event_id.enum"
+      ],
+      "evidence": [
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "29ea731913fbc6b08e30957f0e68ef587d604fd19adce94826463c396296c561",
+          "claim_type": "incident"
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "violation_id": "week5_events.event_type.enum",
+      "severity": "low",
+      "recurrence_count": 1,
+      "latest_occurrence": "2026-04-01T22:25:15.620898+00:00",
+      "affected_surface": "week5.events",
+      "owner": "upstream-week5-team",
+      "priority_tuple": [
+        1,
+        1,
+        "2026-04-01T22:25:15.620898+00:00",
+        "week5_events.event_type.enum"
+      ],
+      "evidence": [
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "2b81a23b8f6c9b0d0c13447c1a88111e6629673d456e0edfdf7761f257c12fd0",
+          "claim_type": "incident"
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "violation_id": "week5_events.record_id.enum",
+      "severity": "low",
+      "recurrence_count": 1,
+      "latest_occurrence": "2026-04-01T22:25:15.620898+00:00",
+      "affected_surface": "week5.events",
+      "owner": "upstream-week5-team",
+      "priority_tuple": [
+        1,
+        1,
+        "2026-04-01T22:25:15.620898+00:00",
+        "week5_events.record_id.enum"
+      ],
+      "evidence": [
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "050445855c2dedb3fba79a0c613d79e4e1bba6220f49912c5d37a73db4e2ffdf",
+          "claim_type": "incident"
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "violation_id": "week5_events.severity.enum",
+      "severity": "low",
+      "recurrence_count": 1,
+      "latest_occurrence": "2026-04-01T22:25:15.620898+00:00",
+      "affected_surface": "week5.events",
+      "owner": "upstream-week5-team",
+      "priority_tuple": [
+        1,
+        1,
+        "2026-04-01T22:25:15.620898+00:00",
+        "week5_events.severity.enum"
+      ],
+      "evidence": [
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "8f76c1037cb6a3b5b28f5ffb6b9c2451ed34f4f0f38932d8899259cf0eee423a",
+          "claim_type": "incident"
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "violation_id": "week5_events.source.enum",
+      "severity": "low",
+      "recurrence_count": 1,
+      "latest_occurrence": "2026-04-01T22:25:15.620898+00:00",
+      "affected_surface": "week5.events",
+      "owner": "upstream-week5-team",
+      "priority_tuple": [
+        1,
+        1,
+        "2026-04-01T22:25:15.620898+00:00",
+        "week5_events.source.enum"
+      ],
+      "evidence": [
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "7c5ec96cc6983d63fa41515ec1e0b918523cfd96e64959cda57f4a7f1b91c5c0",
+          "claim_type": "incident"
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "violation_id": "week3_extractions.category.enum",
+      "severity": "low",
+      "recurrence_count": 1,
+      "latest_occurrence": "2026-04-01T22:25:15.593939+00:00",
+      "affected_surface": "week3.extractions",
+      "owner": "upstream-week3-team",
+      "priority_tuple": [
+        1,
+        1,
+        "2026-04-01T22:25:15.593939+00:00",
+        "week3_extractions.category.enum"
+      ],
+      "evidence": [
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "9a0dc2b1b5804a2353e3fa9dd0f7c656aa0960a0cfb38f0eed1629e5277e7fc0",
+          "claim_type": "incident"
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "violation_id": "week3_extractions.entity.name.enum",
+      "severity": "low",
+      "recurrence_count": 1,
+      "latest_occurrence": "2026-04-01T22:25:15.593939+00:00",
+      "affected_surface": "week3.extractions",
+      "owner": "upstream-week3-team",
+      "priority_tuple": [
+        1,
+        1,
+        "2026-04-01T22:25:15.593939+00:00",
+        "week3_extractions.entity.name.enum"
+      ],
+      "evidence": [
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "41a2dce23f17be2ebf1c588d48a9897dfff0831f85f31be50f93ba59e9b2a284",
+          "claim_type": "incident"
+        }
+      ]
+    },
+    {
+      "rank": 9,
+      "violation_id": "week3_extractions.entity.score.enum",
+      "severity": "low",
+      "recurrence_count": 1,
+      "latest_occurrence": "2026-04-01T22:25:15.593939+00:00",
+      "affected_surface": "week3.extractions",
+      "owner": "upstream-week3-team",
+      "priority_tuple": [
+        1,
+        1,
+        "2026-04-01T22:25:15.593939+00:00",
+        "week3_extractions.entity.score.enum"
+      ],
+      "evidence": [
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "04537391717eae505494fa4e10c4d52414632293c4b61c18e33202f162b29f78",
+          "claim_type": "incident"
+        }
+      ]
+    },
+    {
+      "rank": 10,
+      "violation_id": "week3_extractions.event_ts.enum",
+      "severity": "low",
+      "recurrence_count": 1,
+      "latest_occurrence": "2026-04-01T22:25:15.593939+00:00",
+      "affected_surface": "week3.extractions",
+      "owner": "upstream-week3-team",
+      "priority_tuple": [
+        1,
+        1,
+        "2026-04-01T22:25:15.593939+00:00",
+        "week3_extractions.event_ts.enum"
+      ],
+      "evidence": [
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "d9835e2571a285f74cd219c3b5306a365d2867936a04c2d16557474562992c8c",
+          "claim_type": "incident"
+        }
+      ]
+    }
+  ],
+  "schema_changes_summary": {
+    "total_changes": 2,
+    "breaking_changes": 0,
+    "non_breaking_changes": 2,
+    "top_changes": [
+      {
+        "change_id": "week3_extractions.v1:60bb3e200e5d5ca6",
+        "compatibility_verdict": "fully-compatible",
+        "impact_scope": "medium",
+        "detected_at": "",
+        "affected_interface": "week3_extractions.v1",
+        "priority_tuple": [
+          0,
+          2,
+          "",
+          "week3_extractions.v1:60bb3e200e5d5ca6"
+        ],
+        "evidence": [
+          {
+            "artifact_path": "C:/Abdu/data-guard/validation_reports/schema_evolution_week3_extractions.v1.json",
+            "record_selector": "week3_extractions.v1:60bb3e200e5d5ca6",
+            "claim_type": "schema_change"
+          }
+        ]
+      },
+      {
+        "change_id": "week5_events.v1:a5888a9182ba8b2c",
+        "compatibility_verdict": "fully-compatible",
+        "impact_scope": "medium",
+        "detected_at": "",
+        "affected_interface": "week5_events.v1",
+        "priority_tuple": [
+          0,
+          2,
+          "",
+          "week5_events.v1:a5888a9182ba8b2c"
+        ],
+        "evidence": [
+          {
+            "artifact_path": "C:/Abdu/data-guard/validation_reports/schema_evolution_week5_events.v1.json",
+            "record_selector": "week5_events.v1:a5888a9182ba8b2c",
+            "claim_type": "schema_change"
+          }
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "artifact_path": "C:/Abdu/data-guard/validation_reports/schema_evolution_week3_extractions.v1.json",
+        "record_selector": "week3_extractions.v1:60bb3e200e5d5ca6",
+        "claim_type": "schema_change"
+      },
+      {
+        "artifact_path": "C:/Abdu/data-guard/validation_reports/schema_evolution_week5_events.v1.json",
+        "record_selector": "week5_events.v1:a5888a9182ba8b2c",
+        "claim_type": "schema_change"
+      }
+    ]
+  },
+  "ai_risk_summary": {
+    "quarantine_rate": 1.0,
+    "output_violation_rate": 0.0,
+    "trace_violation_rate": 0.0,
+    "drift_status": "insufficient_history",
+    "trend_status": "insufficient_history",
+    "completeness_flags": {
+      "has_metrics": true,
+      "has_history": true
+    },
+    "evidence": [
+      {
+        "artifact_path": "C:/Abdu/data-guard/validation_reports/ai_metrics.json",
+        "record_selector": "rates",
+        "claim_type": "ai_risk"
+      }
+    ]
+  },
+  "recommended_actions": [
+    {
+      "action_id": "e2f92d64400da702",
+      "issue_key": {
+        "issue_type": "schema_change",
+        "affected_surface": "schema_evolution",
+        "field_or_interface": "compatibility"
+      },
+      "priority_score": 28.0,
+      "severity": "medium",
+      "recurrence_count": 2,
+      "latest_occurrence": null,
+      "remediation_target": "schema_migration_plan",
+      "affected_location": "validation_reports/schema_evolution_*.json",
+      "owner": "unassigned",
+      "consumer_impact": "Schema incompatibilities can disrupt downstream consumers.",
+      "verification_step": "Confirm compatibility verdict improves and run summary reports no new breaking changes.",
+      "aggregate_count": 2,
+      "evidence": [
+        {
+          "artifact_path": "validation_reports/schema_evolution_*.json",
+          "record_selector": "compatibility_verdict",
+          "claim_type": "action"
+        }
+      ]
+    },
+    {
+      "action_id": "67efa29c8baa45ad",
+      "issue_key": {
+        "issue_type": "violation",
+        "affected_surface": "week3.extractions",
+        "field_or_interface": "week3.extractions"
+      },
+      "priority_score": 23.0,
+      "severity": "low",
+      "recurrence_count": 4,
+      "latest_occurrence": "2026-04-01T22:33:26.689378+00:00",
+      "remediation_target": "data_contract_or_upstream_payload",
+      "affected_location": "week3.extractions",
+      "owner": "upstream-week3-team",
+      "consumer_impact": "Potential downstream contract breakage and reporting inaccuracies.",
+      "verification_step": "Re-run validation and confirm the violation no longer appears in report_data.json top_violations.",
+      "aggregate_count": 8,
+      "evidence": [
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "e733e394051d648f277f203e555baa7edc25e24bd93c3506fe7282515f7083e6",
+          "claim_type": "action"
+        },
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "d98f6dfc16c3fca8dcdc9ba5058ecd49a664a32a2f3be3f5d5876123cbfcae5d",
+          "claim_type": "action"
+        },
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "920df5e59405f237eb63406fcc74015d4a2b9a036ef6071c6aab7882248a311f",
+          "claim_type": "action"
+        },
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "32356b6acd4deab25da0044db8fac25afb356bf6d42449646a499e3fe46d338b",
+          "claim_type": "action"
+        },
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "9a0dc2b1b5804a2353e3fa9dd0f7c656aa0960a0cfb38f0eed1629e5277e7fc0",
+          "claim_type": "action"
+        },
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "41a2dce23f17be2ebf1c588d48a9897dfff0831f85f31be50f93ba59e9b2a284",
+          "claim_type": "action"
+        },
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "04537391717eae505494fa4e10c4d52414632293c4b61c18e33202f162b29f78",
+          "claim_type": "action"
+        },
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "d9835e2571a285f74cd219c3b5306a365d2867936a04c2d16557474562992c8c",
+          "claim_type": "action"
+        }
+      ]
+    },
+    {
+      "action_id": "043c5bc86d8f94a3",
+      "issue_key": {
+        "issue_type": "violation",
+        "affected_surface": "week5.events",
+        "field_or_interface": "week5.events"
+      },
+      "priority_score": 17.0,
+      "severity": "low",
+      "recurrence_count": 1,
+      "latest_occurrence": "2026-04-01T22:25:15.620898+00:00",
+      "remediation_target": "data_contract_or_upstream_payload",
+      "affected_location": "week5.events",
+      "owner": "upstream-week5-team",
+      "consumer_impact": "Potential downstream contract breakage and reporting inaccuracies.",
+      "verification_step": "Re-run validation and confirm the violation no longer appears in report_data.json top_violations.",
+      "aggregate_count": 5,
+      "evidence": [
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "29ea731913fbc6b08e30957f0e68ef587d604fd19adce94826463c396296c561",
+          "claim_type": "action"
+        },
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "2b81a23b8f6c9b0d0c13447c1a88111e6629673d456e0edfdf7761f257c12fd0",
+          "claim_type": "action"
+        },
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "050445855c2dedb3fba79a0c613d79e4e1bba6220f49912c5d37a73db4e2ffdf",
+          "claim_type": "action"
+        },
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "8f76c1037cb6a3b5b28f5ffb6b9c2451ed34f4f0f38932d8899259cf0eee423a",
+          "claim_type": "action"
+        },
+        {
+          "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+          "record_selector": "7c5ec96cc6983d63fa41515ec1e0b918523cfd96e64959cda57f4a7f1b91c5c0",
+          "claim_type": "action"
+        }
+      ]
+    }
+  ],
+  "evidence_index": [
+    {
+      "artifact_path": "C:/Abdu/data-guard/validation_reports/ai_metrics.json",
+      "record_selector": "rates",
+      "claim_type": "ai_risk"
+    },
+    {
+      "artifact_path": "C:/Abdu/data-guard/validation_reports/ai_metrics.json",
+      "record_selector": "rates.prompt_quarantine_rate",
+      "claim_type": "action"
+    },
+    {
+      "artifact_path": "C:/Abdu/data-guard/validation_reports/schema_evolution_week3_extractions.v1.json",
+      "record_selector": "week3_extractions.v1:60bb3e200e5d5ca6",
+      "claim_type": "schema_change"
+    },
+    {
+      "artifact_path": "C:/Abdu/data-guard/validation_reports/schema_evolution_week5_events.v1.json",
+      "record_selector": "week5_events.v1:a5888a9182ba8b2c",
+      "claim_type": "schema_change"
+    },
+    {
+      "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+      "record_selector": "04537391717eae505494fa4e10c4d52414632293c4b61c18e33202f162b29f78",
+      "claim_type": "incident"
+    },
+    {
+      "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+      "record_selector": "050445855c2dedb3fba79a0c613d79e4e1bba6220f49912c5d37a73db4e2ffdf",
+      "claim_type": "incident"
+    },
+    {
+      "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+      "record_selector": "29ea731913fbc6b08e30957f0e68ef587d604fd19adce94826463c396296c561",
+      "claim_type": "incident"
+    },
+    {
+      "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+      "record_selector": "2b81a23b8f6c9b0d0c13447c1a88111e6629673d456e0edfdf7761f257c12fd0",
+      "claim_type": "incident"
+    },
+    {
+      "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+      "record_selector": "32356b6acd4deab25da0044db8fac25afb356bf6d42449646a499e3fe46d338b",
+      "claim_type": "incident"
+    },
+    {
+      "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+      "record_selector": "41a2dce23f17be2ebf1c588d48a9897dfff0831f85f31be50f93ba59e9b2a284",
+      "claim_type": "incident"
+    },
+    {
+      "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+      "record_selector": "58812c51a9f7b2c7fe1476f3a3d13b8bf18c5d701a318b3f660468e256a9c547",
+      "claim_type": "incident"
+    },
+    {
+      "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+      "record_selector": "7c5ec96cc6983d63fa41515ec1e0b918523cfd96e64959cda57f4a7f1b91c5c0",
+      "claim_type": "incident"
+    },
+    {
+      "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+      "record_selector": "8f76c1037cb6a3b5b28f5ffb6b9c2451ed34f4f0f38932d8899259cf0eee423a",
+      "claim_type": "incident"
+    },
+    {
+      "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+      "record_selector": "920df5e59405f237eb63406fcc74015d4a2b9a036ef6071c6aab7882248a311f",
+      "claim_type": "incident"
+    },
+    {
+      "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+      "record_selector": "9a0dc2b1b5804a2353e3fa9dd0f7c656aa0960a0cfb38f0eed1629e5277e7fc0",
+      "claim_type": "incident"
+    },
+    {
+      "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+      "record_selector": "d9835e2571a285f74cd219c3b5306a365d2867936a04c2d16557474562992c8c",
+      "claim_type": "incident"
+    },
+    {
+      "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+      "record_selector": "d98f6dfc16c3fca8dcdc9ba5058ecd49a664a32a2f3be3f5d5876123cbfcae5d",
+      "claim_type": "incident"
+    },
+    {
+      "artifact_path": "C:/Abdu/data-guard/violation_log/violations.jsonl",
+      "record_selector": "e733e394051d648f277f203e555baa7edc25e24bd93c3506fe7282515f7083e6",
+      "claim_type": "incident"
+    },
+    {
+      "artifact_path": "validation_reports/schema_evolution_*.json",
+      "record_selector": "compatibility_verdict",
+      "claim_type": "action"
+    }
+  ],
+  "generation_metadata": {
+    "generated_at": "2026-04-04T21:26:32.986775+00:00",
+    "duration_ms": 14,
+    "input_artifact_counts": {
+      "validation_reports": 9,
+      "violations": 14,
+      "schema_evolution_reports": 2,
+      "ownership_map_records": 6,
+      "interface_registry_records": 6,
+      "ai_metrics": 1
+    },
+    "enrichment": {
+      "requested": true,
+      "provider": "openrouter",
+      "status": "missing_config",
+      "fallback_used": true
+    }
+  }
+}

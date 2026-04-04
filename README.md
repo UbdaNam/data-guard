@@ -13,6 +13,71 @@ systems.
 
 Project governance is defined in .specify/memory/constitution.md.
 
+## Developer Workflow and End-to-End Runbook (Feature 8)
+
+This section is the reviewer-facing quick-start and canonical index for running the platform end-to-end.
+
+Quick start:
+
+1. Install Python 3.11 or newer.
+2. Sync dependencies with `uv sync --extra dev`.
+3. Review `.env.example` and keep any OpenRouter settings optional.
+4. Run the canonical command sequence in order:
+
+- `python -m contracts.generator`
+- `python -m contracts.runner`
+- `python -m contracts.attributor`
+- `python -m contracts.schema_analyzer`
+- `python -m contracts.ai_extensions`
+- `python -m contracts.report_generator`
+
+5. Confirm the expected outputs in the canonical artifact directories listed below.
+
+Required baseline behavior:
+
+- The core workflow must succeed without OpenRouter configuration.
+- Optional enrichment is a report-generation enhancement only and is never required.
+- All documented commands must map to real entry points and real artifacts from Features 1–7.
+
+Expected outputs by step:
+
+- Contract generation: `generated_contracts/week3_extractions.yaml`, `generated_contracts/week5_events.yaml`, and DBT companion files.
+- Validation execution: `validation_reports/*.json` and `schema_snapshots/baselines.json`.
+- Violation attribution: `violation_log/violations.jsonl`.
+- Schema evolution analysis: `validation_reports/schema_evolution_*.json`, `migration_impact_*.json`, and `validation_reports/schema_evolution_run_summary.json`.
+- AI contract enforcement: `validation_reports/ai_metrics.json`, `violation_log/ai_violations.jsonl`, and AI snapshot files under `schema_snapshots/ai/`.
+- Report generation: `enforcer_report/report_data.json` and `enforcer_report/report_{date}.md`.
+
+Reviewer verification checklist:
+
+- Contract generation outputs exist in `generated_contracts/`
+- Validation outputs exist in `validation_reports/`
+- Violation records exist in `violation_log/violations.jsonl`
+- Schema evolution outputs exist in `validation_reports/`
+- AI metrics exist in `validation_reports/ai_metrics.json`
+- Report artifacts exist in `enforcer_report/`
+
+Maintainer navigation guide:
+
+- Canonical contracts and schema assets: `generated_contracts/`, `contracts/`, `schema_snapshots/`
+- Validation and analysis evidence: `validation_reports/`
+- Violation records: `violation_log/`
+- Inputs and raw traces: `outputs/`
+- Stakeholder-facing report artifacts: `enforcer_report/`
+
+Deep-dive guidance:
+
+- End-to-end flow and dependency mapping: [docs/runbooks/end_to_end.md](docs/runbooks/end_to_end.md)
+- Troubleshooting and rerun guidance: [docs/runbooks/troubleshooting.md](docs/runbooks/troubleshooting.md)
+
+Optional OpenRouter configuration:
+
+- `OPENROUTER_API_KEY`
+- `OPENROUTER_BASE_URL`
+- `OPENROUTER_MODEL`
+
+These settings are documented for optional enrichment only. If they are absent, the platform continues with the deterministic baseline.
+
 ## Validation Execution (Feature 3)
 
 Primary entry point:

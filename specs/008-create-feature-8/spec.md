@@ -5,6 +5,16 @@
 **Status**: Draft  
 **Input**: User description: "Create Feature 8: Developer Workflow and End-to-End Runbook for a production-grade Python platform called \"The Data Contract Enforcer.\""
 
+## Clarifications
+
+### Session 2026-04-05
+
+- Q: Which platform steps are required versus optional? → A: The required baseline includes contract generation, validation execution, violation attribution, schema evolution analysis, AI contract enforcement, and report generation; only OpenRouter-backed enrichment and supporting documentation are optional.
+- Q: What are the environment and configuration requirements? → A: Use Python 3.11+ with a virtual environment and the repository’s standard dependency installation flow; `.env.example` must contain placeholders only, no secrets are committed, configuration is loaded from environment variables, and missing optional OpenRouter values disable enrichment without blocking the core workflow.
+- Q: What command usage details must the runbook include? → A: Document exact copy-paste canonical commands for every entry point, using the real repo-relative input and output paths from prior features, plus the expected success signal and where failures appear.
+- Q: What troubleshooting scope is required? → A: Include a minimal-but-complete troubleshooting section covering missing input datasets, missing generated contracts, malformed validation reports, missing lineage snapshots, missing schema snapshots, absent OpenRouter configuration, and partial feature execution, with rerun guidance ordered from the earliest missing prerequisite to the latest dependent output.
+- Q: How should the runbook support reviewers and maintainers? → A: Make the README a concise quick-start and canonical index, with linked runbooks for detailed procedures, artifact locations, and troubleshooting so first-time users are not overwhelmed.
+
 ## User Scenarios & Testing _(mandatory)_
 
 ### User Story 1 - Fresh-Clone Setup (Priority: P1)
@@ -29,6 +39,14 @@ As a teammate or evaluator, I can run the platform in the correct order across F
 **Why this priority**: The platform is only operable if its core commands are documented in a repeatable sequence with clear outputs.
 
 **Independent Test**: A reviewer can execute the documented command sequence and produce the expected artifacts for contract generation, validation, attribution, schema evolution, AI enforcement, and reporting.
+
+**Required Baseline**: The documented workflow MUST include contract generation, validation execution, violation attribution, schema evolution analysis, AI contract enforcement, and report generation in the canonical order. Optional OpenRouter-backed enrichment may be skipped and must not block the core workflow.
+
+**Command Coverage**: Each documented command MUST correspond to a real platform entry point and real artifacts produced by prior features.
+
+**Recovery Order**: Troubleshooting guidance MUST explain rerun behavior from prerequisite inputs to downstream generated artifacts, so users always regenerate the earliest missing dependency first.
+
+**Usability Rule**: The README MUST help a reviewer verify the platform quickly, while optional runbooks provide deeper guidance for maintainers.
 
 **Acceptance Scenarios**:
 
@@ -63,18 +81,25 @@ As a maintainer or demo operator, I can diagnose common setup and execution fail
 
 ### Functional Requirements
 
-- **FR-001**: The feature MUST document a fresh-clone setup workflow that covers environment creation, dependency installation, and first-run verification.
-- **FR-002**: The feature MUST identify all required environment variables, describe their purpose, and distinguish required values from optional OpenRouter settings.
+- **FR-001**: The feature MUST document a fresh-clone setup workflow that covers Python 3.11+ environment creation, virtual environment setup, dependency installation, and first-run verification.
+- **FR-002**: The feature MUST identify all required environment variables, describe their purpose, and distinguish required values from optional OpenRouter settings loaded from environment variables only.
 - **FR-003**: The feature MUST provide the canonical execution order across Features 1–7 and explain why that order matters.
-- **FR-004**: The feature MUST document the supported command entry point for each platform capability and the expected artifact outputs for each command.
-- **FR-005**: The feature MUST describe required input data preparation expectations before each command is run.
+- **FR-004**: The feature MUST document the exact canonical command for each platform capability, including the real repo-relative input paths and output paths used by that command.
+- **FR-005**: The feature MUST describe required input data preparation expectations before each command is run, including which prior outputs are prerequisites.
 - **FR-006**: The feature MUST preserve the canonical repository paths and output locations established by earlier features.
 - **FR-007**: The feature MUST clearly distinguish required core workflow steps from optional capabilities, including LLM-assisted enrichment.
 - **FR-008**: The feature MUST explain how to configure optional OpenRouter-backed capabilities and how the platform behaves when those settings are absent.
 - **FR-009**: The feature MUST provide troubleshooting and recovery guidance for missing configuration, missing inputs, partial runs, and command-order mistakes.
+- **FR-016**: The feature MUST cover the minimum troubleshooting cases for missing input datasets, missing generated contracts, malformed validation reports, missing lineage snapshots, missing schema snapshots, absent OpenRouter configuration, and partial feature execution.
+- **FR-017**: The feature MUST explain rerun behavior as an ordered recovery flow that starts with the earliest missing prerequisite and proceeds toward dependent generated outputs.
+- **FR-018**: The feature MUST make the README a concise reviewer-facing quick-start and canonical index, while optional runbooks carry deeper maintainer guidance.
+- **FR-019**: The feature MUST describe expected outputs in a way that is quick to verify at a glance and precise enough to locate the canonical artifact paths.
 - **FR-010**: The feature MUST support reviewer execution on a fresh clone without requiring prior knowledge of repository internals.
 - **FR-011**: The feature MUST describe expected outputs for each documented entry point in a way that is verifiable by inspection.
 - **FR-012**: The feature MUST keep deterministic non-LLM operation available as the default operational path.
+- **FR-015**: The feature MUST state the expected success signal and failure surface for each documented command.
+- **FR-013**: The feature MUST ensure `.env.example` contains placeholders only and no secrets or production credentials.
+- **FR-014**: The feature MUST define that missing optional OpenRouter configuration is handled by disabling enrichment while preserving successful core execution.
 
 ### Key Entities _(include if feature involves data)_
 

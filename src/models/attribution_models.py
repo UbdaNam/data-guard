@@ -177,6 +177,9 @@ class BlastRadiusImpact(BaseModel):
     affected_nodes: list[str] = Field(default_factory=list)
     affected_pipelines: list[str] = Field(default_factory=list)
     affected_interfaces: list[str] = Field(default_factory=list)
+    direct_subscribers: list[str] = Field(default_factory=list)
+    transitive_downstream_nodes: list[str] = Field(default_factory=list)
+    contamination_depth: int = 0
     estimated_impacted_records: int | None = None
     estimated_impacted_datasets: int | None = None
     knowledge_completeness: LineageCompleteness = LineageCompleteness.partial
@@ -191,6 +194,9 @@ class BlastRadiusSummary(BaseModel):
     affected_nodes: list[str] = Field(default_factory=list)
     affected_pipelines: list[str] = Field(default_factory=list)
     affected_interfaces: list[str] = Field(default_factory=list)
+    direct_subscribers: list[str] = Field(default_factory=list)
+    transitive_downstream_nodes: list[str] = Field(default_factory=list)
+    contamination_depth: int = 0
     estimated_impacted_records: int | None = None
     estimated_impacted_datasets: int | None = None
     knowledge_completeness: LineageCompleteness = LineageCompleteness.partial

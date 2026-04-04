@@ -18,11 +18,13 @@ SECTION_ORDER = [
 def build_fallback_narratives(report: OperationalReportData) -> dict[str, str]:
     score = report.data_health_score.value
     score_text = "insufficient evidence" if score is None else f"{score:.1f}/100"
+    formula = "(checks_passed / total_checks × 100) - (20 × critical_violation_count)"
 
     return {
         "Data Health Score": (
             f"Computed Data Health Score is {score_text}. "
-            f"Status: {report.data_health_score.score_status}."
+            f"Status: {report.data_health_score.score_status}. "
+            f"Formula: {formula}."
         ),
         "Violations this period": (
             f"Detected {report.violations_summary.total} violation records in the reporting window."
@@ -63,6 +65,13 @@ def render_markdown(
     lines.append("")
     lines.append(f"- Value: {report.data_health_score.value}")
     lines.append(f"- Status: {report.data_health_score.score_status}")
+    lines.append(f"- Formula: (checks_passed / total_checks × 100) - (20 × critical_violation_count)")
+    lines.append(f"- Checks passed: {report.data_health_score.checks_passed}")
+    lines.append(f"- Total checks: {report.data_health_score.total_checks}")
+    lines.append(f"- Critical violations: {report.data_health_score.critical_violation_count}")
+    lines.append(f"- Check penalty: {report.data_health_score.check_penalty}")
+    lines.append(f"- Critical penalty: {report.data_health_score.critical_penalty}")
+    lines.append(f"- Raw score: {report.data_health_score.raw_score}")
     if report.data_health_score.reason:
         lines.append(f"- Reason: {report.data_health_score.reason}")
     lines.append("")
@@ -112,6 +121,10 @@ def render_markdown(
             f"target={action.remediation_target} location={action.affected_location} "
             f"owner={action.owner} verify={action.verification_step}"
         )
+        if action.source_artifact_path or action.field_path or action.contract_clause_id:
+            lines.append(
+                f"  - references: file={action.source_artifact_path or 'n/a'} field={action.field_path or 'n/a'} clause={action.contract_clause_id or 'n/a'}"
+            )
     lines.append("")
 
     # 6) Evidence traceability notes

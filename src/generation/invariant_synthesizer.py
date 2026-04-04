@@ -7,6 +7,11 @@ from typing import Any
 from src.models.contract_models import InvariantClause, InvariantSource, ProfiledField, SemanticConfidence
 
 
+def _confidence_guard(field_path: str) -> bool:
+    lowered = field_path.lower()
+    return any(token in lowered for token in ("confidence", "confidence_score", "confidence_probability"))
+
+
 def _dataset_requirement_overrides(dataset_id: str) -> list[InvariantClause]:
     slug = dataset_id.replace(".", "_")
     return [
@@ -59,6 +64,18 @@ def synthesize_invariants(
                     supported_in_dbt=False,
                 )
             )
+            if _confidence_guard(field.field_path):
+                clauses.append(
+                    InvariantClause(
+                        clause_id=f"{slug}.{field.field_path}.confidence_bounds",
+                        field_path=field.field_path,
+                        clause_type="confidence_bounds",
+                        source=InvariantSource.inferred,
+                        expression={"min": 0.0, "max": 1.0},
+                        confidence=SemanticConfidence.high,
+                        supported_in_dbt=False,
+                    )
+                )
             if (field.numeric_stats.get("min") or 0) >= 0:
                 clauses.append(
                     InvariantClause(

@@ -18,6 +18,9 @@ from src.ai_enforcement.violation_writer import append_violations
 from src.models.ai_enforcement_models import AIEnforcementRun, AIViolationCategory, AIViolationRecord, AIViolationSeverity, DriftComparisonStatus
 
 
+OUTPUT_VIOLATION_WARN_THRESHOLD = 0.10
+
+
 def _load_jsonl(path: Path) -> list[dict[str, Any]]:
     if not path.exists():
         return []
@@ -139,6 +142,28 @@ def run_ai_enforcement(
                 )
             )
 
+    output_failed = sum(1 for item in output_results if item.validation_status.value != "PASS")
+    trace_failed = sum(1 for item in trace_results if item.validation_status.value != "PASS")
+    prompt_quarantined = sum(1 for item in prompt_results if item.quarantined)
+    output_violation_rate = output_failed / max(len(output_results), 1)
+
+    if output_violation_rate > OUTPUT_VIOLATION_WARN_THRESHOLD:
+        violations.append(
+            AIViolationRecord(
+                violation_id=make_violation_id(run_id, AIViolationCategory.structured_output.value, "week2_verdicts", "output_rate_warn"),
+                run_id=run_id,
+                category=AIViolationCategory.structured_output,
+                severity=AIViolationSeverity.medium,
+                surface_id="week2_verdicts",
+                record_ref="output_violation_rate",
+                message="Structured output violation rate exceeded warning threshold",
+                evidence={
+                    "output_violation_rate": output_violation_rate,
+                    "threshold": OUTPUT_VIOLATION_WARN_THRESHOLD,
+                },
+            )
+        )
+
     if drift_result.comparison_status in {DriftComparisonStatus.baseline_unreadable, DriftComparisonStatus.compared} and drift_result.drift_detected:
         violations.append(
             AIViolationRecord(
@@ -156,9 +181,6 @@ def run_ai_enforcement(
     appended = append_violations(repo_root / violation_log_path, violations)
 
     previous_metrics = read_json(repo_root / validation_report_path)
-    output_failed = sum(1 for item in output_results if item.validation_status.value != "PASS")
-    trace_failed = sum(1 for item in trace_results if item.validation_status.value != "PASS")
-    prompt_quarantined = sum(1 for item in prompt_results if item.quarantined)
 
     metrics = assemble_metrics_report(
         run_id=run_id,
@@ -205,6 +227,7 @@ def run_ai_enforcement(
             "prompt_quarantined": prompt_quarantined,
             "outputs_processed": len(output_results),
             "outputs_failed": output_failed,
+            "output_violation_rate": round(output_violation_rate, 6),
             "traces_processed": len(trace_results),
             "traces_failed": trace_failed,
             "drift_status": drift_result.comparison_status.value,

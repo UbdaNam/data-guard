@@ -39,6 +39,7 @@ def _numeric_summary(values: list[float]) -> dict[str, float]:
         return float(sorted_vals[idx])
 
     return {
+        "sample_count": float(len(sorted_vals)),
         "min": float(sorted_vals[0]),
         "max": float(sorted_vals[-1]),
         "mean": float(mean(sorted_vals)),

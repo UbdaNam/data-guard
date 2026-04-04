@@ -33,6 +33,9 @@ class DataHealthScore(BaseModel):
     check_penalty: float | None
     critical_penalty: float | None
     raw_score: float | None
+    checks_passed: int | None = None
+    total_checks: int | None = None
+    critical_violation_count: int | None = None
     formula_version: str = "fr032_v1"
     reason: str | None = None
 
@@ -54,6 +57,9 @@ class TopViolation(BaseModel):
     affected_surface: str
     owner: str = "unassigned"
     priority_tuple: list[str | int | float] = Field(default_factory=list)
+    source_artifact_path: str | None = None
+    field_path: str | None = None
+    contract_clause_id: str | None = None
     evidence: list[EvidenceReference] = Field(default_factory=list)
 
 
@@ -64,6 +70,9 @@ class RankedSchemaChange(BaseModel):
     detected_at: str | None
     affected_interface: str | None
     priority_tuple: list[str | int | float] = Field(default_factory=list)
+    source_artifact_path: str | None = None
+    field_path: str | None = None
+    contract_clause_id: str | None = None
     evidence: list[EvidenceReference] = Field(default_factory=list)
 
 
@@ -98,6 +107,9 @@ class RecommendedAction(BaseModel):
     consumer_impact: str | None = None
     verification_step: str
     aggregate_count: int
+    source_artifact_path: str | None = None
+    field_path: str | None = None
+    contract_clause_id: str | None = None
     evidence: list[EvidenceReference] = Field(default_factory=list)
 
 

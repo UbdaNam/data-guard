@@ -33,7 +33,7 @@ def generate_recommended_actions(
     for violation in top_violations:
         issue_type = "violation"
         affected_surface = violation.affected_surface
-        field_or_interface = violation.affected_surface
+        field_or_interface = violation.field_path or violation.contract_clause_id or violation.affected_surface
         action_id = _make_action_id(issue_type, affected_surface, field_or_interface)
         action = RecommendedAction(
             action_id=action_id,
@@ -51,12 +51,15 @@ def generate_recommended_actions(
             severity=violation.severity,
             recurrence_count=violation.recurrence_count,
             latest_occurrence=violation.latest_occurrence,
-            remediation_target="data_contract_or_upstream_payload",
-            affected_location=affected_surface,
+            remediation_target=violation.source_artifact_path or "data_contract_or_upstream_payload",
+            affected_location=violation.field_path or affected_surface,
             owner=violation.owner,
             consumer_impact="Potential downstream contract breakage and reporting inaccuracies.",
             verification_step="Re-run validation and confirm the violation no longer appears in report_data.json top_violations.",
             aggregate_count=violation.recurrence_count,
+            source_artifact_path=violation.source_artifact_path,
+            field_path=violation.field_path,
+            contract_clause_id=violation.contract_clause_id,
             evidence=[
                 EvidenceReference(
                     artifact_path=ref.artifact_path,
@@ -97,6 +100,9 @@ def generate_recommended_actions(
                 consumer_impact="Schema incompatibilities can disrupt downstream consumers.",
                 verification_step="Confirm compatibility verdict improves and run summary reports no new breaking changes.",
                 aggregate_count=max(schema_change_count, 1),
+                source_artifact_path="validation_reports/schema_evolution_*.json",
+                field_path=field_or_interface,
+                contract_clause_id=field_or_interface,
                 evidence=[
                     EvidenceReference(
                         artifact_path="validation_reports/schema_evolution_*.json",
@@ -137,6 +143,9 @@ def generate_recommended_actions(
                     consumer_impact="Elevated AI quarantine rates can reduce reliable downstream outputs.",
                     verification_step="Reduce quarantine rate and confirm trend improves in ai_metrics history.",
                     aggregate_count=1,
+                    source_artifact_path=str(ai_risk.get("_artifact_path", "validation_reports/ai_metrics.json")),
+                    field_path="rates.prompt_quarantine_rate",
+                    contract_clause_id="prompt_input_quality_controls",
                     evidence=[
                         EvidenceReference(
                             artifact_path=str(ai_risk.get("_artifact_path", "validation_reports/ai_metrics.json")),

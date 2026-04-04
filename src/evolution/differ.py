@@ -110,6 +110,14 @@ def _compare_constraints(source: NormalizedField, target: NormalizedField) -> li
         and target.maximum is not None
         and target.maximum < source.maximum
     ):
+        classification = None
+        if (
+            source.minimum == 0.0
+            and source.maximum == 1.0
+            and target.minimum == 0.0
+            and target.maximum == 100.0
+        ):
+            classification = "CRITICAL"
         changes.append(
             _make_change(
                 ChangeClass.change_semantic_scale,
@@ -118,6 +126,7 @@ def _compare_constraints(source: NormalizedField, target: NormalizedField) -> li
                 {
                     "from_range": [source.minimum, source.maximum],
                     "to_range": [target.minimum, target.maximum],
+                    **({"classification": classification} if classification else {}),
                 },
             )
         )

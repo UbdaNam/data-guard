@@ -80,6 +80,18 @@ class BaselineStatistic(BaseModel):
     updated_at: str
 
 
+class BaselineArtifactRecord(BaseModel):
+    contract_id: str
+    column_name: str
+    sample_count: int
+    mean: float
+    stddev: float
+    min: float
+    max: float
+    created_at: str
+    updated_at: str
+
+
 class ValidationRun(BaseModel):
     run_id: str
     run_timestamp: str

@@ -7,22 +7,106 @@ implemented in the foundation feature.
 from __future__ import annotations
 
 import argparse
+import json
 from datetime import UTC, datetime
+import os
 from pathlib import Path
 from typing import Any
 from uuid import uuid4
+from urllib.error import URLError
+from urllib.request import Request, urlopen
 
+from contracts.baseline_store import build_baseline_store
 from src.generation.dataset_loader import load_feature1_artifacts, load_jsonl_dataset, resolve_dataset_targets
 from src.generation.deterministic_writer import atomic_write_json, atomic_write_yaml, build_deterministic_signature
 from src.generation.invariant_synthesizer import synthesize_invariants
 from src.generation.lineage_injector import inject_downstream_context
 from src.generation.profilers import profile_records
 from src.generation.renderers import render_bitol_contract, render_dbt_schema, render_dbt_yaml_payload
-from src.models.contract_models import CanonicalMismatchRecord, GeneratedContract, GenerationMetadata
+from src.models.contract_models import CanonicalMismatchRecord, GeneratedContract, GenerationMetadata, ProfiledField, SemanticConfidence
+from src.models.validation_models import NumericProfile
 from src.validators.contract_quality_validator import validate_canonical_output_names, validate_metadata
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+
+
+def _build_numeric_profiles(profiled_fields: list[ProfiledField]) -> dict[str, NumericProfile]:
+    profiles: dict[str, NumericProfile] = {}
+    for field in profiled_fields:
+        numeric_stats = field.numeric_stats or {}
+        if not numeric_stats:
+            continue
+        sample_count = int(float(numeric_stats.get("sample_count", 0) or 0))
+        if sample_count <= 0:
+            continue
+        profiles[field.field_path] = NumericProfile(
+            column_name=field.field_path,
+            sample_size=sample_count,
+            mean=float(numeric_stats.get("mean", 0.0) or 0.0),
+            stddev=float(numeric_stats.get("stddev", 0.0) or 0.0),
+            min=float(numeric_stats.get("min", 0.0) or 0.0),
+            max=float(numeric_stats.get("max", 0.0) or 0.0),
+        )
+    return profiles
+
+
+def _annotate_ambiguous_fields(profiled_fields: list[ProfiledField]) -> list[ProfiledField]:
+    openrouter_key = os.getenv("OPENROUTER_API_KEY", "").strip()
+    base_url = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1").strip().rstrip("/")
+    model = os.getenv("OPENROUTER_MODEL", "").strip()
+    if not openrouter_key or not model:
+        return profiled_fields
+
+    annotated: list[ProfiledField] = []
+    for field in profiled_fields:
+        if field.semantic_confidence != SemanticConfidence.low:
+            annotated.append(field)
+            continue
+        prompt = (
+            "Provide a short, deterministic annotation for a low-confidence schema field. "
+            f"Field path: {field.field_path}. "
+            f"Observed types: {', '.join(field.observed_types) or 'unknown'}. "
+            f"Uncertainty note: {field.uncertainty_note or 'none'}."
+        )
+        try:
+            request = Request(
+                f"{base_url}/chat/completions",
+                data=json.dumps(
+                    {
+                        "model": model,
+                        "messages": [
+                            {"role": "system", "content": "Return one concise sentence only."},
+                            {"role": "user", "content": prompt},
+                        ],
+                        "temperature": 0,
+                        "max_tokens": 60,
+                    }
+                ).encode("utf-8"),
+                headers={
+                    "Authorization": f"Bearer {openrouter_key}",
+                    "Content-Type": "application/json",
+                    "HTTP-Referer": "https://github.com/microsoft/copilot",
+                    "X-Title": "Data Guard Generator",
+                },
+                method="POST",
+            )
+            with urlopen(request, timeout=10) as response:
+                payload = json.loads(response.read().decode("utf-8"))
+            content = (
+                ((payload.get("choices") or [{}])[0].get("message") or {}).get("content")
+                if isinstance(payload, dict)
+                else None
+            )
+            annotation = str(content or "").strip()
+            if annotation:
+                field.annotation_note = annotation
+                field.annotation_source = "openrouter"
+        except (URLError, TimeoutError, ValueError, json.JSONDecodeError, OSError):
+            field.annotation_note = field.uncertainty_note or "Low-confidence field annotated deterministically."
+            field.annotation_source = "deterministic"
+        annotated.append(field)
+    return annotated
 
 
 def _build_mismatch_records(dataset_id: str, readiness_status: str) -> list[CanonicalMismatchRecord]:
@@ -65,7 +149,10 @@ def run_generation(dataset_ids: list[str] | None = None) -> dict[str, Any]:
             )
             continue
 
-        profiled_fields = profile_records(load_result.records)
+        profiled_fields = _annotate_ambiguous_fields(profile_records(load_result.records))
+        numeric_profiles = _build_numeric_profiles(profiled_fields)
+        if numeric_profiles:
+            build_baseline_store(REPO_ROOT).update_from_profiles(target.dataset_id, numeric_profiles, refresh_allowed=True)
         clauses = synthesize_invariants(target.dataset_id, profiled_fields, artifacts.requirement_traceability)
         downstream_context = inject_downstream_context(
             target.dataset_id,

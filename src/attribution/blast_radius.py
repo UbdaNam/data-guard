@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from contracts.registry_loader import contamination_depth, direct_subscribers, registry_entries, transitive_downstream_consumers
 from src.attribution.artifact_resolver import build_dataset_index, load_dataset_readiness, load_interface_registry
 from src.models.attribution_models import BlastRadiusImpact, BlastRadiusSummary, LineageCompleteness, SchemaAnchor
 
@@ -13,6 +14,25 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 def compute_blast_radius(anchor: SchemaAnchor, max_hops: int = 6) -> BlastRadiusSummary:
     interfaces = load_interface_registry(REPO_ROOT)
     datasets = build_dataset_index(load_dataset_readiness(REPO_ROOT))
+    registry = registry_entries()
+
+    node_aliases = [anchor.dataset_id, anchor.contract_id, anchor.schema_name or "", anchor.interface_id or "", anchor.ownership_id or ""]
+    direct_registry_subscribers = sorted(
+        {
+            entry.consumer
+            for entry in registry
+            if entry.producer in node_aliases or entry.consumer in node_aliases
+        }
+    )
+    downstream_registry_nodes = sorted(
+        set(transitive_downstream_consumers(anchor.dataset_id, None))
+        | set(transitive_downstream_consumers(anchor.contract_id, None))
+        | set(transitive_downstream_consumers(anchor.schema_name or "", None))
+    )
+    registry_depth = max(
+        [contamination_depth(alias, None) for alias in node_aliases if alias],
+        default=0,
+    )
 
     direct_nodes: list[str] = []
     direct_pipelines: list[str] = []
@@ -50,6 +70,9 @@ def compute_blast_radius(anchor: SchemaAnchor, max_hops: int = 6) -> BlastRadius
         affected_nodes=sorted(dict.fromkeys(direct_nodes)),
         affected_pipelines=sorted(dict.fromkeys(direct_pipelines)),
         affected_interfaces=sorted(dict.fromkeys(direct_interfaces)),
+        direct_subscribers=direct_registry_subscribers,
+        transitive_downstream_nodes=downstream_registry_nodes,
+        contamination_depth=registry_depth,
         estimated_impacted_records=len(direct_nodes) or None,
         estimated_impacted_datasets=1 if datasets.get(anchor.dataset_id) else None,
         knowledge_completeness=LineageCompleteness.complete if direct_nodes else LineageCompleteness.partial,
@@ -59,6 +82,9 @@ def compute_blast_radius(anchor: SchemaAnchor, max_hops: int = 6) -> BlastRadius
         affected_nodes=sorted(dict.fromkeys(indirect_nodes)),
         affected_pipelines=sorted(dict.fromkeys(indirect_pipelines)),
         affected_interfaces=sorted(dict.fromkeys(indirect_interfaces)),
+        direct_subscribers=direct_registry_subscribers,
+        transitive_downstream_nodes=downstream_registry_nodes,
+        contamination_depth=registry_depth,
         estimated_impacted_records=len(indirect_nodes) or None,
         estimated_impacted_datasets=len(set(indirect_nodes)) or None,
         knowledge_completeness=LineageCompleteness.partial if indirect_nodes else LineageCompleteness.missing,
@@ -70,6 +96,9 @@ def compute_blast_radius(anchor: SchemaAnchor, max_hops: int = 6) -> BlastRadius
         affected_nodes=sorted(dict.fromkeys(direct_nodes + indirect_nodes)),
         affected_pipelines=sorted(dict.fromkeys(direct_pipelines + indirect_pipelines)),
         affected_interfaces=sorted(dict.fromkeys(direct_interfaces + indirect_interfaces)),
+        direct_subscribers=direct_registry_subscribers,
+        transitive_downstream_nodes=downstream_registry_nodes,
+        contamination_depth=registry_depth,
         estimated_impacted_records=direct.estimated_impacted_records,
         estimated_impacted_datasets=direct.estimated_impacted_datasets or indirect.estimated_impacted_datasets,
         knowledge_completeness=LineageCompleteness.complete if direct_nodes else LineageCompleteness.partial,

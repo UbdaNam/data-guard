@@ -7,6 +7,7 @@ from typing import Any
 
 import yaml
 
+from contracts.registry_loader import load_registry, registry_entries
 from src.models.schema_evolution_models import (
     ChangeClass,
     CompatibilityVerdict,
@@ -35,6 +36,8 @@ def resolve_affected_consumers(repo_root: Path, contract_payload: dict[str, Any]
 
     interfaces = _load_yaml_list(repo_root / "contracts" / "interface_registry.yaml")
     ownerships = _load_yaml_list(repo_root / "contracts" / "schema_ownership_map.yaml")
+    registry_payload = load_registry(repo_root / "docs" / "governance" / "subscriptions_registry.yaml") if (repo_root / "docs" / "governance" / "subscriptions_registry.yaml").exists() else None
+    registry = registry_entries(registry_payload) if registry_payload else []
 
     interface_hits = [
         row
@@ -44,6 +47,13 @@ def resolve_affected_consumers(repo_root: Path, contract_payload: dict[str, Any]
 
     owner_hits = [row for row in ownerships if str(row.get("schema_name") or "") == schema_name]
     consumer_impacts: dict[str, ConsumerImpact] = {}
+
+    registry_hits = [
+        entry
+        for entry in registry
+        if entry.producer in {dataset_id, schema_name, str(contract_payload.get("contract_id") or "")}
+        or entry.consumer in {dataset_id, schema_name, str(contract_payload.get("contract_id") or "")}
+    ]
 
     for item in interface_hits:
         ownership_id = str(item.get("ownership_ref") or "") or None
@@ -58,6 +68,17 @@ def resolve_affected_consumers(repo_root: Path, contract_payload: dict[str, Any]
                         likely_failure_modes=[],
                         impact_severity=Urgency.medium,
                     )
+
+    for entry in registry_hits:
+        key = entry.consumer
+        if key not in consumer_impacts:
+            consumer_impacts[key] = ConsumerImpact(
+                consumer_id=key,
+                interface_id=entry.interface_id,
+                ownership_id=None,
+                likely_failure_modes=[],
+                impact_severity=Urgency.medium,
+            )
 
     if not consumer_impacts:
         consumer_impacts["unknown_consumer"] = ConsumerImpact(

@@ -45,6 +45,36 @@ Operational guarantees:
 - Invalid type violations return `FAIL`
 - Unchanged inputs produce identical report content except `report_id` and `run_timestamp`
 
+## Violation Attribution (Feature 4)
+
+Primary entry point:
+
+- contracts/attributor.py
+
+Primary governed inputs:
+
+- validation_reports/\*.json
+- outputs/week4/lineage_snapshots.jsonl
+- contracts/interface_registry.yaml
+- contracts/schema_ownership_map.yaml
+- generated_contracts/\*.yaml
+
+Primary generated outputs:
+
+- violation_log/violations.jsonl
+
+Attribution can also be triggered via:
+
+- src/cli/foundation.py attribute-violations
+
+Operational guarantees:
+
+- Only `FAIL` and selected attributable `ERROR` classes are considered.
+- Blame chains are confidence-ranked and bounded to 1–5 candidates.
+- Missing lineage or git evidence degrades gracefully instead of failing the run.
+- Duplicate violation IDs are suppressed on reruns by default.
+- Unsupported validation, schema-evolution, AI-check, or report modes are rejected.
+
 ## Contract Generation (Feature 2)
 
 Primary entry point:

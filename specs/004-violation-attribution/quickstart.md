@@ -17,6 +17,13 @@
 2. Confirm output file exists at `violation_log/violations.jsonl`.
 3. Re-run unchanged inputs and confirm deterministic ordering and duplicate suppression.
 
+Example:
+
+```bash
+python contracts/attributor.py --dry-run
+python contracts/attributor.py
+```
+
 ## Verification checklist
 
 - Eligibility filtering applied to `FAIL` and selected attributable `ERROR` classes.
@@ -34,6 +41,13 @@
 - Missing lineage data does not halt run; records are emitted with partial blast radius and uncertainty.
 - Missing git history does not halt run; lineage-only candidates emitted with lower confidence.
 - Weak mapping does not fabricate certainty; confidence and uncertainty fields remain explicit.
+
+## Expected summary
+
+- `processed_reports` reflects the number of validation reports considered.
+- `attributed_violations` reflects eligible failures that received at least one candidate.
+- `written_violations` reflects the number of JSONL records appended to the output file.
+- `skipped_results` reflects PASS results plus non-attributable or unresolved failures.
 
 ## Scope boundary checks
 

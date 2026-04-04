@@ -263,3 +263,11 @@ flowchart LR
 ## Complexity Tracking
 
 No constitution violations requiring exceptions.
+
+## Implementation Evidence
+
+- Dry-run command: `contracts/attributor.py --dry-run`
+- Real command: `contracts/attributor.py`
+- Observed output path: `violation_log/violations.jsonl`
+- Observed run result: 14 attributed violations written with deterministic ordering and duplicate suppression enabled.
+- Observed degradation behavior: missing git history and partial lineage information produced warnings, but the run completed successfully.
